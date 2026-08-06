@@ -197,10 +197,10 @@ mesh = SubResource( 19 )
 shape = SubResource( 20 )
 
 [node name="WP_1" type="Position3D" parent="Enemy"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
 
 [node name="WP_2" type="Position3D" parent="Enemy"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0 )
 
 [node name="WP_3" type="Position3D" parent="Enemy"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
@@ -217,13 +217,13 @@ mesh = SubResource( 19 )
 shape = SubResource( 20 )
 
 [node name="WP_1" type="Position3D" parent="Enemy2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7 )
 
 [node name="WP_2" type="Position3D" parent="Enemy2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 14 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7 )
 
 [node name="WP_3" type="Position3D" parent="Enemy2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 14 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -278,7 +278,7 @@ anchor_right = 0.9
 anchor_bottom = 0.2
 margin_bottom = 60.0
 text = "Collect ALL 5 coins!
-WASD = Move
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
 Space = Jump
 Right-Click = Look"
 align = 1

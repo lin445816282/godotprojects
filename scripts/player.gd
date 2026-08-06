@@ -9,6 +9,8 @@ var left_arm: MeshInstance = null
 var right_arm: MeshInstance = null
 var left_leg: MeshInstance = null
 var right_leg: MeshInstance = null
+var head: MeshInstance = null
+var torso: MeshInstance = null
 var anim_time = 0.0
 var is_moving = false
 var is_jumping = false
@@ -16,53 +18,76 @@ var is_jumping = false
 func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
 	add_to_group("player")
-	add_body_parts()
+	build_body()
 	reset()
 
-func add_body_parts():
-	# Eyes - bigger and more visible
+func build_body():
+	# Torso - wide blue body
+	var body_mat = SpatialMaterial.new()
+	body_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
+	torso = MeshInstance.new()
+	var tm = CubeMesh.new()
+	tm.size = Vector3(0.9, 0.8, 0.5)
+	torso.mesh = tm
+	torso.material_override = body_mat
+	torso.translation = Vector3(0, 0.5, 0)
+	add_child(torso)
+
+	# Head - round lighter blue
+	var head_mat = SpatialMaterial.new()
+	head_mat.albedo_color = Color(0.25, 0.6, 1.0, 1)
+	head = MeshInstance.new()
+	var hm = SphereMesh.new()
+	hm.radius = 0.35
+	hm.height = 0.6
+	head.mesh = hm
+	head.material_override = head_mat
+	head.translation = Vector3(0, 1.2, 0)
+	add_child(head)
+
+	# Eyes - black dots
 	var eye_mat = SpatialMaterial.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
-	var eye_shape = SphereMesh.new()
-	eye_shape.radius = 0.1
-	eye_shape.height = 0.16
-	for x_offset in [-0.15, 0.15]:
+	var em = SphereMesh.new()
+	em.radius = 0.07
+	em.height = 0.1
+	for ox in [-0.12, 0.12]:
 		var eye = MeshInstance.new()
-		eye.mesh = eye_shape
+		eye.mesh = em
 		eye.material_override = eye_mat
-		eye.translation = Vector3(x_offset, 0.6, -0.35)
+		eye.translation = Vector3(ox, 1.28, -0.3)
 		add_child(eye)
-	
-	# Arms - thicker and longer
+
+	# Arms - blue rectangles
 	var arm_mat = SpatialMaterial.new()
-	arm_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
-	var arm_mesh = CubeMesh.new()
-	arm_mesh.size = Vector3(0.25, 0.7, 0.25)
+	arm_mat.albedo_color = Color(0.12, 0.4, 0.85, 1)
+	var am = CubeMesh.new()
+	am.size = Vector3(0.22, 0.6, 0.22)
 	left_arm = MeshInstance.new()
-	left_arm.mesh = arm_mesh
+	left_arm.mesh = am
 	left_arm.material_override = arm_mat
-	left_arm.translation = Vector3(-0.55, 0.1, 0)
+	left_arm.translation = Vector3(-0.6, 0.3, 0)
 	add_child(left_arm)
 	right_arm = MeshInstance.new()
-	right_arm.mesh = arm_mesh
+	right_arm.mesh = am
 	right_arm.material_override = arm_mat
-	right_arm.translation = Vector3(0.55, 0.1, 0)
+	right_arm.translation = Vector3(0.6, 0.3, 0)
 	add_child(right_arm)
-	
-	# Legs - thicker
+
+	# Legs - dark blue
 	var leg_mat = SpatialMaterial.new()
-	leg_mat.albedo_color = Color(0.1, 0.3, 0.65, 1)
-	var leg_mesh = CubeMesh.new()
-	leg_mesh.size = Vector3(0.25, 0.55, 0.25)
+	leg_mat.albedo_color = Color(0.08, 0.25, 0.6, 1)
+	var lm = CubeMesh.new()
+	lm.size = Vector3(0.24, 0.5, 0.24)
 	left_leg = MeshInstance.new()
-	left_leg.mesh = leg_mesh
+	left_leg.mesh = lm
 	left_leg.material_override = leg_mat
-	left_leg.translation = Vector3(-0.18, -0.65, 0)
+	left_leg.translation = Vector3(-0.2, -0.5, 0)
 	add_child(left_leg)
 	right_leg = MeshInstance.new()
-	right_leg.mesh = leg_mesh
+	right_leg.mesh = lm
 	right_leg.material_override = leg_mat
-	right_leg.translation = Vector3(0.18, -0.65, 0)
+	right_leg.translation = Vector3(0.2, -0.5, 0)
 	add_child(right_leg)
 
 func reset():
@@ -73,6 +98,15 @@ func reset():
 	anim_time = 0.0
 	is_moving = false
 	is_jumping = false
+	set_body_visible(true)
+
+func set_body_visible(v):
+	if torso: torso.visible = v
+	if head: head.visible = v
+	if left_arm: left_arm.visible = v
+	if right_arm: right_arm.visible = v
+	if left_leg: left_leg.visible = v
+	if right_leg: right_leg.visible = v
 
 func _physics_process(dt):
 	if GameManager.state != GameManager.State.PLAYING:
@@ -121,28 +155,28 @@ func update_animation(dt):
 		return
 	anim_time += dt
 	if is_jumping:
-		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, -50.0, 8.0 * dt)
-		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, -50.0, 8.0 * dt)
-		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 35.0, 8.0 * dt)
-		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, -35.0, 8.0 * dt)
+		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, -50.0, 8.0*dt)
+		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, -50.0, 8.0*dt)
+		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 35.0, 8.0*dt)
+		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, -35.0, 8.0*dt)
 	elif is_moving:
-		var swing = sin(anim_time * 12.0)
-		left_arm.rotation_degrees.x = swing * 30.0
-		right_arm.rotation_degrees.x = -swing * 30.0
-		left_leg.rotation_degrees.x = -swing * 25.0
-		right_leg.rotation_degrees.x = swing * 25.0
+		var sw = sin(anim_time*12.0)
+		left_arm.rotation_degrees.x = sw*30.0
+		right_arm.rotation_degrees.x = -sw*30.0
+		left_leg.rotation_degrees.x = -sw*25.0
+		right_leg.rotation_degrees.x = sw*25.0
 	else:
-		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, 0.0, 8.0 * dt)
-		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, 0.0, 8.0 * dt)
-		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 0.0, 8.0 * dt)
-		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, 0.0, 8.0 * dt)
+		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, 0.0, 8.0*dt)
+		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, 0.0, 8.0*dt)
+		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 0.0, 8.0*dt)
+		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, 0.0, 8.0*dt)
 
 func die():
 	if dead:
 		return
 	dead = true
 	velocity = Vector3(0, 10, 0)
-	$Mesh.material_override.albedo_color = Color(1, 0, 0, 1)
+	set_body_visible(false)
 	yield(get_tree().create_timer(0.6), "timeout")
 	if dead:
 		GameManager.player_died()
