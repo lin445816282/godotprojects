@@ -9,7 +9,21 @@ var dead = false
 func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
 	add_to_group("player")
+	add_eyes()
 	reset()
+
+func add_eyes():
+	var eye_mat = SpatialMaterial.new()
+	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
+	var eye_shape = SphereMesh.new()
+	eye_shape.radius = 0.08
+	eye_shape.height = 0.12
+	for x_offset in [-0.15, 0.15]:
+		var eye = MeshInstance.new()
+		eye.mesh = eye_shape
+		eye.material_override = eye_mat
+		eye.translation = Vector3(x_offset, 1.65, -0.32)
+		add_child(eye)
 
 func reset():
 	dead = false
