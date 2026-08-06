@@ -23,9 +23,15 @@ func _process(dt):
 			$Mesh.visible = false
 		return
 	atime += dt
-	var pos = global_transform.origin
-	pos.y = base_y + sin(atime * 3.0) * 0.2
-	global_transform.origin = pos
+	# Only float when not being pulled by magnet
+	var near = false
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		near = (global_transform.origin - players[0].global_transform.origin).length() < 5.0
+	if not near:
+		var pos = global_transform.origin
+		pos.y = base_y + sin(atime * 3.0) * 0.2
+		global_transform.origin = pos
 	rotate_y(dt * 2.5)
 	check_proximity_collect()
 
