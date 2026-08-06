@@ -2,9 +2,9 @@ extends Area
 
 enum State { PATROL, CHASE, RETURN }
 export var patrol_speed = 2.0
-export var chase_speed = 5.0
+export var chase_speed = 4.0
 export var wait_time = 0.8
-export var detect_range = 6.0
+export var detect_range = 4.0
 var state = State.PATROL
 var wps = []
 var idx = 0

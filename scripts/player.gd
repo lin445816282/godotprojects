@@ -20,44 +20,49 @@ func _ready():
 	reset()
 
 func add_body_parts():
+	# Eyes - bigger and more visible
 	var eye_mat = SpatialMaterial.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
 	var eye_shape = SphereMesh.new()
-	eye_shape.radius = 0.08
-	eye_shape.height = 0.12
+	eye_shape.radius = 0.1
+	eye_shape.height = 0.16
 	for x_offset in [-0.15, 0.15]:
 		var eye = MeshInstance.new()
 		eye.mesh = eye_shape
 		eye.material_override = eye_mat
-		eye.translation = Vector3(x_offset, 1.65, -0.32)
+		eye.translation = Vector3(x_offset, 0.6, -0.35)
 		add_child(eye)
+	
+	# Arms - thicker and longer
+	var arm_mat = SpatialMaterial.new()
+	arm_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
 	var arm_mesh = CubeMesh.new()
-	arm_mesh.size = Vector3(0.18, 0.5, 0.18)
-	var body_mat = SpatialMaterial.new()
-	body_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
+	arm_mesh.size = Vector3(0.25, 0.7, 0.25)
 	left_arm = MeshInstance.new()
 	left_arm.mesh = arm_mesh
-	left_arm.material_override = body_mat
-	left_arm.translation = Vector3(-0.4, 1.0, 0)
+	left_arm.material_override = arm_mat
+	left_arm.translation = Vector3(-0.55, 0.1, 0)
 	add_child(left_arm)
 	right_arm = MeshInstance.new()
 	right_arm.mesh = arm_mesh
-	right_arm.material_override = body_mat
-	right_arm.translation = Vector3(0.4, 1.0, 0)
+	right_arm.material_override = arm_mat
+	right_arm.translation = Vector3(0.55, 0.1, 0)
 	add_child(right_arm)
-	var leg_mesh = CubeMesh.new()
-	leg_mesh.size = Vector3(0.2, 0.45, 0.2)
+	
+	# Legs - thicker
 	var leg_mat = SpatialMaterial.new()
 	leg_mat.albedo_color = Color(0.1, 0.3, 0.65, 1)
+	var leg_mesh = CubeMesh.new()
+	leg_mesh.size = Vector3(0.25, 0.55, 0.25)
 	left_leg = MeshInstance.new()
 	left_leg.mesh = leg_mesh
 	left_leg.material_override = leg_mat
-	left_leg.translation = Vector3(-0.15, 0.15, 0)
+	left_leg.translation = Vector3(-0.18, -0.65, 0)
 	add_child(left_leg)
 	right_leg = MeshInstance.new()
 	right_leg.mesh = leg_mesh
 	right_leg.material_override = leg_mat
-	right_leg.translation = Vector3(0.15, 0.15, 0)
+	right_leg.translation = Vector3(0.18, -0.65, 0)
 	add_child(right_leg)
 
 func reset():
@@ -68,7 +73,6 @@ func reset():
 	anim_time = 0.0
 	is_moving = false
 	is_jumping = false
-	$Mesh.material_override.albedo_color = Color(0.15, 0.45, 0.9, 1)
 
 func _physics_process(dt):
 	if GameManager.state != GameManager.State.PLAYING:
