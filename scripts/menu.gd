@@ -1,0 +1,44 @@
+extends Control
+
+onready var title = $Panel/Title
+onready var info = $Panel/Info
+onready var start = $Panel/StartBtn
+onready var restart = $Panel/RestartBtn
+onready var quit = $Panel/QuitBtn
+
+func _ready():
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	info.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	GameManager.connect("state_changed", self, "_st")
+	start.connect("pressed", GameManager, "start_game")
+	restart.connect("pressed", GameManager, "start_game")
+	quit.connect("pressed", GameManager, "quit_game")
+	_show()
+
+func _st(st):
+	if st == GameManager.State.MENU:
+		_show()
+	elif st == GameManager.State.PLAYING:
+		visible = false
+	elif st == GameManager.State.WIN:
+		_end("You Win!", "Score: " + str(GameManager.score))
+	elif st == GameManager.State.LOSE:
+		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target))
+
+func _show():
+	visible = true
+	title.text = "Coin Quest"
+	info.text = "Collect ALL 5 coins!\nWASD = Move  Space = Jump\nRight-Click = Look"
+	start.visible = true
+	restart.visible = false
+	quit.visible = false
+
+func _end(txt, inf):
+	visible = true
+	title.text = txt
+	info.text = inf
+	start.visible = false
+	restart.visible = true
+	quit.visible = true

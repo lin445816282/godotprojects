@@ -1,0 +1,289 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://scripts/enemy.gd" type="Script" id=2]
+[ext_resource path="res://scripts/collectible.gd" type="Script" id=3]
+[ext_resource path="res://scripts/hud.gd" type="Script" id=4]
+[ext_resource path="res://scripts/menu.gd" type="Script" id=5]
+[ext_resource path="res://scripts/camera_orbit.gd" type="Script" id=6]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.2, 0.7, 0.2, 1 )
+
+[sub_resource type="CubeMesh" id=7]
+size = Vector3( 10, 1, 10 )
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 5, 0.5, 5 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.55, 0.35, 0.2, 1 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 10.3, 3, 0.3 )
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 5.15, 1.5, 0.15 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.15, 0.45, 0.9, 1 )
+
+[sub_resource type="CapsuleMesh" id=12]
+radius = 0.4
+mid_height = 1.2
+
+[sub_resource type="CapsuleShape" id=13]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="SpatialMaterial" id=15]
+albedo_color = Color( 1, 0.85, 0.1, 1 )
+
+[sub_resource type="CylinderMesh" id=16]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.15
+
+[sub_resource type="SphereShape" id=17]
+radius = 0.6
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 1, 0.15, 0.15, 1 )
+
+[sub_resource type="CubeMesh" id=19]
+size = Vector3( 0.8, 1.5, 0.8 )
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 0.6, 0.6, 0.6 )
+
+[node name="Root" type="Spatial"]
+
+[node name="Light" type="DirectionalLight" parent="."]
+transform = Transform( 0.7, 0, 0.7, 0.35, 0.87, -0.35, -0.61, 0.5, 0.61, 0, 8, 0 )
+light_energy = 5.0
+
+[node name="CameraOrbit" type="Camera" parent="."]
+current = true
+script = ExtResource( 6 )
+
+[node name="Ground" type="MeshInstance" parent="."]
+material_override = SubResource( 9 )
+mesh = SubResource( 7 )
+
+[node name="Floor" type="StaticBody" parent="."]
+
+[node name="Col" type="CollisionShape" parent="Floor"]
+shape = SubResource( 14 )
+
+[node name="Wall_N" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5 )
+material_override = SubResource( 10 )
+mesh = SubResource( 8 )
+
+[node name="Wall_N_Col" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5 )
+
+[node name="Shape" type="CollisionShape" parent="Wall_N_Col"]
+shape = SubResource( 21 )
+
+[node name="Wall_S" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 5 )
+material_override = SubResource( 10 )
+mesh = SubResource( 8 )
+
+[node name="Wall_S_Col" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 5 )
+
+[node name="Shape" type="CollisionShape" parent="Wall_S_Col"]
+shape = SubResource( 21 )
+
+[node name="Wall_E" type="MeshInstance" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 5, 1.5, 0 )
+material_override = SubResource( 10 )
+mesh = SubResource( 8 )
+
+[node name="Wall_E_Col" type="StaticBody" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 5, 1.5, 0 )
+
+[node name="Shape" type="CollisionShape" parent="Wall_E_Col"]
+shape = SubResource( 21 )
+
+[node name="Wall_W" type="MeshInstance" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -5, 1.5, 0 )
+material_override = SubResource( 10 )
+mesh = SubResource( 8 )
+
+[node name="Wall_W_Col" type="StaticBody" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -5, 1.5, 0 )
+
+[node name="Shape" type="CollisionShape" parent="Wall_W_Col"]
+shape = SubResource( 21 )
+
+[node name="Player" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+script = ExtResource( 1 )
+
+[node name="Mesh" type="MeshInstance" parent="Player"]
+material_override = SubResource( 11 )
+mesh = SubResource( 12 )
+
+[node name="Col" type="CollisionShape" parent="Player"]
+shape = SubResource( 13 )
+
+[node name="Coin1" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, -3 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Coin1"]
+material_override = SubResource( 15 )
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="Coin1"]
+shape = SubResource( 17 )
+
+[node name="Coin2" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, -3 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Coin2"]
+material_override = SubResource( 15 )
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="Coin2"]
+shape = SubResource( 17 )
+
+[node name="Coin3" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 3 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Coin3"]
+material_override = SubResource( 15 )
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="Coin3"]
+shape = SubResource( 17 )
+
+[node name="Coin4" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 3 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Coin4"]
+material_override = SubResource( 15 )
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="Coin4"]
+shape = SubResource( 17 )
+
+[node name="Coin5" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Coin5"]
+material_override = SubResource( 15 )
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="Coin5"]
+shape = SubResource( 17 )
+
+[node name="Enemy" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.7, -4 )
+script = ExtResource( 2 )
+
+[node name="Mesh" type="MeshInstance" parent="Enemy"]
+material_override = SubResource( 18 )
+mesh = SubResource( 19 )
+
+[node name="Col" type="CollisionShape" parent="Enemy"]
+shape = SubResource( 20 )
+
+[node name="WP_1" type="Position3D" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+
+[node name="WP_2" type="Position3D" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="WP_3" type="Position3D" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Score" type="Label" parent="UI/HUD"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.02
+anchor_bottom = 0.02
+margin_right = 200.0
+margin_bottom = 30.0
+text = "Coins: 0/5"
+
+[node name="Timer" type="Label" parent="UI/HUD"]
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.02
+margin_left = -200.0
+margin_bottom = 30.0
+text = "Time: 60s"
+align = 2
+
+[node name="Menu" type="Control" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+
+[node name="Panel" type="Panel" parent="UI/Menu"]
+anchor_left = 0.35
+anchor_top = 0.25
+anchor_right = 0.65
+anchor_bottom = 0.65
+
+[node name="Title" type="Label" parent="UI/Menu/Panel"]
+anchor_left = 0.1
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.05
+margin_bottom = 40.0
+text = "Coin Quest"
+align = 1
+
+[node name="Info" type="Label" parent="UI/Menu/Panel"]
+anchor_left = 0.1
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.2
+margin_bottom = 60.0
+text = "Collect ALL 5 coins!
+WASD = Move
+Space = Jump
+Right-Click = Look"
+align = 1
+
+[node name="StartBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.25
+anchor_top = 0.55
+anchor_right = 0.75
+anchor_bottom = 0.55
+margin_bottom = 30.0
+text = "Start Game"
+
+[node name="RestartBtn" type="Button" parent="UI/Menu/Panel"]
+visible = false
+anchor_left = 0.25
+anchor_top = 0.65
+anchor_right = 0.75
+anchor_bottom = 0.65
+margin_bottom = 30.0
+text = "Restart"
+
+[node name="QuitBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.25
+anchor_top = 0.75
+anchor_right = 0.75
+anchor_bottom = 0.75
+margin_bottom = 30.0
+text = "Quit"

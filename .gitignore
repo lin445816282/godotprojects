@@ -1,0 +1,15 @@
+# Godot
+.godot/
+.import/
+export_presets.cfg
+*.import
+*.translation
+
+# Mono
+mono_crash.*
+.mono/
+
+# System
+Thumbs.db
+.DS_Store
+*.log
