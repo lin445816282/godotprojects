@@ -15,14 +15,20 @@ var anim_time = 0.0
 var is_moving = false
 var is_jumping = false
 
+# Powerups
+var has_shield = false
+var speed_boost_timer = 0.0
+var magnet_timer = 0.0
+var magnet_ring: MeshInstance = null
+
 func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
 	add_to_group("player")
 	build_body()
+	make_magnet_ring()
 	reset()
 
 func build_body():
-	# Torso - wide blue body
 	var body_mat = SpatialMaterial.new()
 	body_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
 	torso = MeshInstance.new()
@@ -32,8 +38,6 @@ func build_body():
 	torso.material_override = body_mat
 	torso.translation = Vector3(0, 0.5, 0)
 	add_child(torso)
-
-	# Head - round lighter blue
 	var head_mat = SpatialMaterial.new()
 	head_mat.albedo_color = Color(0.25, 0.6, 1.0, 1)
 	head = MeshInstance.new()
@@ -44,8 +48,6 @@ func build_body():
 	head.material_override = head_mat
 	head.translation = Vector3(0, 1.2, 0)
 	add_child(head)
-
-	# Eyes - black dots
 	var eye_mat = SpatialMaterial.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
 	var em = SphereMesh.new()
@@ -57,8 +59,6 @@ func build_body():
 		eye.material_override = eye_mat
 		eye.translation = Vector3(ox, 1.28, -0.3)
 		add_child(eye)
-
-	# Arms - blue rectangles
 	var arm_mat = SpatialMaterial.new()
 	arm_mat.albedo_color = Color(0.12, 0.4, 0.85, 1)
 	var am = CubeMesh.new()
@@ -73,8 +73,6 @@ func build_body():
 	right_arm.material_override = arm_mat
 	right_arm.translation = Vector3(0.6, 0.3, 0)
 	add_child(right_arm)
-
-	# Legs - dark blue
 	var leg_mat = SpatialMaterial.new()
 	leg_mat.albedo_color = Color(0.08, 0.25, 0.6, 1)
 	var lm = CubeMesh.new()
@@ -90,6 +88,21 @@ func build_body():
 	right_leg.translation = Vector3(0.2, -0.5, 0)
 	add_child(right_leg)
 
+func make_magnet_ring():
+	magnet_ring = MeshInstance.new()
+	var ring = CylinderMesh.new()
+	ring.top_radius = 3.5
+	ring.bottom_radius = 3.5
+	ring.height = 0.05
+	magnet_ring.mesh = ring
+	var mat = SpatialMaterial.new()
+	mat.albedo_color = Color(0.8, 0.3, 0.8, 0.3)
+	mat.flags_transparent = true
+	magnet_ring.material_override = mat
+	magnet_ring.translation = Vector3(0, 0.1, 0)
+	magnet_ring.visible = false
+	add_child(magnet_ring)
+
 func reset():
 	dead = false
 	velocity = Vector3.ZERO
@@ -98,7 +111,23 @@ func reset():
 	anim_time = 0.0
 	is_moving = false
 	is_jumping = false
+	has_shield = false
+	speed_boost_timer = 0.0
+	magnet_timer = 0.0
 	set_body_visible(true)
+	if magnet_ring:
+		magnet_ring.visible = false
+
+func activate_shield():
+	has_shield = true
+
+func activate_speed():
+	speed_boost_timer = 5.0
+
+func activate_magnet():
+	magnet_timer = 5.0
+	if magnet_ring:
+		magnet_ring.visible = true
 
 func set_body_visible(v):
 	if torso: torso.visible = v
@@ -113,6 +142,18 @@ func _physics_process(dt):
 		velocity = Vector3.ZERO
 		transform.origin = Vector3(0, 2.0, 0)
 		return
+
+	# Update powerup timers
+	if speed_boost_timer > 0:
+		speed_boost_timer -= dt
+	if magnet_timer > 0:
+		magnet_timer -= dt
+		if magnet_timer <= 0 and magnet_ring:
+			magnet_ring.visible = false
+		if magnet_ring:
+			magnet_ring.rotate_y(dt * 3.0)
+		pull_coins(dt)
+
 	if not is_on_floor():
 		velocity.y -= gravity * dt
 	if dead:
@@ -133,8 +174,9 @@ func _physics_process(dt):
 		fwd.y = 0
 		rgt.y = 0
 		var mv = fwd.normalized() * d.z + rgt.normalized() * d.x
-		velocity.x = mv.x * speed
-		velocity.z = mv.z * speed
+		var spd = speed * (2.0 if speed_boost_timer > 0 else 1.0)
+		velocity.x = mv.x * spd
+		velocity.z = mv.z * spd
 		if mv.length() > 0.1:
 			rotation.y = atan2(-mv.x, -mv.z)
 			is_moving = true
@@ -149,6 +191,19 @@ func _physics_process(dt):
 	is_jumping = not is_on_floor()
 	velocity = move_and_slide(velocity, Vector3.UP)
 	update_animation(dt)
+
+func pull_coins(dt):
+	var coins = get_tree().get_nodes_in_group("coins")
+	for coin in coins:
+		if coin.has_method("is_taken") and coin.taken:
+			continue
+		var d = global_transform.origin - coin.global_transform.origin
+		var dist = d.length()
+		if dist < 5.0 and dist > 0.5:
+			d = d.normalized()
+			coin.global_transform.origin += d * 8.0 * dt
+		elif dist <= 0.5:
+			coin.global_transform.origin = global_transform.origin
 
 func update_animation(dt):
 	if not left_arm or not right_arm or not left_leg or not right_leg:
@@ -173,6 +228,9 @@ func update_animation(dt):
 
 func die():
 	if dead:
+		return
+	if has_shield:
+		has_shield = false
 		return
 	dead = true
 	velocity = Vector3(0, 10, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://scripts/enemy.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/hud.gd" type="Script" id=4]
 [ext_resource path="res://scripts/menu.gd" type="Script" id=5]
 [ext_resource path="res://scripts/camera_orbit.gd" type="Script" id=6]
+[ext_resource path="res://scripts/powerup.gd" type="Script" id=7]
 
 [sub_resource type="SpatialMaterial" id=9]
 albedo_color = Color( 0.2, 0.7, 0.2, 1 )
@@ -172,6 +173,29 @@ material_override = SubResource( 15 )
 mesh = SubResource( 16 )
 
 [node name="Col" type="CollisionShape" parent="Coin5"]
+shape = SubResource( 17 )
+
+
+[node name="PowerUp_Magnet" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 7 )
+script = ExtResource( 7 )
+power_type = 2
+
+[node name="Mesh" type="MeshInstance" parent="PowerUp_Magnet"]
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="PowerUp_Magnet"]
+shape = SubResource( 17 )
+
+[node name="PowerUp_Speed" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -7 )
+script = ExtResource( 7 )
+power_type = 1
+
+[node name="Mesh" type="MeshInstance" parent="PowerUp_Speed"]
+mesh = SubResource( 16 )
+
+[node name="Col" type="CollisionShape" parent="PowerUp_Speed"]
 shape = SubResource( 17 )
 
 [node name="Enemy" type="Area" parent="."]

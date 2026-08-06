@@ -8,6 +8,7 @@ var ptimer = 0.0
 func _ready():
 	connect("body_entered", self, "_pick")
 	GameManager.connect("game_started", self, "_on_game_started")
+	add_to_group("coins")
 	base_y = global_transform.origin.y
 	atime = randf() * TAU
 
