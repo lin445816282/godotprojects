@@ -11,14 +11,13 @@ func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
 	base_y = global_transform.origin.y
 	float_time = randf() * TAU
-	set_mesh_color()
-
-func set_mesh_color():
-	var c
-	match power_type:
-		Type.SHIELD:  c = Color(0.2, 0.8, 0.2, 1)
-		Type.SPEED:   c = Color(0.8, 0.8, 0.1, 1)
-		Type.MAGNET:  c = Color(0.8, 0.3, 0.8, 1)
+	var mat = SpatialMaterial.new()
+	$Mesh.material_override = mat
+	var c = Color(0.8, 0.3, 0.8, 1)
+	if power_type == Type.SHIELD:
+		c = Color(0.2, 0.8, 0.2, 1)
+	elif power_type == Type.SPEED:
+		c = Color(0.8, 0.8, 0.1, 1)
 	$Mesh.material_override.albedo_color = c
 
 func _process(dt):
