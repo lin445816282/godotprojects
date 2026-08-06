@@ -27,6 +27,16 @@ func _process(dt):
 	pos.y = base_y + sin(atime * 3.0) * 0.2
 	global_transform.origin = pos
 	rotate_y(dt * 2.5)
+	check_proximity_collect()
+
+func check_proximity_collect():
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() == 0:
+		return
+	var p = players[0]
+	var dist = (global_transform.origin - p.global_transform.origin).length()
+	if dist < 0.8:
+		_pick(p)
 
 func _pick(body):
 	if taken or not body.is_in_group("player"):
