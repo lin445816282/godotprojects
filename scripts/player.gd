@@ -9,6 +9,9 @@ var left_arm: MeshInstance = null
 var right_arm: MeshInstance = null
 var left_leg: MeshInstance = null
 var right_leg: MeshInstance = null
+var anim_time = 0.0
+var is_moving = false
+var is_jumping = false
 
 func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
@@ -17,7 +20,6 @@ func _ready():
 	reset()
 
 func add_body_parts():
-	# Eyes
 	var eye_mat = SpatialMaterial.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
 	var eye_shape = SphereMesh.new()
@@ -29,7 +31,6 @@ func add_body_parts():
 		eye.material_override = eye_mat
 		eye.translation = Vector3(x_offset, 1.65, -0.32)
 		add_child(eye)
-	# Arms
 	var arm_mesh = CubeMesh.new()
 	arm_mesh.size = Vector3(0.18, 0.5, 0.18)
 	var body_mat = SpatialMaterial.new()
@@ -44,7 +45,6 @@ func add_body_parts():
 	right_arm.material_override = body_mat
 	right_arm.translation = Vector3(0.4, 1.0, 0)
 	add_child(right_arm)
-	# Legs
 	var leg_mesh = CubeMesh.new()
 	leg_mesh.size = Vector3(0.2, 0.45, 0.2)
 	var leg_mat = SpatialMaterial.new()
@@ -65,6 +65,9 @@ func reset():
 	velocity = Vector3.ZERO
 	transform.origin = Vector3(0, 2.0, 0)
 	rotation_degrees = Vector3.ZERO
+	anim_time = 0.0
+	is_moving = false
+	is_jumping = false
 	$Mesh.material_override.albedo_color = Color(0.15, 0.45, 0.9, 1)
 
 func _physics_process(dt):
@@ -96,13 +99,39 @@ func _physics_process(dt):
 		velocity.z = mv.z * speed
 		if mv.length() > 0.1:
 			rotation.y = atan2(-mv.x, -mv.z)
+			is_moving = true
 		else:
 			velocity.x = 0
 			velocity.z = 0
+			is_moving = false
 	else:
 		velocity.x = 0
 		velocity.z = 0
+		is_moving = false
+	is_jumping = not is_on_floor()
 	velocity = move_and_slide(velocity, Vector3.UP)
+	update_animation(dt)
+
+func update_animation(dt):
+	if not left_arm or not right_arm or not left_leg or not right_leg:
+		return
+	anim_time += dt
+	if is_jumping:
+		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, -50.0, 8.0 * dt)
+		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, -50.0, 8.0 * dt)
+		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 35.0, 8.0 * dt)
+		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, -35.0, 8.0 * dt)
+	elif is_moving:
+		var swing = sin(anim_time * 12.0)
+		left_arm.rotation_degrees.x = swing * 30.0
+		right_arm.rotation_degrees.x = -swing * 30.0
+		left_leg.rotation_degrees.x = -swing * 25.0
+		right_leg.rotation_degrees.x = swing * 25.0
+	else:
+		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, 0.0, 8.0 * dt)
+		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, 0.0, 8.0 * dt)
+		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 0.0, 8.0 * dt)
+		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, 0.0, 8.0 * dt)
 
 func die():
 	if dead:
