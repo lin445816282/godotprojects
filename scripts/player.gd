@@ -106,29 +106,13 @@ func create_particles():
 	particles = CPUParticles.new()
 	particles.name = "CoinParticles"
 	particles.emitting = false
-	particles.amount = 20
-	particles.lifetime = 0.6
+	particles.amount = 15
+	particles.lifetime = 0.5
 	particles.one_shot = true
 	particles.explosiveness = 1.0
-	particles.emission_shape = CPUParticles.EMISSION_SHAPE_SPHERE
-	particles.emission_sphere_radius = 0.3
-	particles.gravity = Vector3(0, 2, 0)
-	particles.spread = 180.0
-	particles.flatness = 0.0
+	particles.spread = 120.0
 	particles.speed_scale = 2.0
-	particles.initial_velocity = 4.0
-	particles.initial_velocity_random = 1.0
-	particles.angular_velocity = 5.0
-	particles.angular_velocity_random = 2.0
-	particles.scale_amount = 1.0
-	particles.scale_amount_random = 0.5
 	particles.color = Color(1, 0.85, 0.1, 1)
-	particles.lifetime_randomness = 0.3
-	particles.damping = 3.0
-	particles.damping_random = 1.0
-	var draw_pass = QuadMesh.new()
-	draw_pass.size = Vector2(0.15, 0.15)
-	particles.draw_pass_1 = draw_pass
 	add_child(particles)
 
 func reset():
