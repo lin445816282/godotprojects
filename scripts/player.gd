@@ -5,14 +5,19 @@ export var jump_speed = 8.0
 export var gravity = 20.0
 var velocity = Vector3.ZERO
 var dead = false
+var left_arm: MeshInstance = null
+var right_arm: MeshInstance = null
+var left_leg: MeshInstance = null
+var right_leg: MeshInstance = null
 
 func _ready():
 	GameManager.connect("game_started", self, "_on_game_started")
 	add_to_group("player")
-	add_eyes()
+	add_body_parts()
 	reset()
 
-func add_eyes():
+func add_body_parts():
+	# Eyes
 	var eye_mat = SpatialMaterial.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
 	var eye_shape = SphereMesh.new()
@@ -24,6 +29,36 @@ func add_eyes():
 		eye.material_override = eye_mat
 		eye.translation = Vector3(x_offset, 1.65, -0.32)
 		add_child(eye)
+	# Arms
+	var arm_mesh = CubeMesh.new()
+	arm_mesh.size = Vector3(0.18, 0.5, 0.18)
+	var body_mat = SpatialMaterial.new()
+	body_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
+	left_arm = MeshInstance.new()
+	left_arm.mesh = arm_mesh
+	left_arm.material_override = body_mat
+	left_arm.translation = Vector3(-0.4, 1.0, 0)
+	add_child(left_arm)
+	right_arm = MeshInstance.new()
+	right_arm.mesh = arm_mesh
+	right_arm.material_override = body_mat
+	right_arm.translation = Vector3(0.4, 1.0, 0)
+	add_child(right_arm)
+	# Legs
+	var leg_mesh = CubeMesh.new()
+	leg_mesh.size = Vector3(0.2, 0.45, 0.2)
+	var leg_mat = SpatialMaterial.new()
+	leg_mat.albedo_color = Color(0.1, 0.3, 0.65, 1)
+	left_leg = MeshInstance.new()
+	left_leg.mesh = leg_mesh
+	left_leg.material_override = leg_mat
+	left_leg.translation = Vector3(-0.15, 0.15, 0)
+	add_child(left_leg)
+	right_leg = MeshInstance.new()
+	right_leg.mesh = leg_mesh
+	right_leg.material_override = leg_mat
+	right_leg.translation = Vector3(0.15, 0.15, 0)
+	add_child(right_leg)
 
 func reset():
 	dead = false
