@@ -33,6 +33,8 @@ func _pick(body):
 	taken = true
 	ptimer = 0.25
 	GameManager.add_score(1)
+	if body.has_method("collect_coin_effect"):
+		body.collect_coin_effect()
 	$Col.disabled = true
 
 func _on_game_started():
