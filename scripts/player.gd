@@ -149,7 +149,8 @@ func _physics_process(dt):
 		return
 	if GameManager.state != GameManager.State.PLAYING:
 		velocity = Vector3.ZERO
-		transform.origin = Vector3(0, 2.0, 0)
+		if GameManager.state == GameManager.State.MENU or GameManager.state == GameManager.State.WIN or GameManager.state == GameManager.State.LOSE:
+			transform.origin = Vector3(0, 2.0, 0)
 		return
 
 	# Update powerup timers

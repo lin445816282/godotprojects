@@ -2,6 +2,7 @@ extends Control
 
 onready var s = $Score
 onready var t = $Timer
+onready var count = $Countdown
 var pulse = 0.0
 
 func _ready():
@@ -9,6 +10,10 @@ func _ready():
 	GameManager.connect("timer_changed", self, "_tm")
 	GameManager.connect("state_changed", self, "_st")
 	GameManager.connect("game_started", self, "_gs")
+	GameManager.connect("countdown_tick", self, "_ct")
+	GameManager.connect("countdown_done", self, "_gd")
+	if count:
+		count.visible = false
 	visible = false
 
 func _process(dt):
@@ -29,6 +34,18 @@ func _tm(v):
 
 func _st(st):
 	visible = (st == GameManager.State.PLAYING)
+
+func _ct(v):
+	if count:
+		if v > 0:
+			count.text = str(v)
+		else:
+			count.text = "GO!"
+		count.visible = true
+
+func _gd():
+	if count:
+		count.visible = false
 
 func _gs():
 	s.text = "Coins: 0/" + str(GameManager.target)
