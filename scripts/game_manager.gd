@@ -76,17 +76,17 @@ func toggle_pause():
 	elif state == State.PAUSED:
 		_change(State.PLAYING)
 
+const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn"]
+
 func load_level(idx):
-	if idx == -1:
+	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
 		get_tree().reload_current_scene()
 		_change(State.MENU)
-	elif idx == 1:
-		current_level = 1
-		get_tree().change_scene("res://scenes/level_2.tscn")
-	elif idx == 0:
-		current_level = 0
-		get_tree().reload_current_scene()
+	else:
+		current_level = idx
+		get_tree().change_scene(LEVELS[idx])
+		_change(State.COUNTDOWN)
 
 func quit_game():
 	get_tree().quit()

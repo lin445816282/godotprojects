@@ -1,5 +1,8 @@
 extends Control
 
+var time = 0.0
+var state_anim = false
+
 onready var title = $Panel/Title
 onready var info = $Panel/Info
 onready var start = $Panel/StartBtn
@@ -7,6 +10,7 @@ onready var restart = $Panel/RestartBtn
 onready var quit = $Panel/QuitBtn
 onready var lvl2 = $Panel/Level2Btn
 onready var backmenu = $Panel/BackMenuBtn
+onready var next = $Panel/NextBtn
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -21,6 +25,8 @@ func _ready():
 		lvl2.connect("pressed", self, "_go_lvl2")
 	if backmenu:
 		backmenu.connect("pressed", self, "_back_to_menu")
+	if next:
+		next.connect("pressed", self, "_go_next")
 	_show()
 
 func _st(st):
@@ -31,14 +37,24 @@ func _st(st):
 	elif st == GameManager.State.PAUSED:
 		_pause()
 	elif st == GameManager.State.WIN:
-		_end("You Win!", "Score: " + str(GameManager.score))
+		_end("You Win!", "Score: " + str(GameManager.score), true)
 	elif st == GameManager.State.LOSE:
-		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target))
+		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target), false)
+
+func _go_next():
+	var n = GameManager.current_level + 1
+	if n < LevelManager.LEVEL_COUNT and LevelManager.unlocked > n:
+		GameManager.load_level(n)
+	else:
+		GameManager.load_level(-1)
 
 func _back_to_menu():
 	GameManager.load_level(-1)
 
 func _pause():
+	state_anim = false
+	title.rect_scale = Vector2(1, 1)
+	title.modulate = Color(1, 1, 1, 1)
 	visible = true
 	title.text = "Paused"
 	info.text = "ESC = Resume"
@@ -48,7 +64,16 @@ func _pause():
 	if backmenu:
 		backmenu.visible = true
 
+func _process(dt):
+	if visible and state_anim:
+		time += dt
+		var s = 0.9 + sin(time * 2.0) * 0.1
+		title.rect_scale = Vector2(s, s)
+		title.modulate = Color(1, 1, 0.6 + 0.4 * sin(time * 2.0), 1)
+
 func _show():
+	state_anim = true
+	time = 0.0
 	visible = true
 	if backmenu:
 		backmenu.visible = false
@@ -60,7 +85,7 @@ func _show():
 	restart.visible = false
 	quit.visible = false
 
-func _end(txt, inf):
+func _end(txt, inf, can_next):
 	visible = true
 	if backmenu:
 		backmenu.visible = false
@@ -70,3 +95,7 @@ func _end(txt, inf):
 	start.visible = false
 	restart.visible = true
 	quit.visible = true
+	if next:
+		next.visible = can_next and GameManager.current_level + 1 < LevelManager.LEVEL_COUNT and LevelManager.unlocked > GameManager.current_level + 1
+	if lvl2:
+		lvl2.visible = false
