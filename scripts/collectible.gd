@@ -1,5 +1,8 @@
 extends Area
 
+enum Tier { COPPER, SILVER, GOLD }
+export(Tier) var tier = Tier.COPPER
+export var worth = 1
 var taken = false
 var base_y = 0.0
 var atime = 0.0
@@ -28,6 +31,27 @@ func _ready():
 	add_to_group("coins")
 	base_y = global_transform.origin.y
 	atime = randf() * TAU
+	_apply_tier()
+
+func _apply_tier():
+	match tier:
+		Tier.SILVER:
+			worth = 3
+			$Mesh.material_override = $Mesh.material_override.duplicate() if $Mesh.material_override else null
+			if $Mesh.material_override:
+				$Mesh.material_override.albedo_color = Color(0.85, 0.85, 0.9, 1)
+			else:
+				var m = SpatialMaterial.new()
+				m.albedo_color = Color(0.85, 0.85, 0.9, 1)
+				$Mesh.material_override = m
+		Tier.GOLD:
+			worth = 5
+			var m = SpatialMaterial.new()
+			m.albedo_color = Color(1, 0.8, 0.1, 1)
+			$Mesh.material_override = m
+		_:
+			worth = 1
+			$Mesh.material_override = null
 
 func _process(dt):
 	if taken:
@@ -66,8 +90,8 @@ func _pick(body):
 		return
 	taken = true
 	ptimer = 0.25
-	AudioManager.play("coin")
-	GameManager.add_score(1)
+	AudioManager.play("coin" if tier == Tier.COPPER else "coin2" if tier == Tier.SILVER else "coin3")
+	GameManager.add_score(worth)
 	burst_particles()
 	if body.has_method("collect_coin_effect"):
 		body.collect_coin_effect()

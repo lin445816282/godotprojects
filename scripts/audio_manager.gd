@@ -4,7 +4,7 @@ extends Node
 var players = {}
 
 func _ready():
-	for key in ["jump", "coin", "death", "win", "powerup"]:
+	for key in ["jump", "coin", "coin2", "coin3", "death", "win", "powerup"]:
 		var p = AudioStreamPlayer.new()
 		add_child(p)
 		players[key] = p
@@ -19,6 +19,8 @@ func _gen(name):
 	var dur = 0.15
 	if name == "coin":
 		dur = 0.25
+	elif name == "coin2" or name == "coin3":
+		dur = 0.3
 	elif name == "death":
 		dur = 0.6
 	elif name == "win":
@@ -33,6 +35,12 @@ func _gen(name):
 	for i in range(n):
 		var v = 0.0
 		match name:
+			"coin2":
+				var f2 = 1046.0 + 523.0 * sin(TAU * 5.0 * t)
+				v = (sin(TAU * f2 * t) + sin(TAU * f2 * 1.5 * t) * 0.5) * exp(-t * 8.0) * 0.5
+			"coin3":
+				var f3 = 1318.0 + 587.0 * sin(TAU * 5.5 * t)
+				v = (sin(TAU * f3 * t) + sin(TAU * f3 * 1.5 * t) * 0.5) * exp(-t * 8.0) * 0.5
 			"jump":
 				v = sin(TAU * 350.0 * t) * exp(-t * 14.0) * 0.6
 			"coin":

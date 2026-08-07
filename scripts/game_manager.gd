@@ -10,7 +10,7 @@ signal countdown_tick(t)
 signal countdown_done
 
 export var duration = 60.0
-export var target = 5
+export var target = 9
 export var countdown_time = 3.0
 var state = State.MENU
 var countdown_left = 0.0
