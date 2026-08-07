@@ -163,6 +163,7 @@ func _physics_process(dt):
 		return
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_speed
+		AudioManager.play("jump")
 	var d = Vector3()
 	d.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	d.z = Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
@@ -233,6 +234,7 @@ func die():
 		has_shield = false
 		return
 	dead = true
+	AudioManager.play("death")
 	velocity = Vector3(0, 10, 0)
 	set_body_visible(false)
 	yield(get_tree().create_timer(0.6), "timeout")

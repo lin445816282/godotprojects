@@ -165,7 +165,7 @@ mesh = SubResource( 16 )
 shape = SubResource( 17 )
 
 [node name="Coin5" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 6 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6 )
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="Coin5"]
@@ -175,15 +175,14 @@ mesh = SubResource( 16 )
 [node name="Col" type="CollisionShape" parent="Coin5"]
 shape = SubResource( 17 )
 
-[node name="PowerUp_Shield" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.5, -8 )
+[node name="PowerUp_Magnet" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 7 )
 script = ExtResource( 7 )
-power_type = 0
 
-[node name="Mesh" type="MeshInstance" parent="PowerUp_Shield"]
+[node name="Mesh" type="MeshInstance" parent="PowerUp_Magnet"]
 mesh = SubResource( 16 )
 
-[node name="Col" type="CollisionShape" parent="PowerUp_Shield"]
+[node name="Col" type="CollisionShape" parent="PowerUp_Magnet"]
 shape = SubResource( 17 )
 
 [node name="PowerUp_Speed" type="Area" parent="."]
@@ -195,17 +194,6 @@ power_type = 1
 mesh = SubResource( 16 )
 
 [node name="Col" type="CollisionShape" parent="PowerUp_Speed"]
-shape = SubResource( 17 )
-
-[node name="PowerUp_Magnet" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 7 )
-script = ExtResource( 7 )
-power_type = 2
-
-[node name="Mesh" type="MeshInstance" parent="PowerUp_Magnet"]
-mesh = SubResource( 16 )
-
-[node name="Col" type="CollisionShape" parent="PowerUp_Magnet"]
 shape = SubResource( 17 )
 
 [node name="Enemy" type="Area" parent="."]
@@ -301,7 +289,8 @@ anchor_right = 0.9
 anchor_bottom = 0.2
 margin_bottom = 60.0
 text = "Collect ALL 5 coins!
-WASD = Move  Space = Jump
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+Space = Jump
 Right-Click = Look"
 align = 1
 

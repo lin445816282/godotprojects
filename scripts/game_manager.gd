@@ -19,6 +19,7 @@ func _process(dt):
 		if time_left <= 0:
 			time_left = 0
 			if score >= target:
+				AudioManager.play("win")
 				_change(State.WIN)
 			else:
 				_change(State.LOSE)

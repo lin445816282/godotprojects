@@ -34,6 +34,7 @@ func _pick(body):
 	if taken or not body.is_in_group("player"):
 		return
 	taken = true
+	AudioManager.play("powerup")
 	match power_type:
 		Type.SHIELD:  body.activate_shield()
 		Type.SPEED:   body.activate_speed()

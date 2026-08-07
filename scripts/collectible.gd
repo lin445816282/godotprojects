@@ -5,6 +5,23 @@ var base_y = 0.0
 var atime = 0.0
 var ptimer = 0.0
 
+func burst_particles():
+	var cp = CPUParticles.new()
+	cp.one_shot = true
+	cp.emitting = true
+	cp.amount = 20
+	cp.lifetime = 0.6
+	cp.local_coords = true
+	cp.direction = Vector3(0, 1, 0)
+	cp.spread = 45.0
+	cp.gravity = Vector3(0, -9, 0)
+	cp.initial_velocity = 4.0
+	cp.scale_amount = 0.08
+	cp.color = Color(1, 0.85, 0.1, 1)
+	add_child(cp)
+	yield(get_tree().create_timer(0.7), "timeout")
+	cp.queue_free()
+
 func _ready():
 	connect("body_entered", self, "_pick")
 	GameManager.connect("game_started", self, "_on_game_started")
@@ -49,7 +66,9 @@ func _pick(body):
 		return
 	taken = true
 	ptimer = 0.25
+	AudioManager.play("coin")
 	GameManager.add_score(1)
+	burst_particles()
 	if body.has_method("collect_coin_effect"):
 		body.collect_coin_effect()
 	$Col.disabled = true
