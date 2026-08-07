@@ -14,6 +14,8 @@ onready var next = $Panel/NextBtn
 onready var lvl3 = $Panel/Level3Btn
 onready var shade = $"..//Shade"
 onready var sens = $Panel/SensSlider
+var keybtns = []
+var listening_action = ""
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -34,6 +36,11 @@ func _ready():
 		lvl3.connect("pressed", self, "_go_lvl3")
 	if sens:
 		sens.connect("value_changed", self, "_sens_changed")
+	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
+		var b = get_node_or_null("Panel/" + a + "Btn")
+		if b:
+			b.connect("pressed", self, "start_listen", [a])
+			keybtns.append(a)
 	_show()
 
 func _st(st):
@@ -47,6 +54,9 @@ func _st(st):
 		_end("You Win!", "Score: " + str(GameManager.score), true)
 	elif st == GameManager.State.LOSE:
 		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target), false)
+
+func _go_lvl2():
+	GameManager.load_level(1)
 
 func _go_lvl3():
 	GameManager.load_level(2)
@@ -85,13 +95,26 @@ func _process(dt):
 func _sens_changed(v):
 	SettingsManager.set("sensitivity", v)
 
+func start_listen(action):
+	listening_action = action
+	info.text = "Press a key for: " + action
+
+func _unhandled_input(event):
+	if listening_action != "" and event is InputEventKey:
+		SettingsManager.set_key(listening_action, event.scancode)
+		listening_action = ""
+		_show()
+		return
+	if listening_action == "" and event.is_action_pressed("ui_cancel") and state_anim:
+		GameManager.toggle_pause()
+
 func _show():
 	_shd(0, 0, 0, 0)
 	state_anim = true
-	if sens:
-		sens.value = SettingsManager.get("sensitivity", 0.3)
 	time = 0.0
 	visible = true
+	if sens:
+		sens.value = SettingsManager.get("sensitivity", 0.3)
 	if backmenu:
 		backmenu.visible = false
 	title.text = "Coin Quest"
@@ -101,6 +124,21 @@ func _show():
 	start.text = "Play Level 1"
 	restart.visible = false
 	quit.visible = false
+	if lvl2:
+		lvl2.visible = LevelManager.unlocked > 1
+		lvl2.disabled = LevelManager.unlocked <= 1
+	if lvl3:
+		lvl3.visible = LevelManager.unlocked > 2
+		lvl3.disabled = LevelManager.unlocked <= 2
+	_refresh_keys()
+
+func _refresh_keys():
+	for a in keybtns:
+		var b = get_node_or_null("Panel/" + a + "Btn")
+		if b:
+			var sc = SettingsManager.get_key(a)
+			var nm = OS.get_scancode_string(sc)
+			b.text = a.replace("move_", "").replace("_", " ").replace("backward", "back") + ": " + nm
 
 func _shd(r, g, b, a):
 	if shade:
@@ -124,3 +162,5 @@ func _end(txt, inf, can_next):
 		next.visible = can_next and GameManager.current_level + 1 < LevelManager.LEVEL_COUNT and LevelManager.unlocked > GameManager.current_level + 1
 	if lvl2:
 		lvl2.visible = false
+	if lvl3:
+		lvl3.visible = false

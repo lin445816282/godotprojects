@@ -412,6 +412,46 @@ WASD = Move  Space = Jump
 Right-Click = Look"
 align = 1
 
+[node name="move_forwardBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.05
+anchor_top = 0.80
+anchor_right = 0.45
+anchor_bottom = 0.80
+margin_bottom = 20.0
+text = "Forward: W"
+
+[node name="move_backwardBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.05
+anchor_top = 0.83
+anchor_right = 0.45
+anchor_bottom = 0.83
+margin_bottom = 20.0
+text = "Back: W"
+
+[node name="move_leftBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.05
+anchor_top = 0.87
+anchor_right = 0.45
+anchor_bottom = 0.87
+margin_bottom = 20.0
+text = "Left: W"
+
+[node name="move_rightBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.05
+anchor_top = 0.90
+anchor_right = 0.45
+anchor_bottom = 0.90
+margin_bottom = 20.0
+text = "Right: W"
+
+[node name="jumpBtn" type="Button" parent="UI/Menu/Panel"]
+anchor_left = 0.05
+anchor_top = 0.93
+anchor_right = 0.45
+anchor_bottom = 0.93
+margin_bottom = 20.0
+text = "Jump: W"
+
 [node name="SensLabel" type="Label" parent="UI/Menu/Panel"]
 anchor_left = 0.05
 anchor_top = 0.85
