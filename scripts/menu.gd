@@ -22,10 +22,20 @@ func _st(st):
 		_show()
 	elif st == GameManager.State.PLAYING:
 		visible = false
+	elif st == GameManager.State.PAUSED:
+		_pause()
 	elif st == GameManager.State.WIN:
 		_end("You Win!", "Score: " + str(GameManager.score))
 	elif st == GameManager.State.LOSE:
 		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target))
+
+func _pause():
+	visible = true
+	title.text = "Paused"
+	info.text = "ESC = Resume"
+	start.visible = false
+	restart.visible = false
+	quit.visible = true
 
 func _show():
 	visible = true

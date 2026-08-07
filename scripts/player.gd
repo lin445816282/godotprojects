@@ -144,6 +144,9 @@ func set_body_visible(v):
 	if right_leg: right_leg.visible = v
 
 func _physics_process(dt):
+	if GameManager.state == GameManager.State.PAUSED:
+		velocity = Vector3.ZERO
+		return
 	if GameManager.state != GameManager.State.PLAYING:
 		velocity = Vector3.ZERO
 		transform.origin = Vector3(0, 2.0, 0)
