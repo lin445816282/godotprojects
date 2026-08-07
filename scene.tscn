@@ -62,6 +62,7 @@ environment = ExtResource( 8 )
 [node name="Light" type="DirectionalLight" parent="."]
 transform = Transform( 0.7, 0, 0.7, 0.35, 0.87, -0.35, -0.61, 0.5, 0.61, 0, 8, 0 )
 light_energy = 5.0
+shadow_enabled = true
 
 [node name="CameraOrbit" type="Camera" parent="."]
 current = true

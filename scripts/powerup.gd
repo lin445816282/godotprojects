@@ -19,6 +19,9 @@ func _ready():
 	elif power_type == Type.SPEED:
 		c = Color(0.8, 0.8, 0.1, 1)
 	$Mesh.material_override.albedo_color = c
+	$Mesh.material_override.emission_enabled = true
+	$Mesh.material_override.emission_color = c
+	$Mesh.material_override.emission_energy = 1.3
 
 func _process(dt):
 	if taken:

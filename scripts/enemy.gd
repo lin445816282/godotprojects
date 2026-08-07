@@ -19,6 +19,15 @@ var attack_timer = 0.0
 func _ready():
 	connect("body_entered", self, "_hit")
 	GameManager.connect("game_started", self, "_on_game_started")
+	_setup_glow()
+
+func _setup_glow():
+	if $Mesh.material_override:
+		var m = $Mesh.material_override.duplicate()
+		m.emission_enabled = true
+		m.emission_color = Color(1, 0.2, 0.2, 1)
+		m.emission_energy = 2.0
+		$Mesh.material_override = m
 	for c in get_children():
 		if c is Position3D and c.name.begins_with("WP"):
 			wps.append(c.global_transform.origin)

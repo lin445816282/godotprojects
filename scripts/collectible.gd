@@ -34,24 +34,27 @@ func _ready():
 	_apply_tier()
 
 func _apply_tier():
+	var col = Color(1, 0.6, 0.1, 1)
 	match tier:
 		Tier.SILVER:
+			col = Color(0.85, 0.85, 0.9, 1)
 			worth = 3
-			$Mesh.material_override = $Mesh.material_override.duplicate() if $Mesh.material_override else null
-			if $Mesh.material_override:
-				$Mesh.material_override.albedo_color = Color(0.85, 0.85, 0.9, 1)
-			else:
-				var m = SpatialMaterial.new()
-				m.albedo_color = Color(0.85, 0.85, 0.9, 1)
-				$Mesh.material_override = m
 		Tier.GOLD:
+			col = Color(1, 0.8, 0.1, 1)
 			worth = 5
-			var m = SpatialMaterial.new()
-			m.albedo_color = Color(1, 0.8, 0.1, 1)
-			$Mesh.material_override = m
 		_:
+			col = Color(1, 0.6, 0.1, 1)
 			worth = 1
-			$Mesh.material_override = null
+	var m
+	if $Mesh.material_override == null:
+		m = SpatialMaterial.new()
+	else:
+		m = $Mesh.material_override.duplicate()
+	m.albedo_color = col
+	m.emission_enabled = true
+	m.emission_color = col
+	m.emission_energy = 1.5
+	$Mesh.material_override = m
 
 func _process(dt):
 	if taken:
@@ -64,7 +67,6 @@ func _process(dt):
 			$Mesh.visible = false
 		return
 	atime += dt
-	# Only float when not being pulled by magnet
 	var near = false
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
