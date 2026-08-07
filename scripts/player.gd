@@ -217,6 +217,9 @@ func _physics_process(dt):
 	velocity = move_and_slide(velocity, Vector3.UP)
 	update_animation(dt)
 	update_dust(dt)
+	if global_transform.origin.y < -8.0:
+		die()
+		return
 	if hit_flash > 0.0:
 		var on = int(floor(hit_flash * 12.0)) % 2 == 0
 		set_body_visible(on)

@@ -43,6 +43,8 @@ func _process(dt):
 			else:
 				_change(State.LOSE)
 
+var wins_total = 0
+
 func start_game():
 	score = 0
 	time_left = duration
@@ -65,6 +67,16 @@ func add_score(n = 1):
 func _on_level_complete():
 	LevelManager.record_score(current_level, score)
 	LevelManager.unlock_next()
+	_check_achievements()
+
+func _check_achievements():
+	wins_total += 1
+	if wins_total >= 1:
+		Achievements.unlock("first_win")
+	if wins_total >= 2:
+		Achievements.unlock("three_wins")
+	if time_left >= duration - 25.0:
+		Achievements.unlock("sprinter")
 
 func player_died():
 	if state == State.PLAYING:

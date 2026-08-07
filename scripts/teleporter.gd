@@ -15,3 +15,21 @@ func _teleport(body):
 	if dest:
 		body.global_transform.origin = dest.global_transform.origin + Vector3(0, 1, 0)
 		AudioManager.play("powerup")
+		_spawn_particles()
+
+func _spawn_particles():
+	var cp = CPUParticles.new()
+	cp.one_shot = true
+	cp.emitting = true
+	cp.amount = 30
+	cp.lifetime = 0.6
+	cp.local_coords = true
+	cp.direction = Vector3(0, 1, 0)
+	cp.spread = 180.0
+	cp.gravity = Vector3(0, -3, 0)
+	cp.initial_velocity = 3.0
+	cp.scale_amount = 0.1
+	cp.color = Color(0.2, 0.9, 1, 1)
+	add_child(cp)
+	yield(get_tree().create_timer(0.8), "timeout")
+	cp.queue_free()

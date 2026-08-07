@@ -19,6 +19,7 @@ GameManager="*res://scripts/game_manager.gd"
 AudioManager="*res://scripts/audio_manager.gd"
 LevelManager="*res://scripts/level_manager.gd"
 SettingsManager="*res://scripts/settings_manager.gd"
+Achievements="*res://scripts/achievements.gd"
 
 [display]
 
