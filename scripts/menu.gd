@@ -12,6 +12,8 @@ onready var lvl2 = $Panel/Level2Btn
 onready var backmenu = $Panel/BackMenuBtn
 onready var next = $Panel/NextBtn
 onready var lvl3 = $Panel/Level3Btn
+onready var shade = $"..//Shade"
+onready var sens = $Panel/SensSlider
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -30,6 +32,8 @@ func _ready():
 		next.connect("pressed", self, "_go_next")
 	if lvl3:
 		lvl3.connect("pressed", self, "_go_lvl3")
+	if sens:
+		sens.connect("value_changed", self, "_sens_changed")
 	_show()
 
 func _st(st):
@@ -58,6 +62,7 @@ func _back_to_menu():
 	GameManager.load_level(-1)
 
 func _pause():
+	_shd(0, 0, 0, 0)
 	state_anim = false
 	title.rect_scale = Vector2(1, 1)
 	title.modulate = Color(1, 1, 1, 1)
@@ -77,8 +82,14 @@ func _process(dt):
 		title.rect_scale = Vector2(s, s)
 		title.modulate = Color(1, 1, 0.6 + 0.4 * sin(time * 2.0), 1)
 
+func _sens_changed(v):
+	SettingsManager.set("sensitivity", v)
+
 func _show():
+	_shd(0, 0, 0, 0)
 	state_anim = true
+	if sens:
+		sens.value = SettingsManager.get("sensitivity", 0.3)
 	time = 0.0
 	visible = true
 	if backmenu:
@@ -91,8 +102,16 @@ func _show():
 	restart.visible = false
 	quit.visible = false
 
+func _shd(r, g, b, a):
+	if shade:
+		shade.color = Color(r, g, b, a)
+
 func _end(txt, inf, can_next):
 	visible = true
+	if can_next:
+		_shd(1, 0.9, 0.3, 0.16)
+	else:
+		_shd(0.8, 0.1, 0.1, 0.18)
 	if backmenu:
 		backmenu.visible = false
 	title.text = txt
