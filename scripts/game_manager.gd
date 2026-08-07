@@ -76,7 +76,7 @@ func toggle_pause():
 	elif state == State.PAUSED:
 		_change(State.PLAYING)
 
-const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn"]
+const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn"]
 
 func load_level(idx):
 	if idx == -1 or idx >= LEVELS.size():

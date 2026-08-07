@@ -11,6 +11,7 @@ onready var quit = $Panel/QuitBtn
 onready var lvl2 = $Panel/Level2Btn
 onready var backmenu = $Panel/BackMenuBtn
 onready var next = $Panel/NextBtn
+onready var lvl3 = $Panel/Level3Btn
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -27,6 +28,8 @@ func _ready():
 		backmenu.connect("pressed", self, "_back_to_menu")
 	if next:
 		next.connect("pressed", self, "_go_next")
+	if lvl3:
+		lvl3.connect("pressed", self, "_go_lvl3")
 	_show()
 
 func _st(st):
@@ -40,6 +43,9 @@ func _st(st):
 		_end("You Win!", "Score: " + str(GameManager.score), true)
 	elif st == GameManager.State.LOSE:
 		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target), false)
+
+func _go_lvl3():
+	GameManager.load_level(2)
 
 func _go_next():
 	var n = GameManager.current_level + 1
