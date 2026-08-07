@@ -5,6 +5,7 @@ onready var info = $Panel/Info
 onready var start = $Panel/StartBtn
 onready var restart = $Panel/RestartBtn
 onready var quit = $Panel/QuitBtn
+onready var lvl2 = $Panel/Level2Btn
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -15,6 +16,8 @@ func _ready():
 	start.connect("pressed", GameManager, "start_game")
 	restart.connect("pressed", GameManager, "start_game")
 	quit.connect("pressed", GameManager, "quit_game")
+	if lvl2:
+		lvl2.connect("pressed", self, "_go_lvl2")
 	_show()
 
 func _st(st):

@@ -76,6 +76,16 @@ func toggle_pause():
 	elif state == State.PAUSED:
 		_change(State.PLAYING)
 
+func load_level(idx):
+	# idx 0=当前场景,1=level_2
+	if idx == 1:
+		current_level = 1
+		get_tree().change_scene("res://scenes/level_2.tscn")
+	# 回主关则重载当前主场景
+	elif idx == 0:
+		current_level = 0
+		get_tree().reload_current_scene()
+
 func quit_game():
 	get_tree().quit()
 
