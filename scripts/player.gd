@@ -17,6 +17,7 @@ var is_jumping = false
 var invuln_timer = 0.0
 var hit_flash = 0.0
 var hits_taken = 0
+var dust_timer = 0.0
 
 # Powerups
 var has_shield = false
@@ -204,6 +205,7 @@ func _physics_process(dt):
 	is_jumping = not is_on_floor()
 	velocity = move_and_slide(velocity, Vector3.UP)
 	update_animation(dt)
+	update_dust(dt)
 	if hit_flash > 0.0:
 		var on = int(floor(hit_flash * 12.0)) % 2 == 0
 		set_body_visible(on)
@@ -267,6 +269,30 @@ func die():
 	yield(get_tree().create_timer(0.6), "timeout")
 	if dead:
 		GameManager.player_died()
+
+func update_dust(dt):
+	if is_moving and is_on_floor() and GameManager.state == GameManager.State.PLAYING:
+		dust_timer -= dt
+		if dust_timer <= 0.0:
+			dust_timer = 0.08
+			var cp = CPUParticles.new()
+			cp.one_shot = true
+			cp.emitting = true
+			cp.amount = 6
+			cp.lifetime = 0.4
+			cp.local_coords = true
+			cp.direction = Vector3(0, 1, 0)
+			cp.spread = 60.0
+			cp.gravity = Vector3(0, -2, 0)
+			cp.initial_velocity = 1.5
+			cp.scale_amount = 0.05
+			cp.color = Color(0.75, 0.7, 0.6, 0.8)
+			cp.translation = Vector3(0, 0.05, 0)
+			add_child(cp)
+			yield(get_tree().create_timer(0.5), "timeout")
+			cp.queue_free()
+	else:
+		dust_timer = 0.0
 
 func get_hits():
 	return hits_taken

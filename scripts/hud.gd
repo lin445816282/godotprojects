@@ -31,8 +31,34 @@ func _sync_hits():
 			hits = v
 			_update_level()
 
+var popup_text = ""
+
 func _sc(v):
+	var prev = int(s.text.split("//")[0].replace("Coins: ", "").split("/")[0]) if "/" in s.text else 0
+	if v > prev:
+		spawn_feedback(v - prev)
 	s.text = "Coins: " + str(v) + "/" + str(GameManager.target)
+
+func spawn_feedback(delta):
+	var lbl = Label.new()
+	lbl.text = "+" + str(delta)
+	lbl.add_color_override("font_color", Color(1, 0.85, 0.1, 1))
+	lbl.anchor_left = 0.5
+	lbl.anchor_top = 0.5
+	lbl.anchor_right = 0.5
+	lbl.anchor_bottom = 0.5
+	margin = -0.0
+	lbl.rect_position = Vector2(-40, -20)
+	lbl.align = 1
+	add_child(lbl)
+	yield(get_tree().create_timer(0.1), "timeout")
+	if lbl:
+		var t = 0.0
+		while t < 0.7 and is_instance_valid(lbl):
+			t += get_process_delta_time()
+			lbl.rect_position.y -= 1.2
+			lbl.modulate.a = 1.0 - t / 0.7
+		lbl.queue_free()
 
 func _tm(v):
 	var sec = int(ceil(v))
