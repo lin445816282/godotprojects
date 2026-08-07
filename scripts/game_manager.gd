@@ -95,3 +95,10 @@ func _change(s):
 	if state != s:
 		state = s
 		emit_signal("state_changed", s)
+		_update_music()
+
+func _update_music():
+	if state == State.PLAYING or state == State.COUNTDOWN or state == State.PAUSED:
+		AudioManager.play_music("play")
+	else:
+		AudioManager.play_music("menu")

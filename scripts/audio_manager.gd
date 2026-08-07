@@ -1,13 +1,62 @@
 extends Node
 
-# 程序化 SFX 管理器：实时合成短音效，无需外部素材
+# 程序化 SFX + BGM 管理器
 var players = {}
+var music = null
+var music_playing = ""
 
 func _ready():
 	for key in ["jump", "coin", "coin2", "coin3", "death", "win", "powerup"]:
 		var p = AudioStreamPlayer.new()
 		add_child(p)
 		players[key] = p
+	music = AudioStreamPlayer.new()
+	music.volume_db = -12.0
+	add_child(music)
+
+func play_music(kind):
+	if music_playing == kind or not music:
+		return
+	var kinddur = 12.0 if kind == "menu" else 8.0
+	var sr = 22050
+	var n = int(sr * kinddur)
+	var bytes = PoolByteArray()
+	bytes.resize(n * 2)
+	var scale = [0.0, 4.0, 5.0, 7.0, 9.0, 11.0, 12.0, 16.0]
+	var root = 55.0 if kind == "menu" else 65.0
+	var t = 0.0
+	var dt = 1.0 / sr
+	for i in range(n):
+		var beat = int(t * 2.0)
+		var ss = scale[beat % scale.size()]
+		var f = root * pow(2.0, ss / 12.0)
+		var bass = 0.0
+		if kind == "play":
+			bass = sin(TAU * (f / 2.0) * t) * 0.35
+		elif beat % 4 in [0, 2]:
+			bass = sin(TAU * f * 0.25 * t) * 0.3
+		var lead = sin(TAU * f * 2.0 * t) * 0.08 * exp(-fmod(t, 0.75) * 3.0)
+		var v = clamp(bass + lead, -1.0, 1.0) * 0.5
+		var s16 = int(v * 32767.0)
+		bytes[i * 2] = s16 & 0xFF
+		bytes[i * 2 + 1] = (s16 >> 8) & 0xFF
+		t += dt
+	var sample = AudioStreamSample.new()
+	sample.format = AudioStreamSample.FORMAT_16_BITS
+	sample.mix_rate = sr
+	sample.stereo = false
+	sample.loop_mode = AudioStreamSample.LOOP_FORWARD
+	sample.loop_begin = 0
+	sample.loop_end = n
+	sample.data = bytes
+	music.stream = sample
+	music.play()
+	music_playing = kind
+
+func stop_music():
+	if music:
+		music.stop()
+	music_playing = ""
 
 # 预生成每个音效的采样，重复播放时复用
 var cache = {}
