@@ -1,11 +1,15 @@
 extends Camera
 
 export var distance = 8.0
+export var sensitivity = 0.3
 var yaw = 0.0
 var pitch = -20.0
 var player = null
 
 func _ready():
+	# 从本地设置读取灵敏度
+	if SettingsManager.has("sensitivity"):
+		sensitivity = SettingsManager.get("sensitivity")
 	set_process_input(true)
 	find_player()
 	# Default position behind spawn point so camera isn't stuck underground
@@ -19,8 +23,8 @@ func find_player():
 
 func _input(event):
 	if player and event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_RIGHT):
-		yaw -= event.relative.x * 0.3
-		pitch -= event.relative.y * 0.3
+		yaw -= event.relative.x * sensitivity
+		pitch -= event.relative.y * sensitivity
 		pitch = clamp(pitch, -70.0, -5.0)
 
 func _process(_dt):

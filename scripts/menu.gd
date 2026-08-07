@@ -6,6 +6,7 @@ onready var start = $Panel/StartBtn
 onready var restart = $Panel/RestartBtn
 onready var quit = $Panel/QuitBtn
 onready var lvl2 = $Panel/Level2Btn
+onready var backmenu = $Panel/BackMenuBtn
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -18,6 +19,8 @@ func _ready():
 	quit.connect("pressed", GameManager, "quit_game")
 	if lvl2:
 		lvl2.connect("pressed", self, "_go_lvl2")
+	if backmenu:
+		backmenu.connect("pressed", self, "_back_to_menu")
 	_show()
 
 func _st(st):
@@ -32,6 +35,9 @@ func _st(st):
 	elif st == GameManager.State.LOSE:
 		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target))
 
+func _back_to_menu():
+	GameManager.load_level(-1)
+
 func _pause():
 	visible = true
 	title.text = "Paused"
@@ -39,9 +45,13 @@ func _pause():
 	start.visible = false
 	restart.visible = false
 	quit.visible = true
+	if backmenu:
+		backmenu.visible = true
 
 func _show():
 	visible = true
+	if backmenu:
+		backmenu.visible = false
 	title.text = "Coin Quest"
 	var best1 = LevelManager.best_for(0)
 	info.text = "Unlocked: " + str(LevelManager.unlocked) + "/" + str(LevelManager.LEVEL_COUNT) + "\nBest Lv1: " + str(best1) + " pts\nWASD = Move  Space = Jump"
@@ -52,6 +62,8 @@ func _show():
 
 func _end(txt, inf):
 	visible = true
+	if backmenu:
+		backmenu.visible = false
 	title.text = txt
 	var b = LevelManager.best_for(GameManager.current_level)
 	info.text = inf + "\nBest Lv" + str(GameManager.current_level + 1) + ": " + str(b) + " pts"
