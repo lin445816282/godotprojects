@@ -6,6 +6,8 @@ export var chase_speed = 4.0
 export var wait_time = 0.8
 export var detect_range = 4.0
 export var attack_cooldown = 1.0
+export var sprint = false
+export var sprint_mult = 1.8
 var state = State.PATROL
 var wps = []
 var idx = 0
@@ -141,7 +143,8 @@ func do_chase(dt):
 	if dir.length() < 0.4:
 		return
 	dir = dir.normalized()
-	move_in_dir(dir, chase_speed, dt)
+	var spd = chase_speed * (sprint_mult if sprint else 1.0)
+	move_in_dir(dir, spd, dt)
 
 func do_return(dt):
 	var dir = origin - global_transform.origin

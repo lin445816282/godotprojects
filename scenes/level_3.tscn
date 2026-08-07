@@ -53,6 +53,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 [node name="Enemy" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.7, -6 )
 script = ExtResource( 3 )
+sprint = true
 
 [node name="Mesh" type="MeshInstance" parent="Enemy"]
 material_override = SubResource( 13 )

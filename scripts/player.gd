@@ -18,6 +18,7 @@ var invuln_timer = 0.0
 var hit_flash = 0.0
 var hits_taken = 0
 var dust_timer = 0.0
+var jumps_left = 1
 
 # Powerups
 var has_shield = false
@@ -118,6 +119,7 @@ func reset():
 	invuln_timer = 0.0
 	hit_flash = 0.0
 	hits_taken = 0
+	jumps_left = 1
 	has_shield = false
 	speed_boost_timer = 0.0
 	magnet_timer = 0.0
@@ -176,6 +178,11 @@ func _physics_process(dt):
 		return
 	if (Input.is_action_just_pressed("jump") or Input.is_joy_button_just_pressed(0, 0)) and is_on_floor():
 		velocity.y = jump_speed
+		jumps_left = 1
+		AudioManager.play("jump")
+	elif (Input.is_action_just_pressed("jump") or Input.is_joy_button_just_pressed(0, 0)) and jumps_left > 0:
+		jumps_left -= 1
+		velocity.y = jump_speed * 0.9
 		AudioManager.play("jump")
 	var d = Vector3()
 	if Input.get_joypad_axis(0, 0) != 0.0 or Input.get_joypad_axis(0, 1) != 0.0:
@@ -261,8 +268,14 @@ func take_hit(from : Vector3):
 	invuln_timer = 1.0
 	hit_flash = 1.0
 	velocity = from * -8.0 + Vector3(0, 6.0, 0)
+	_hud_flash()
 	if hits_taken >= 3:
 		die()
+
+func _hud_flash():
+	var hud = get_tree().current_scene.find_node("HUD", true, false)
+	if hud and hud.has_method("damage_flash"):
+		hud.damage_flash()
 
 func die():
 	if dead:

@@ -33,6 +33,14 @@ func set(key, value):
 	data[key] = value
 	save()
 
+# 音量
+func get_volume(kind, default_db = 0.0):
+	return data.get(kind, default_db)
+
+func set_volume(kind, db):
+	data[kind] = db
+	save()
+
 # 键位：保存按键scancode并应用到InputMap
 const ACTIONS = {
 	"move_forward": 87,

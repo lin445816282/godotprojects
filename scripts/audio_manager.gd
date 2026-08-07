@@ -17,6 +17,7 @@ func _ready():
 func play_music(kind):
 	if music_playing == kind or not music:
 		return
+	music.volume_db = SettingsManager.get_volume("music", -12.0)
 	var kinddur = 12.0 if kind == "menu" else 8.0
 	var sr = 22050
 	var n = int(sr * kinddur)
@@ -121,5 +122,6 @@ func play(name):
 	if not players.has(name):
 		return
 	var p : AudioStreamPlayer = players[name]
+	p.volume_db = SettingsManager.get_volume("sfx", 0.0)
 	p.stream = _gen(name)
 	p.play()

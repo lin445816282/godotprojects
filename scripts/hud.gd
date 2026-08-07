@@ -6,6 +6,7 @@ onready var count = $Countdown
 onready var lvl = $LevelLabel
 var pulse = 0.0
 var hits = 3
+var flash_timer = 0.0
 
 func _ready():
 	GameManager.connect("score_changed", self, "_sc")
@@ -68,6 +69,30 @@ func _tm(v):
 		t.add_color_override("font_color", Color(1, c * 0.5, c * 0.5, 1))
 	else:
 		t.add_color_override("font_color", Color(1, 1, 1, 1))
+
+var red_flash = null
+
+func damage_flash():
+	if not red_flash:
+		red_flash = ColorRect.new()
+		red_flash.color = Color(1, 0.1, 0.1, 0)
+		red_flash.anchor_right = 1.0
+		red_flash.anchor_bottom = 1.0
+		red_flash.mouse_filter = 2
+		add_child(red_flash)
+	red_flash.color.a = 0.4
+	red_flash.color.r = 1.0
+	red_flash.color.g = 0.1
+	red_flash.color.b = 0.1
+	flash_timer = 0.3
+
+func _process(dt):
+	if visible:
+		pulse += dt
+		_sync_hits()
+		if red_flash and flash_timer > 0.0:
+			flash_timer -= dt
+			red_flash.color.a = flash_timer / 0.3 * 0.4
 
 func _st(st):
 	visible = (st == GameManager.State.PLAYING)

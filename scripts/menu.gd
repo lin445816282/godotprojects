@@ -14,6 +14,8 @@ onready var next = $Panel/NextBtn
 onready var lvl3 = $Panel/Level3Btn
 onready var shade = $"..//Shade"
 onready var sens = $Panel/SensSlider
+onready var sfx = $Panel/SfxSlider
+onready var music = $Panel/MusicSlider
 var keybtns = []
 var listening_action = ""
 
@@ -36,6 +38,10 @@ func _ready():
 		lvl3.connect("pressed", self, "_go_lvl3")
 	if sens:
 		sens.connect("value_changed", self, "_sens_changed")
+	if sfx:
+		sfx.connect("value_changed", self, "_sfx_changed")
+	if music:
+		music.connect("value_changed", self, "_music_changed")
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var b = get_node_or_null("Panel/" + a + "Btn")
 		if b:
@@ -95,6 +101,14 @@ func _process(dt):
 func _sens_changed(v):
 	SettingsManager.set("sensitivity", v)
 
+func _sfx_changed(v):
+	SettingsManager.set_volume("sfx", v)
+	AudioManager.play("coin")
+
+func _music_changed(v):
+	SettingsManager.set_volume("music", v)
+	AudioManager.play_music("menu")
+
 func start_listen(action):
 	listening_action = action
 	info.text = "Press a key for: " + action
@@ -115,6 +129,10 @@ func _show():
 	visible = true
 	if sens:
 		sens.value = SettingsManager.get("sensitivity", 0.3)
+	if sfx:
+		sfx.value = SettingsManager.get_volume("sfx", 0.0)
+	if music:
+		music.value = SettingsManager.get_volume("music", -12.0)
 	if backmenu:
 		backmenu.visible = false
 	title.text = "Coin Quest"
@@ -154,7 +172,9 @@ func _end(txt, inf, can_next):
 		backmenu.visible = false
 	title.text = txt
 	var b = LevelManager.best_for(GameManager.current_level)
-	info.text = inf + "\nBest Lv" + str(GameManager.current_level + 1) + ": " + str(b) + " pts"
+	var time_s = str(int(GameManager.duration - GameManager.time_left))
+	var stat = "\nBest Lv" + str(GameManager.current_level + 1) + ": " + str(b) + " pts   Time: " + time_s + "s"
+	info.text = inf + stat
 	start.visible = false
 	restart.visible = true
 	quit.visible = true
