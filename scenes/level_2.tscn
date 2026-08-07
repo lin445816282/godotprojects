@@ -1,16 +1,30 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/level_2.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
+[ext_resource path="res://scripts/moving_platform.gd" type="Script" id=3]
+[ext_resource path="res://scripts/teleporter.gd" type="Script" id=4]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0.4, 0.6, 0.4, 1 )
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="CubeMesh" id=6]
 size = Vector3( 24, 1, 24 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 12, 0.5, 12 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.7, 0.5, 0.3, 1 )
+
+[sub_resource type="CubeMesh" id=9]
+size = Vector3( 2, 0.4, 2 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 1, 0.2, 1 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.2, 0.8, 0.9, 1 )
 
 [node name="Level2" type="Spatial"]
 script = ExtResource( 1 )
@@ -23,13 +37,53 @@ transform = Transform( 0.7, 0, 0.7, 0.35, 0.87, -0.35, -0.61, 0.5, 0.61, 0, 8, 0
 light_energy = 5.0
 
 [node name="Ground" type="MeshInstance" parent="."]
-material_override = SubResource( 3 )
-mesh = SubResource( 4 )
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
 
 [node name="Floor" type="StaticBody" parent="."]
 
 [node name="Col" type="CollisionShape" parent="Floor"]
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="PlayerSpawn" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+
+[node name="Platform" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.2, 0 )
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Platform"]
+material_override = SubResource( 8 )
+mesh = SubResource( 9 )
+
+[node name="Col" type="CollisionShape" parent="Platform"]
+shape = SubResource( 10 )
+
+[node name="PlatArea" type="Area" parent="Platform"]
+
+[node name="Col" type="CollisionShape" parent="Platform/PlatArea"]
+shape = SubResource( 10 )
+
+[node name="PortalA" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 0 )
+script = ExtResource( 4 )
+target = NodePath("../../PortalB")
+
+[node name="Mesh" type="MeshInstance" parent="PortalA"]
+material_override = SubResource( 11 )
+mesh = SubResource( 9 )
+
+[node name="Col" type="CollisionShape" parent="PortalA"]
+shape = SubResource( 10 )
+
+[node name="PortalB" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 4 )
+script = ExtResource( 4 )
+target = NodePath("../PortalA")
+
+[node name="Mesh" type="MeshInstance" parent="PortalB"]
+material_override = SubResource( 11 )
+mesh = SubResource( 9 )
+
+[node name="Col" type="CollisionShape" parent="PortalB"]
+shape = SubResource( 10 )
