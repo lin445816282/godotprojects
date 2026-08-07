@@ -3,7 +3,9 @@ extends Control
 onready var s = $Score
 onready var t = $Timer
 onready var count = $Countdown
+onready var lvl = $LevelLabel
 var pulse = 0.0
+var hits = 3
 
 func _ready():
 	GameManager.connect("score_changed", self, "_sc")
@@ -19,6 +21,15 @@ func _ready():
 func _process(dt):
 	if visible:
 		pulse += dt
+		_sync_hits()
+
+func _sync_hits():
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0 and players[0].has_method("get_hits"):
+		var v = players[0].get_hits()
+		if v != hits:
+			hits = v
+			_update_level()
 
 func _sc(v):
 	s.text = "Coins: " + str(v) + "/" + str(GameManager.target)
@@ -47,7 +58,14 @@ func _gd():
 	if count:
 		count.visible = false
 
+func _update_level():
+	if lvl:
+		var cur = GameManager.current_level
+		lvl.text = "Level " + str(cur + 1) + "   Hits left: " + str(max(hits, 0))
+		lvl.visible = true
+
 func _gs():
+	_update_level()
 	s.text = "Coins: 0/" + str(GameManager.target)
 	t.text = "Time: " + str(int(GameManager.duration)) + "s"
 	t.add_color_override("font_color", Color(1, 1, 1, 1))

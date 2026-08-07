@@ -268,6 +268,9 @@ func die():
 	if dead:
 		GameManager.player_died()
 
+func get_hits():
+	return hits_taken
+
 func collect_coin_effect():
 	pass
 

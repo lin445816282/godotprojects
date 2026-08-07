@@ -349,6 +349,16 @@ margin_bottom = 30.0
 text = "Time: 60s"
 align = 2
 
+[node name="LevelLabel" type="Label" parent="UI/HUD"]
+visible = false
+anchor_left = 0.02
+anchor_top = 0.07
+anchor_right = 0.02
+anchor_bottom = 0.07
+margin_right = 300.0
+margin_bottom = 30.0
+text = "Level 1   Hits left: 3"
+
 [node name="Countdown" type="Label" parent="UI/HUD"]
 visible = false
 anchor_left = 0.5
