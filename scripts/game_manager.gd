@@ -14,6 +14,7 @@ export var target = 9
 export var countdown_time = 3.0
 var state = State.MENU
 var countdown_left = 0.0
+var current_level = 0
 var score = 0
 var time_left = 0.0
 
@@ -37,6 +38,7 @@ func _process(dt):
 			time_left = 0
 			if score >= target:
 				AudioManager.play("win")
+				_on_level_complete()
 				_change(State.WIN)
 			else:
 				_change(State.LOSE)
@@ -56,7 +58,13 @@ func add_score(n = 1):
 	score += n
 	emit_signal("score_changed", score)
 	if score >= target:
+		AudioManager.play("win")
+		_on_level_complete()
 		_change(State.WIN)
+
+func _on_level_complete():
+	LevelManager.record_score(current_level, score)
+	LevelManager.unlock_next()
 
 func player_died():
 	if state == State.PLAYING:

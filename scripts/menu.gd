@@ -40,15 +40,18 @@ func _pause():
 func _show():
 	visible = true
 	title.text = "Coin Quest"
-	info.text = "Collect ALL 5 coins!\nWASD = Move  Space = Jump\nRight-Click = Look"
+	var best1 = LevelManager.best_for(0)
+	info.text = "Unlocked: " + str(LevelManager.unlocked) + "/" + str(LevelManager.LEVEL_COUNT) + "\nBest Lv1: " + str(best1) + " pts\nWASD = Move  Space = Jump"
 	start.visible = true
+	start.text = "Play Level 1"
 	restart.visible = false
 	quit.visible = false
 
 func _end(txt, inf):
 	visible = true
 	title.text = txt
-	info.text = inf
+	var b = LevelManager.best_for(GameManager.current_level)
+	info.text = inf + "\nBest Lv" + str(GameManager.current_level + 1) + ": " + str(b) + " pts"
 	start.visible = false
 	restart.visible = true
 	quit.visible = true

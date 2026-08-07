@@ -17,6 +17,7 @@ run/main_scene="res://scene.tscn"
 
 GameManager="*res://scripts/game_manager.gd"
 AudioManager="*res://scripts/audio_manager.gd"
+LevelManager="*res://scripts/level_manager.gd"
 
 [display]
 
