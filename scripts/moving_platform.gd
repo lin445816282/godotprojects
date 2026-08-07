@@ -3,6 +3,7 @@ extends KinematicBody
 # 移动平台：在两点间往返移动，把站在上面的物体一起带走
 export var speed = 2.0
 export var dist = 3.0
+export var vertical = false
 var base = Vector3.ZERO
 var phase = 0.0
 var attached = null
@@ -19,7 +20,10 @@ func _ready():
 
 func _physics_process(dt):
 	phase += dt * speed
-	var target = base + Vector3(sin(phase), 0, 0) * dist
+	var offset = Vector3(sin(phase), 0, 0) * dist
+	if vertical:
+		offset = Vector3(0, sin(phase), 0) * dist
+	var target = base + offset
 	var motion = target - global_transform.origin
 	# 带动附着的玩家/物体
 	if attached and is_instance_valid(attached):

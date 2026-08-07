@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/level_2.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://scripts/moving_platform.gd" type="Script" id=3]
 [ext_resource path="res://scripts/teleporter.gd" type="Script" id=4]
+[ext_resource path="res://scripts/ground_texture.gd" type="Script" id=5]
 
 [sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0.4, 0.6, 0.4, 1 )
@@ -38,6 +39,7 @@ light_energy = 5.0
 
 [node name="Ground" type="MeshInstance" parent="."]
 material_override = SubResource( 5 )
+script = ExtResource( 5 )
 mesh = SubResource( 6 )
 
 [node name="Floor" type="StaticBody" parent="."]
@@ -62,6 +64,25 @@ shape = SubResource( 10 )
 [node name="PlatArea" type="Area" parent="Platform"]
 
 [node name="Col" type="CollisionShape" parent="Platform/PlatArea"]
+shape = SubResource( 10 )
+
+[node name="Lift" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 4 )
+script = ExtResource( 3 )
+vertical = true
+dist = 2.0
+speed = 1.2
+
+[node name="Mesh" type="MeshInstance" parent="Lift"]
+material_override = SubResource( 8 )
+mesh = SubResource( 9 )
+
+[node name="Col" type="CollisionShape" parent="Lift"]
+shape = SubResource( 10 )
+
+[node name="LiftArea" type="Area" parent="Lift"]
+
+[node name="Col" type="CollisionShape" parent="Lift/LiftArea"]
 shape = SubResource( 10 )
 
 [node name="PortalA" type="Area" parent="."]
