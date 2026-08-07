@@ -174,12 +174,16 @@ func _physics_process(dt):
 		velocity.z = lerp(velocity.z, 0.0, 0.1)
 		velocity = move_and_slide(velocity, Vector3.UP)
 		return
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if (Input.is_action_just_pressed("jump") or Input.is_joy_button_just_pressed(0, 0)) and is_on_floor():
 		velocity.y = jump_speed
 		AudioManager.play("jump")
 	var d = Vector3()
-	d.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	d.z = Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
+	if Input.get_joypad_axis(0, 0) != 0.0 or Input.get_joypad_axis(0, 1) != 0.0:
+		d.x = Input.get_joypad_axis(0, 0)
+		d.z = Input.get_joypad_axis(0, 1)
+	else:
+		d.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+		d.z = Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
 	d = d.normalized()
 	var cam = get_viewport().get_camera()
 	if cam:

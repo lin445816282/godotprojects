@@ -19,7 +19,7 @@ var score = 0
 var time_left = 0.0
 
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel") or (event is InputEventJoypadButton and event.button_index == 7 and event.pressed):
 		toggle_pause()
 
 func _process(dt):
