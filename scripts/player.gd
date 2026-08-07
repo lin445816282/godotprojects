@@ -14,6 +14,9 @@ var torso: MeshInstance = null
 var anim_time = 0.0
 var is_moving = false
 var is_jumping = false
+var invuln_timer = 0.0
+var hit_flash = 0.0
+var hits_taken = 0
 
 # Powerups
 var has_shield = false
@@ -111,6 +114,9 @@ func reset():
 	anim_time = 0.0
 	is_moving = false
 	is_jumping = false
+	invuln_timer = 0.0
+	hit_flash = 0.0
+	hits_taken = 0
 	has_shield = false
 	speed_boost_timer = 0.0
 	magnet_timer = 0.0
@@ -144,6 +150,8 @@ func _physics_process(dt):
 		return
 
 	# Update powerup timers
+	invuln_timer = max(invuln_timer - dt, 0.0)
+	hit_flash = max(hit_flash - dt, 0.0)
 	if speed_boost_timer > 0:
 		speed_boost_timer -= dt
 	if magnet_timer > 0:
@@ -192,6 +200,9 @@ func _physics_process(dt):
 	is_jumping = not is_on_floor()
 	velocity = move_and_slide(velocity, Vector3.UP)
 	update_animation(dt)
+	if hit_flash > 0.0:
+		var on = int(floor(hit_flash * 12.0)) % 2 == 0
+		set_body_visible(on)
 
 func pull_coins(dt):
 	var coins = get_tree().get_nodes_in_group("coins")
@@ -227,15 +238,27 @@ func update_animation(dt):
 		left_leg.rotation_degrees.x = lerp(left_leg.rotation_degrees.x, 0.0, 8.0*dt)
 		right_leg.rotation_degrees.x = lerp(right_leg.rotation_degrees.x, 0.0, 8.0*dt)
 
-func die():
-	if dead:
+func take_hit(from : Vector3):
+	if dead or invuln_timer > 0.0:
 		return
 	if has_shield:
 		has_shield = false
+		AudioManager.play("powerup")
+		invuln_timer = 1.0
+		hit_flash = 1.0
+		return
+	hits_taken += 1
+	invuln_timer = 1.0
+	hit_flash = 1.0
+	velocity = from * -8.0 + Vector3(0, 6.0, 0)
+	if hits_taken >= 3:
+		die()
+
+func die():
+	if dead:
 		return
 	dead = true
 	AudioManager.play("death")
-	velocity = Vector3(0, 10, 0)
 	set_body_visible(false)
 	yield(get_tree().create_timer(0.6), "timeout")
 	if dead:

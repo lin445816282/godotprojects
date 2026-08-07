@@ -5,6 +5,7 @@ export var patrol_speed = 2.0
 export var chase_speed = 4.0
 export var wait_time = 0.8
 export var detect_range = 4.0
+export var attack_cooldown = 1.0
 var state = State.PATROL
 var wps = []
 var idx = 0
@@ -13,6 +14,7 @@ var wtimer = 0.0
 var origin = Vector3.ZERO
 var pulse = 0.0
 var player = null
+var attack_timer = 0.0
 
 func _ready():
 	connect("body_entered", self, "_hit")
@@ -36,6 +38,7 @@ func _process(dt):
 	pulse += dt
 	var sc = 1.0 + sin(pulse * 4.0) * 0.08
 	$Mesh.scale = Vector3(sc, 1.0, sc)
+	attack_timer = max(attack_timer - dt, 0.0)
 	if GameManager.state != GameManager.State.PLAYING:
 		return
 
@@ -47,8 +50,9 @@ func _process(dt):
 		if dist_to_player > detect_range * 1.5:
 			state = State.RETURN
 			$Mesh.material_override.albedo_color = Color(1, 0.5, 0.1, 1)
-		elif dist_to_player <= 0.8:
+		elif dist_to_player <= 0.8 and attack_timer <= 0.0:
 			_hit(player)
+			attack_timer = attack_cooldown
 			return
 	elif state == State.PATROL:
 		if player and dist_to_player < detect_range:
@@ -70,6 +74,11 @@ func _process(dt):
 			do_chase(dt)
 		State.RETURN:
 			do_return(dt)
+
+func attack_dir() -> Vector3:
+	if player:
+		return (global_transform.origin - player.global_transform.origin).normalized()
+	return Vector3.ZERO
 
 func find_player():
 	var players = get_tree().get_nodes_in_group("player")
@@ -143,5 +152,5 @@ func move_in_dir(dir, spd, dt):
 	rotation.y = atan2(dir.x, dir.z)
 
 func _hit(body):
-	if body.is_in_group("player") and body.has_method("die"):
-		body.die()
+	if body.is_in_group("player") and body.has_method("take_hit"):
+		body.take_hit(attack_dir())
