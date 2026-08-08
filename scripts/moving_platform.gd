@@ -10,9 +10,6 @@ var attached = null
 
 func _ready():
 	base = global_transform.origin
-
-func _ready():
-	base = global_transform.origin
 	var a = get_node_or_null("PlatArea")
 	if a:
 		a.connect("body_entered", self, "_on_Area_body_entered")
@@ -28,7 +25,7 @@ func _physics_process(dt):
 	# 带动附着的玩家/物体
 	if attached and is_instance_valid(attached):
 		attached.global_transform.origin += motion
-	move_and_slide(motion, Vector3.UP)
+	var _vel = move_and_slide(motion, Vector3.UP)
 
 func _on_Area_body_entered(body):
 	if body.is_in_group("player"):
