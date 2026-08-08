@@ -12,13 +12,13 @@ static func apply_gradient_sky(env: Environment, top_color = Color(0.2, 0.4, 0.9
 		var horizon = 0.45
 		var c: Color
 		if t < horizon:
-			c = top_color.linear_interpolate(horizon_color, t / horizon)
+			c = top_color.lerp(horizon_color, t / horizon)
 		else:
-			c = horizon_color.linear_interpolate(bottom_color, (t - horizon) / (1.0 - horizon))
+			c = horizon_color.lerp(bottom_color, (t - horizon) / (1.0 - horizon))
 		for x in range(w):
 			img.set_pixel(x, y, c)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img)
 	sky.panorama = tex
-	env.background_sky = sky
+	env.sky = sky
 	env.background_mode = Environment.BG_SKY

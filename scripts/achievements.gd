@@ -15,11 +15,11 @@ var earned = {}
 
 func _ready():
 	if SettingsManager.has("achievements"):
-		earned = SettingsManager.get("achievements", {})
+		earned = SettingsManager.get_setting("achievements", {})
 
 func unlock(name):
 	if earned.has(name):
 		return
 	earned[name] = true
-	SettingsManager.set("achievements", earned)
+	SettingsManager.set_setting("achievements", earned)
 	emit_signal("unlocked", name)

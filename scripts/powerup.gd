@@ -7,7 +7,7 @@ var float_time = 0.0
 var base_y = 0.0
 
 func _ready():
-	connect("body_entered", self, "_pick")
+	body_entered.connect(_pick)
 	GameManager.game_started.connect(_on_game_started)
 	base_y = global_position.y
 	float_time = randf() * TAU

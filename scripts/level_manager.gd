@@ -11,10 +11,9 @@ func _ready():
 	load_save()
 
 func load_save():
-	var f = FileAccess.open(
-	if f.file_exists(SAVE_PATH):
-		f.open(SAVE_PATH, FileAccess.READ)
-		var data = parse_json(f.get_as_text())
+	if FileAccess.file_exists(SAVE_PATH):
+		var f = FileAccess.open(SAVE_PATH, FileAccess.READ)
+		var data = JSON.parse_string(f.get_as_text())
 		f.close()
 		if data is Dictionary:
 			if data.has("unlocked"):
@@ -23,9 +22,8 @@ func load_save():
 				best_scores = data["best"]
 
 func save():
-	var f = FileAccess.open(
-	f.open(SAVE_PATH, FileAccess.WRITE)
-	f.store_string(to_json({
+	var f = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	f.store_string(JSON.stringify({
 		"unlocked": unlocked,
 		"best": best_scores
 	}))

@@ -22,11 +22,11 @@ func burst_particles():
 	cp.scale_amount = 0.08
 	cp.color = Color(1, 0.85, 0.1, 1)
 	add_child(cp)
-	await(get_tree().create_timer(0.7), "timeout")
+	await get_tree().create_timer(0.7).timeout
 	cp.queue_free()
 
 func _ready():
-	connect("body_entered", self, "_pick")
+	body_entered.connect(_pick)
 	GameManager.game_started.connect(_on_game_started)
 	add_to_group("coins")
 	base_y = global_position.y

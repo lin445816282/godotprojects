@@ -31,5 +31,5 @@ func _spawn_particles():
 	cp.scale_amount = 0.1
 	cp.color = Color(0.2, 0.9, 1, 1)
 	add_child(cp)
-	await(get_tree().create_timer(0.8), "timeout")
+	await get_tree().create_timer(0.8).timeout
 	cp.queue_free()

@@ -71,10 +71,10 @@ func shoot_pattern(count, cd):
 		return
 	var base_dir = (player.global_position - global_position).normalized()
 	for i in range(count):
-		var ang = deg2rad((i - (count - 1) / 2.0) * 15.0)
+		var ang = deg_to_rad((i - (count - 1) / 2.0) * 15.0)
 		var d = base_dir.rotated(Vector3.UP, ang)
 		var b = Area.new()
-		b.translation = global_position + Vector3(0, 1.5, 0)
+		b.position = global_position + Vector3(0, 1.5, 0)
 		# Bullet mesh
 		var mesh = MeshInstance3D.new()
 		var sm = SphereMesh.new()
@@ -94,7 +94,7 @@ func shoot_pattern(count, cd):
 		cs.radius = 0.3
 		col.shape = cs
 		b.add_child(col)
-		b.connect("body_entered", self, "_bullet_hit", [b])
+		b.body_entered.connect(_bullet_hit.bind(b))
 		b.set_meta("dir", d)
 		b.set_meta("speed", 6.0)
 		b.set_meta("life", 3.0)
@@ -128,7 +128,7 @@ func take_damage(amount):
 			if c.is_in_group("boss_projectiles"):
 				c.queue_free()
 		GameManager.add_score(10)
-		await(get_tree().create_timer(0.5), "timeout")
+		await get_tree().create_timer(0.5).timeout
 		GameManager.add_score(10)
 		_on_level_complete_boss()
 

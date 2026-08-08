@@ -6,7 +6,7 @@ var base_y = 0.0
 var ftime = 0.0
 
 func _ready():
-	connect("body_entered", self, "_pick")
+	body_entered.connect(_pick)
 	base_y = global_position.y
 	ftime = randf() * TAU
 

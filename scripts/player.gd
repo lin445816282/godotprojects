@@ -3,7 +3,7 @@ extends CharacterBody3D
 @export var speed = 6.0
 @export var jump_speed = 8.0
 @export var gravity = 20.0
-var velocity = Vector3.ZERO
+
 var dead = false
 var left_arm: MeshInstance3D = null
 var right_arm: MeshInstance3D = null
@@ -41,7 +41,7 @@ func build_body():
 	tm.size = Vector3(0.9, 0.8, 0.5)
 	torso.mesh = tm
 	torso.material_override = body_mat
-	torso.translation = Vector3(0, 0.5, 0)
+	torso.position = Vector3(0, 0.5, 0)
 	add_child(torso)
 	var head_mat = StandardMaterial3D.new()
 	head_mat.albedo_color = Color(0.25, 0.6, 1.0, 1)
@@ -51,7 +51,7 @@ func build_body():
 	hm.height = 0.6
 	head.mesh = hm
 	head.material_override = head_mat
-	head.translation = Vector3(0, 1.2, 0)
+	head.position = Vector3(0, 1.2, 0)
 	add_child(head)
 	var eye_mat = StandardMaterial3D.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
@@ -62,7 +62,7 @@ func build_body():
 		var eye = MeshInstance3D.new()
 		eye.mesh = em
 		eye.material_override = eye_mat
-		eye.translation = Vector3(ox, 1.28, -0.3)
+		eye.position = Vector3(ox, 1.28, -0.3)
 		add_child(eye)
 	var arm_mat = StandardMaterial3D.new()
 	arm_mat.albedo_color = Color(0.12, 0.4, 0.85, 1)
@@ -71,12 +71,12 @@ func build_body():
 	left_arm = MeshInstance3D.new()
 	left_arm.mesh = am
 	left_arm.material_override = arm_mat
-	left_arm.translation = Vector3(-0.6, 0.3, 0)
+	left_arm.position = Vector3(-0.6, 0.3, 0)
 	add_child(left_arm)
 	right_arm = MeshInstance3D.new()
 	right_arm.mesh = am
 	right_arm.material_override = arm_mat
-	right_arm.translation = Vector3(0.6, 0.3, 0)
+	right_arm.position = Vector3(0.6, 0.3, 0)
 	add_child(right_arm)
 	var leg_mat = StandardMaterial3D.new()
 	leg_mat.albedo_color = Color(0.08, 0.25, 0.6, 1)
@@ -85,17 +85,17 @@ func build_body():
 	left_leg = MeshInstance3D.new()
 	left_leg.mesh = lm
 	left_leg.material_override = leg_mat
-	left_leg.translation = Vector3(-0.2, -0.5, 0)
+	left_leg.position = Vector3(-0.2, -0.5, 0)
 	add_child(left_leg)
 	right_leg = MeshInstance3D.new()
 	right_leg.mesh = lm
 	right_leg.material_override = leg_mat
-	right_leg.translation = Vector3(0.2, -0.5, 0)
+	right_leg.position = Vector3(0.2, -0.5, 0)
 	add_child(right_leg)
 
 func make_magnet_ring():
 	magnet_ring = MeshInstance3D.new()
-	var ring = CylinderMesh3D.new()
+	var ring = CylinderMesh.new()
 	ring.top_radius = 3.5
 	ring.bottom_radius = 3.5
 	ring.height = 0.05
@@ -104,7 +104,7 @@ func make_magnet_ring():
 	mat.albedo_color = Color(0.8, 0.3, 0.8, 0.3)
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	magnet_ring.material_override = mat
-	magnet_ring.translation = Vector3(0, 0.1, 0)
+	magnet_ring.position = Vector3(0, 0.1, 0)
 	magnet_ring.visible = false
 	add_child(magnet_ring)
 
@@ -176,11 +176,11 @@ func _physics_process(dt):
 		velocity.z = lerp(velocity.z, 0.0, 0.1)
 		move_and_slide()
 		return
-	if (Input.is_action_just_pressed("jump") or Input.is_joy_button_just_pressed(0, 0)) and is_on_floor():
+	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and is_on_floor():
 		velocity.y = jump_speed
 		jumps_left = 1
 		AudioManager.play("jump")
-	elif (Input.is_action_just_pressed("jump") or Input.is_joy_button_just_pressed(0, 0)) and jumps_left > 0:
+	elif (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and jumps_left > 0:
 		jumps_left -= 1
 		velocity.y = jump_speed * 0.9
 		AudioManager.play("jump")
@@ -286,7 +286,7 @@ func die():
 	dead = true
 	AudioManager.play("death")
 	set_body_visible(false)
-	await(get_tree().create_timer(0.6), "timeout")
+	await get_tree().create_timer(0.6).timeout
 	if dead:
 		GameManager.player_died()
 
@@ -307,9 +307,9 @@ func update_dust(dt):
 			cp.initial_velocity = 1.5
 			cp.scale_amount = 0.05
 			cp.color = Color(0.75, 0.7, 0.6, 0.8)
-			cp.translation = Vector3(0, 0.05, 0)
+			cp.position = Vector3(0, 0.05, 0)
 			add_child(cp)
-			await(get_tree().create_timer(0.5), "timeout")
+			await get_tree().create_timer(0.5).timeout
 			cp.queue_free()
 	else:
 		dust_timer = 0.0

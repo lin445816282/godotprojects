@@ -18,7 +18,7 @@ func _ready():
 		mat
 		mat.emission_color = Color(0.2, 0.8, 0.2, 0.3)
 		sphere.material_override = mat
-		sphere.translation = Vector3(0, 0.8, 0)
+		sphere.position = Vector3(0, 0.8, 0)
 		player.add_child(sphere)
 	sphere.visible = false
 

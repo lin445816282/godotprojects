@@ -19,7 +19,7 @@ var player = null
 var attack_timer = 0.0
 
 func _ready():
-	connect("body_entered", self, "_hit")
+	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
 	_setup_glow()
 
@@ -31,7 +31,7 @@ func _setup_glow():
 		m.emission_energy = 2.0
 		$Mesh.material_override = m
 	for c in get_children():
-		if c is Position3D and c.name.begins_with("WP"):
+		if c is Marker3D and c.name.begins_with("WP"):
 			wps.append(c.global_position)
 	origin = global_position
 

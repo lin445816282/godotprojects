@@ -9,7 +9,7 @@ var player = null
 func _ready():
 	# 从本地设置读取灵敏度
 	if SettingsManager.has("sensitivity"):
-		sensitivity = SettingsManager.get("sensitivity")
+		sensitivity = SettingsManager.get_setting("sensitivity")
 	set_process_input(true)
 	find_player()
 	# Default position behind spawn point so camera isn't stuck underground
@@ -34,8 +34,8 @@ func _process(_dt):
 		# Still no player, stay at default view
 		return
 	var tp = player.global_position + Vector3(0, 1.5, 0)
-	var r = deg2rad(yaw)
-	var p = deg2rad(pitch)
+	var r = deg_to_rad(yaw)
+	var p = deg_to_rad(pitch)
 	global_position = tp + Vector3(
 		distance * sin(r) * cos(p),
 		-distance * sin(p),

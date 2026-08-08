@@ -23,15 +23,15 @@ func _show_next():
 	panel.anchor_left = 0.5
 	panel.anchor_right = 0.5
 	panel.anchor_top = 0.1
-	panel.margin_left = -150
-	panel.margin_right = 150
-	panel.margin_top = 0
-	panel.margin_bottom = 60
+	panel.offset_left = -150
+	panel.offset_right = 150
+	panel.offset_top = 0
+	panel.offset_bottom = 60
 	panel.self_modulate = Color(0, 0, 0, 0.85)
 	add_child(panel)
 	var label = Label.new()
 	label.text = "Achievement Unlocked!\n" + desc
-	label.align = Label.ALIGN_CENTER
+	label.align = HORIZONTAL_ALIGNMENT_CENTER
 	label.valign = Label.VALIGN_CENTER
 	label.anchor_right = 1.0
 	label.anchor_bottom = 1.0

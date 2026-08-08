@@ -5,6 +5,8 @@ func _ready():
 	var img = Image.new()
 	var n = 16
 	img.create(n, n, false, Image.FORMAT_RGB8)
+	if img.get_width() == 0:
+		return
 	for y in range(n):
 		for x in range(n):
 			var c = Color(0.35, 0.6, 0.35) if (x + y) % 2 == 0 else Color(0.2, 0.4, 0.2)

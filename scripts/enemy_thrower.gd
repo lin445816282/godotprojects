@@ -31,7 +31,7 @@ func find_player():
 func fire():
 	var dir = (player.global_position - global_position).normalized()
 	var b = Area.new()
-	b.translation = global_position + Vector3(0, 0.8, 0)
+	b.position = global_position + Vector3(0, 0.8, 0)
 	var mesh = MeshInstance3D.new()
 	var sm = SphereMesh.new()
 	sm.radius = 0.2
@@ -49,7 +49,7 @@ func fire():
 	cs.radius = 0.25
 	col.shape = cs
 	b.add_child(col)
-	b.connect("body_entered", self, "_bullet_hit", [b])
+	b.body_entered.connect(_bullet_hit.bind(b))
 	b.set_meta("vel", dir * bullet_speed)
 	b.set_meta("life", 4.0)
 	b.add_to_group("thrower_bullets")
