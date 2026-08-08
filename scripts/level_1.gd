@@ -1,10 +1,11 @@
 extends Spatial
 
-# 关卡4：冰原 — 低摩擦移动平台、大量旋转障碍、磁铁道具密集
+# 关卡1：草地 — 教学关，基础平台跳跃和收集
 func _ready():
-	GameManager.current_level = 3
-	GameManager.target = 18
-	GameManager.duration = 55.0
+	GameManager.current_level = 0
+	GameManager.target = 9
+	GameManager.duration = 60.0
+	# Apply skybox
 	var we = get_node_or_null("WorldEnv")
 	if we and we.environment:
 		var env = we.environment
@@ -16,7 +17,12 @@ func _ready():
 		img.create(w, h, false, Image.FORMAT_RGB8)
 		for y in range(h):
 			var t = float(y) / h
-			var c = Color(0.55, 0.75, 0.95).linear_interpolate(Color(0.8, 0.9, 1.0), t)
+			var horizon = 0.45
+			var c: Color
+			if t < horizon:
+				c = Color(0.2, 0.4, 0.9).linear_interpolate(Color(0.6, 0.8, 1.0), t / horizon)
+			else:
+				c = Color(0.6, 0.8, 1.0).linear_interpolate(Color(0.3, 0.5, 0.4), (t - horizon) / (1.0 - horizon))
 			for x in range(w):
 				img.set_pixel(x, y, c)
 		var tex = ImageTexture.new()

@@ -23,6 +23,28 @@ func _unhandled_input(event):
 		toggle_pause()
 
 func _process(dt):
+	# Boss projectile movement
+	if state == State.PLAYING:
+		for b in get_tree().get_nodes_in_group("boss_projectiles"):
+			var d = b.get_meta("dir", Vector3.FORWARD)
+			var spd = b.get_meta("speed", 6.0)
+			var life = b.get_meta("life", 3.0)
+			life -= dt
+			b.set_meta("life", life)
+			if life <= 0:
+				b.queue_free()
+				continue
+			b.global_transform.origin += d * spd * dt
+		# Thrower bullets
+		for b in get_tree().get_nodes_in_group("thrower_bullets"):
+			var vel = b.get_meta("vel", Vector3.FORWARD * 6.0)
+			var life = b.get_meta("life", 4.0)
+			life -= dt
+			b.set_meta("life", life)
+			if life <= 0:
+				b.queue_free()
+				continue
+			b.global_transform.origin += vel * dt
 	if state == State.COUNTDOWN:
 		countdown_left -= dt
 		emit_signal("countdown_tick", int(ceil(countdown_left)))
