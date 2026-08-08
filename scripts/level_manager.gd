@@ -2,7 +2,7 @@ extends Node
 
 # 关卡管理：切换关卡、解锁、最高分持久化
 const SAVE_PATH = "user://save.json"
-const LEVEL_COUNT = 3
+const LEVEL_COUNT = 5
 
 var unlocked = 1  # 已解锁关卡数
 var best_scores = {}  # level_idx -> best score

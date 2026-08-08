@@ -19,10 +19,6 @@ func _ready():
 		count.visible = false
 	visible = false
 
-func _process(dt):
-	if visible:
-		pulse += dt
-		_sync_hits()
 
 func _sync_hits():
 	var players = get_tree().get_nodes_in_group("player")
