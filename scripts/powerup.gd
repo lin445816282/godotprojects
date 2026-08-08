@@ -1,17 +1,17 @@
-extends Area
+extends Area3D
 
 enum Type { SHIELD, SPEED, MAGNET }
-export(Type) var power_type = Type.MAGNET
+@export var power_type: Type = Type.MAGNET
 var taken = false
 var float_time = 0.0
 var base_y = 0.0
 
 func _ready():
 	connect("body_entered", self, "_pick")
-	GameManager.connect("game_started", self, "_on_game_started")
-	base_y = global_transform.origin.y
+	GameManager.game_started.connect(_on_game_started)
+	base_y = global_position.y
 	float_time = randf() * TAU
-	var mat = SpatialMaterial.new()
+	var mat = StandardMaterial3D.new()
 	$Mesh.material_override = mat
 	var c = Color(0.8, 0.3, 0.8, 1)
 	if power_type == Type.SHIELD:
@@ -19,7 +19,7 @@ func _ready():
 	elif power_type == Type.SPEED:
 		c = Color(0.8, 0.8, 0.1, 1)
 	$Mesh.material_override.albedo_color = c
-	$Mesh.material_override.emission_enabled = true
+	$Mesh.material_override
 	$Mesh.material_override.emission_color = c
 	$Mesh.material_override.emission_energy = 1.3
 
@@ -28,9 +28,9 @@ func _process(dt):
 		$Mesh.visible = false
 		return
 	float_time += dt
-	var pos = global_transform.origin
+	var pos = global_position
 	pos.y = base_y + sin(float_time * 2.0) * 0.3
-	global_transform.origin = pos
+	global_position = pos
 	rotate_y(dt * 2.0)
 
 func _pick(body):
@@ -48,4 +48,4 @@ func _on_game_started():
 	taken = false
 	$Mesh.visible = true
 	float_time = randf() * TAU
-	global_transform.origin.y = base_y
+	global_position.y = base_y

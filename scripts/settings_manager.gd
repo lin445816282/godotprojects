@@ -9,17 +9,17 @@ func _ready():
 	apply()
 
 func load_settings():
-	var f = File.new()
+	var f = FileAccess.open(
 	if f.file_exists(PATH):
-		f.open(PATH, File.READ)
+		f.open(PATH, FileAccess.READ)
 		var d = parse_json(f.get_as_text())
 		f.close()
 		if d is Dictionary:
 			data = d
 
 func save():
-	var f = File.new()
-	f.open(PATH, File.WRITE)
+	var f = FileAccess.open(
+	f.open(PATH, FileAccess.WRITE)
 	f.store_string(to_json(data))
 	f.close()
 
@@ -74,6 +74,6 @@ func apply():
 			sc = int(map[action])
 		InputMap.action_erase_events(action)
 		var ev = InputEventKey.new()
-		ev.scancode = sc
+		ev.keycode = sc
 		InputMap.action_add_event(action, ev)
 

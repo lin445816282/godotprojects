@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 # 关卡5：Boss关 — 单一Boss敌人、窄小场地、生存+收集
 func _ready():

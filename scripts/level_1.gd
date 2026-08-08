@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 # 关卡1：草地 — 教学关，基础平台跳跃和收集
 func _ready():

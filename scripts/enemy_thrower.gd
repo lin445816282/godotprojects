@@ -1,13 +1,13 @@
-extends Spatial
+extends Node3D
 
 # 投掷型敌人：固定在某个位置，周期性向玩家发射投射物
-export var fire_rate = 2.0
-export var bullet_speed = 6.0
+@export var fire_rate = 2.0
+@export var bullet_speed = 6.0
 var timer = 0.0
 var player = null
 
 func _ready():
-	GameManager.connect("game_started", self, "_on_game_started")
+	GameManager.game_started.connect(_on_game_started)
 
 func _on_game_started():
 	timer = fire_rate * randf()
@@ -29,22 +29,22 @@ func find_player():
 		player = players[0]
 
 func fire():
-	var dir = (player.global_transform.origin - global_transform.origin).normalized()
+	var dir = (player.global_position - global_position).normalized()
 	var b = Area.new()
-	b.translation = global_transform.origin + Vector3(0, 0.8, 0)
-	var mesh = MeshInstance.new()
+	b.translation = global_position + Vector3(0, 0.8, 0)
+	var mesh = MeshInstance3D.new()
 	var sm = SphereMesh.new()
 	sm.radius = 0.2
 	sm.height = 0.4
 	mesh.mesh = sm
-	var mat = SpatialMaterial.new()
+	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color(1, 0.3, 0.1, 1)
-	mat.emission_enabled = true
+	mat
 	mat.emission_color = Color(1, 0.2, 0.0, 1)
 	mat.emission_energy = 1.5
 	mesh.material_override = mat
 	b.add_child(mesh)
-	var col = CollisionShape.new()
+	var col = CollisionShape3D.new()
 	var cs = SphereShape.new()
 	cs.radius = 0.25
 	col.shape = cs

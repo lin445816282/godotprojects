@@ -2,7 +2,7 @@ extends Node
 
 # 金币拾取特效：一圈粒子向上扩散
 static func spawn(at: Vector3, parent: Node, color = Color(1, 0.85, 0.1)):
-	var cp = CPUParticles.new()
+	var cp = CPUParticles3D.new()
 	cp.one_shot = true
 	cp.emitting = true
 	cp.amount = 15

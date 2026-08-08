@@ -1,7 +1,7 @@
-extends Camera
+extends Camera3D
 
-export var distance = 8.0
-export var sensitivity = 0.3
+@export var distance = 8.0
+@export var sensitivity = 0.3
 var yaw = 0.0
 var pitch = -20.0
 var player = null
@@ -13,7 +13,7 @@ func _ready():
 	set_process_input(true)
 	find_player()
 	# Default position behind spawn point so camera isn't stuck underground
-	global_transform.origin = Vector3(0, 7.0, 7.5)
+	global_position = Vector3(0, 7.0, 7.5)
 	look_at(Vector3(0, 1.5, 0), Vector3.UP)
 
 func find_player():
@@ -22,7 +22,7 @@ func find_player():
 		return
 
 func _input(event):
-	if player and event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_RIGHT):
+	if player and event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		yaw -= event.relative.x * sensitivity
 		pitch -= event.relative.y * sensitivity
 		pitch = clamp(pitch, -70.0, -5.0)
@@ -33,10 +33,10 @@ func _process(_dt):
 	if not player:
 		# Still no player, stay at default view
 		return
-	var tp = player.global_transform.origin + Vector3(0, 1.5, 0)
+	var tp = player.global_position + Vector3(0, 1.5, 0)
 	var r = deg2rad(yaw)
 	var p = deg2rad(pitch)
-	global_transform.origin = tp + Vector3(
+	global_position = tp + Vector3(
 		distance * sin(r) * cos(p),
 		-distance * sin(p),
 		distance * cos(r) * cos(p)

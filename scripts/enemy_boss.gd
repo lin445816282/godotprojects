@@ -1,7 +1,7 @@
-extends Area
+extends Area3D
 
 # Boss敌人：大块头、3阶段、弹幕攻击
-export var max_health = 30
+@export var max_health = 30
 var health = 30
 var phase = 0           # 1,2,3
 var player = null
@@ -9,16 +9,15 @@ var atk_cd = 0.0
 var origin = Vector3.ZERO
 var float_t = 0.0
 
-onready var proj_scene = load("res://scripts/boss_projectile.tscn") if ResourceLoader.exists("res://scripts/boss_projectile.tscn") else null
 
 func _ready():
 	connect("body_entered", self, "_hit")
-	GameManager.connect("game_started", self, "_on_game_started")
-	origin = global_transform.origin
+	GameManager.game_started.connect(_on_game_started)
+	origin = global_position
 	if $Mesh.material_override:
 		$Mesh.material_override = $Mesh.material_override.duplicate()
 		$Mesh.material_override.albedo_color = Color(1, 0.1, 0.1, 1)
-		$Mesh.material_override.emission_enabled = true
+		$Mesh.material_override
 		$Mesh.material_override.emission_color = Color(1, 0.05, 0.05, 1)
 		$Mesh.material_override.emission_energy = 3.0
 	$Mesh.scale = Vector3(2.0, 2.5, 2.0)
@@ -27,7 +26,7 @@ func _on_game_started():
 	health = max_health
 	phase = 1
 	atk_cd = 2.0
-	global_transform.origin = origin
+	global_position = origin
 	if $Mesh.material_override:
 		$Mesh.material_override.albedo_color = Color(1, 0.1, 0.1, 1)
 	$Mesh.visible = true
@@ -38,15 +37,15 @@ func _process(dt):
 		return
 	find_player()
 	float_t += dt
-	var pos = global_transform.origin
+	var pos = global_position
 	pos.y = origin.y + sin(float_t * 1.5) * 1.0
-	global_transform.origin = pos
+	global_position = pos
 	atk_cd -= dt
 
 	if not player:
 		return
 
-	var dir = player.global_transform.origin - global_transform.origin
+	var dir = player.global_position - global_position
 	dir.y = 0
 	rotation.y = atan2(dir.x, dir.z)
 
@@ -70,27 +69,27 @@ func shoot_pattern(count, cd):
 	atk_cd = cd
 	if not player:
 		return
-	var base_dir = (player.global_transform.origin - global_transform.origin).normalized()
+	var base_dir = (player.global_position - global_position).normalized()
 	for i in range(count):
 		var ang = deg2rad((i - (count - 1) / 2.0) * 15.0)
 		var d = base_dir.rotated(Vector3.UP, ang)
 		var b = Area.new()
-		b.translation = global_transform.origin + Vector3(0, 1.5, 0)
+		b.translation = global_position + Vector3(0, 1.5, 0)
 		# Bullet mesh
-		var mesh = MeshInstance.new()
+		var mesh = MeshInstance3D.new()
 		var sm = SphereMesh.new()
 		sm.radius = 0.25
 		sm.height = 0.5
 		mesh.mesh = sm
-		var mat = SpatialMaterial.new()
+		var mat = StandardMaterial3D.new()
 		mat.albedo_color = Color(1, 0.2, 0.2, 1)
-		mat.emission_enabled = true
+		mat
 		mat.emission_color = Color(1, 0.1, 0.1, 1)
 		mat.emission_energy = 2.0
 		mesh.material_override = mat
 		b.add_child(mesh)
 		# Collision
-		var col = CollisionShape.new()
+		var col = CollisionShape3D.new()
 		var cs = SphereShape.new()
 		cs.radius = 0.3
 		col.shape = cs
@@ -115,7 +114,7 @@ func find_player():
 
 func _hit(body):
 	if body.is_in_group("player") and body.has_method("take_hit"):
-		body.take_hit((body.global_transform.origin - global_transform.origin).normalized())
+		body.take_hit((body.global_position - global_position).normalized())
 
 func take_damage(amount):
 	if GameManager.state != GameManager.State.PLAYING or health <= 0:
@@ -129,7 +128,7 @@ func take_damage(amount):
 			if c.is_in_group("boss_projectiles"):
 				c.queue_free()
 		GameManager.add_score(10)
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		GameManager.add_score(10)
 		_on_level_complete_boss()
 

@@ -1,20 +1,49 @@
 extends Control
 
-onready var s = $Score
-onready var t = $Timer
-onready var count = $Countdown
-onready var lvl = $LevelLabel
+@onready var s = $Score
+@onready var t = $Timer
+@onready var count = $Countdown
+@onready var lvl = $LevelLabel
 var pulse = 0.0
 var hits = 3
 var flash_timer = 0.0
 
 func _ready():
-	GameManager.connect("score_changed", self, "_sc")
-	GameManager.connect("timer_changed", self, "_tm")
-	GameManager.connect("state_changed", self, "_st")
-	GameManager.connect("game_started", self, "_gs")
-	GameManager.connect("countdown_tick", self, "_ct")
-	GameManager.connect("countdown_done", self, "_gd")
+	# Create HUD UI if not present
+	if not has_node("Score"):
+		var score = Label.new()
+		score.name = "Score"
+		score.position = Vector2(20, 20)
+		add_child(score)
+	if not has_node("Timer"):
+		var timer = Label.new()
+		timer.name = "Timer"
+		timer.position = Vector2(20, 50)
+		add_child(timer)
+	if not has_node("LevelLabel"):
+		var lvl = Label.new()
+		lvl.name = "LevelLabel"
+		lvl.position = Vector2(20, 80)
+		add_child(lvl)
+	if not has_node("Countdown"):
+		var cd = Label.new()
+		cd.name = "Countdown"
+		cd.anchor_left = 0.5
+		cd.anchor_right = 0.5
+		cd.position = Vector2(0, 100)
+		cd.align = Label.ALIGN_CENTER
+		add_child(cd)
+	# Re-get node refs
+	s = $Score
+	t = $Timer
+	lvl = $LevelLabel
+	count = $Countdown
+	GameManager.score_changed.connect(_sc)
+	GameManager.timer_changed.connect(_tm)
+	GameManager.state_changed.connect(_st)
+	GameManager.game_started.connect(_gs)
+	GameManager.countdown_tick.connect(_ct)
+	GameManager.countdown_done.connect(_gd)
 	if count:
 		count.visible = false
 	visible = false
@@ -48,7 +77,7 @@ func spawn_feedback(delta):
 	lbl.rect_position = Vector2(-40, -20)
 	lbl.align = 1
 	add_child(lbl)
-	yield(get_tree().create_timer(0.1), "timeout")
+	await(get_tree().create_timer(0.1), "timeout")
 	if lbl:
 		var t = 0.0
 		while t < 0.7 and is_instance_valid(lbl):

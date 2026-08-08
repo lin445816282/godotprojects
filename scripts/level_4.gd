@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 # 关卡4：冰原 — 低摩擦移动平台、大量旋转障碍、磁铁道具密集
 func _ready():

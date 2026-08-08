@@ -1,4 +1,4 @@
-extends MeshInstance
+extends MeshInstance3D
 
 # 用棋盘格纹理替换纯色地面材质（运行时应用，无需素材）
 func _ready():
@@ -11,7 +11,7 @@ func _ready():
 			img.set_pixel(x, y, c)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img)
-	var mat = SpatialMaterial.new()
+	var mat = StandardMaterial3D.new()
 	mat.albedo_texture = tex
-	mat.flags_unshaded = false
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
 	material_override = mat

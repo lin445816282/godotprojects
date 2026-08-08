@@ -1,13 +1,13 @@
-extends Area
+extends Area3D
 
 # 旋转障碍物：围绕某个轴旋转，碰到玩家造成伤害
-export var spin_speed = 90.0
-export var damage = 1
+@export var spin_speed = 90.0
+@export var damage = 1
 var hit_cooldown = 0.0
 
 func _ready():
 	connect("body_entered", self, "_hit")
-	GameManager.connect("game_started", self, "_on_game_started")
+	GameManager.game_started.connect(_on_game_started)
 
 func _process(dt):
 	if GameManager.state != GameManager.State.PLAYING:

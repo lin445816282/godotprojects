@@ -10,6 +10,6 @@ static func checker(rows = 8, cols = 8, a = Color(0.35, 0.6, 0.35), b = Color(0.
 			img.set_pixel(x, y, c)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img)
-	var mat = SpatialMaterial.new()
+	var mat = StandardMaterial3D.new()
 	mat.albedo_texture = tex
 	return mat

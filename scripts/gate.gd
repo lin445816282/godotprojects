@@ -1,4 +1,4 @@
-extends StaticBody
+extends StaticBody3D
 
 # 门：初始上锁（有碰撞），钥匙解锁后消失
 var locked = true

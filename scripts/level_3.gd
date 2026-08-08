@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 # Level 3 — procedurally generated
 func _ready():

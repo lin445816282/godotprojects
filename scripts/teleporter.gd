@@ -1,7 +1,7 @@
-extends Area
+extends Area3D
 
 # 传送门：玩家进入后传送到目标点
-export(NodePath) var target = null
+@export var target: NodePath = null
 var dest = null
 
 func _ready():
@@ -13,12 +13,12 @@ func _teleport(body):
 	if not body.is_in_group("player"):
 		return
 	if dest:
-		body.global_transform.origin = dest.global_transform.origin + Vector3(0, 1, 0)
+		body.global_position = dest.global_position + Vector3(0, 1, 0)
 		AudioManager.play("powerup")
 		_spawn_particles()
 
 func _spawn_particles():
-	var cp = CPUParticles.new()
+	var cp = CPUParticles3D.new()
 	cp.one_shot = true
 	cp.emitting = true
 	cp.amount = 30
@@ -31,5 +31,5 @@ func _spawn_particles():
 	cp.scale_amount = 0.1
 	cp.color = Color(0.2, 0.9, 1, 1)
 	add_child(cp)
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	cp.queue_free()

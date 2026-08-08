@@ -5,7 +5,7 @@ var achievements_queue = []
 var showing = false
 
 func _ready():
-	Achievements.connect("unlocked", self, "_on_achievement")
+	Achievements.unlocked.connect(_on_achievement)
 
 func _on_achievement(name):
 	achievements_queue.append(name)
@@ -43,7 +43,7 @@ func _show_next():
 		t += get_process_delta_time()
 		if t > 2.5:
 			panel.modulate.a = (3.0 - t) / 0.5
-		yield(get_tree(), "idle_frame")
+		await(get_tree(), "idle_frame")
 	if is_instance_valid(panel):
 		panel.queue_free()
 	_show_next()

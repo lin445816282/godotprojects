@@ -9,9 +9,9 @@ signal paused(p)
 signal countdown_tick(t)
 signal countdown_done
 
-export var duration = 60.0
-export var target = 9
-export var countdown_time = 3.0
+@export var duration = 60.0
+@export var target = 9
+@export var countdown_time = 3.0
 var state = State.MENU
 var countdown_left = 0.0
 var current_level = 0
@@ -34,7 +34,7 @@ func _process(dt):
 			if life <= 0:
 				b.queue_free()
 				continue
-			b.global_transform.origin += d * spd * dt
+			b.global_position += d * spd * dt
 		# Thrower bullets
 		for b in get_tree().get_nodes_in_group("thrower_bullets"):
 			var vel = b.get_meta("vel", Vector3.FORWARD * 6.0)
@@ -44,7 +44,7 @@ func _process(dt):
 			if life <= 0:
 				b.queue_free()
 				continue
-			b.global_transform.origin += vel * dt
+			b.global_position += vel * dt
 	if state == State.COUNTDOWN:
 		countdown_left -= dt
 		emit_signal("countdown_tick", int(ceil(countdown_left)))
@@ -119,7 +119,7 @@ func load_level(idx):
 		_change(State.MENU)
 	else:
 		current_level = idx
-		get_tree().change_scene(LEVELS[idx])
+		get_tree().change_scene_to_file(LEVELS[idx])
 		_change(State.COUNTDOWN)
 
 func quit_game():

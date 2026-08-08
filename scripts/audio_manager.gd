@@ -21,7 +21,7 @@ func play_music(kind):
 	var kinddur = 12.0 if kind == "menu" else 8.0
 	var sr = 22050
 	var n = int(sr * kinddur)
-	var bytes = PoolByteArray()
+	var bytes = PackedByteArray()
 	bytes.resize(n * 2)
 	var scale = [0.0, 4.0, 5.0, 7.0, 9.0, 11.0, 12.0, 16.0]
 	var root = 55.0 if kind == "menu" else 65.0
@@ -78,7 +78,7 @@ func _gen(name):
 	elif name == "powerup":
 		dur = 0.4
 	var n = int(sr * dur)
-	var bytes = PoolByteArray()
+	var bytes = PackedByteArray()
 	bytes.resize(n * 2)
 	var t = 0.0
 	var dt = 1.0 / sr
