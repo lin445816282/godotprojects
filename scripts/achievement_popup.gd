@@ -32,7 +32,7 @@ func _show_next():
 	var label = Label.new()
 	label.text = "Achievement Unlocked!\n" + desc
 	label.align = HORIZONTAL_ALIGNMENT_CENTER
-	label.valign = Label.VALIGN_CENTER
+	label.valign = Label.VERTICAL_ALIGNMENT_CENTER
 	label.anchor_right = 1.0
 	label.anchor_bottom = 1.0
 	label.add_color_override("font_color", Color(1, 0.85, 0.1, 1))
