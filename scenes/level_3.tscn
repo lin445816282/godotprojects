@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource path="res://scripts/level_3.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -73,6 +73,10 @@ extents = Vector3( 9.15, 1.5, 0.15 )
 
 [sub_resource type="CubeMesh" id=26]
 size = Vector3( 2, 0.4, 2 )
+
+[sub_resource type="BoxShape" id=27]
+extents = Vector3( 1, 0.2, 1 )
+
 [node name="Level3" type="Node3D"]
 script = ExtResource( 1 )
 
@@ -151,12 +155,12 @@ material_override = SubResource( 23 )
 mesh = SubResource( 26 )
 
 [node name="Col" type="CollisionShape3D" parent="Plat"]
-shape = SubResource( 9 )
+shape = SubResource( 27 )
 
 [node name="PlatArea" type="Area3D" parent="Plat"]
 
 [node name="Col" type="CollisionShape3D" parent="Plat/PlatArea"]
-shape = SubResource( 9 )
+shape = SubResource( 27 )
 
 [node name="Coin1" type="Area3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.5, -5 )
