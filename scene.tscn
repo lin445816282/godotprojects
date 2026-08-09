@@ -644,9 +644,9 @@ text = ""
 [node name="LevelSelectBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.47
+anchor_top = 0.52
 anchor_right = 0.80
-anchor_bottom = 0.53
+anchor_bottom = 0.58
 margin_bottom = 0.0
 text = ""
 
