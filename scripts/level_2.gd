@@ -24,6 +24,12 @@ func _ready():
 		_create_ui()
 	# Start countdown AFTER UI is fully created
 	await get_tree().process_frame
+	# Difficulty: scale enemies for this level
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if e.has_method("set_difficulty"):
+			e.patrol_speed = 2.5
+			e.chase_speed = 4.5
+			e.detect_range = 4.5
 	GameManager.start_level_countdown()
 
 func _create_ui():

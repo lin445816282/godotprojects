@@ -62,10 +62,27 @@ func _process(dt):
 			$Mesh.material_override.albedo_color = Color(0.8, 0.8, 0.1, 1)
 
 	if atk_cd <= 0:
-		match phase:
-			1: shoot_pattern(1, 1.5)
-			2: shoot_pattern(3, 1.2)
-			3: shoot_pattern(5, 0.8)
+		# Mix charge + shoot in higher phases
+		if phase >= 2 and randi() % 3 == 0:
+			_charge_attack()
+		else:
+			match phase:
+				1: shoot_pattern(1, 1.5)
+				2: shoot_pattern(3, 1.2)
+				3: shoot_pattern(5, 0.8)
+
+
+func _charge_attack():
+	if not player:
+		return
+	atk_cd = 1.5
+	var dir = (player.global_position - global_position).normalized()
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", global_position + dir * 6.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await get_tree().create_timer(0.15).timeout
+	if player and global_position.distance_to(player.global_position) < 2.5:
+		if player.has_method("take_hit"):
+			player.take_hit(-dir)
 
 func shoot_pattern(count, cd):
 	atk_cd = cd

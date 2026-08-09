@@ -182,6 +182,24 @@ func _toggle_mute():
 		AudioManager.mute()
 		if mute_btn: mute_btn.text = "Unmute"
 
+
+func _calc_stars() -> String:
+	var score = GameManager.score
+	var target = GameManager.target
+	var ratio = float(score) / float(target)
+	var stars = 1
+	if ratio >= 2.0:
+		stars = 3
+	elif ratio >= 1.3:
+		stars = 2
+	var s = ""
+	for i in range(3):
+		if i < stars:
+			s += "*"
+		else:
+			s += "."
+	return s
+
 func _show_level_select():
 	var ls = get_node_or_null("../LevelSelect")
 	if ls and ls.has_method("_show"):
@@ -311,7 +329,9 @@ func _end(txt, inf, can_next):
 	if panel:
 		panel.modulate.a = 0.0
 	title.text = txt
-	info.text = inf
+	# Append star rating
+	var stars = _calc_stars()
+	info.text = inf + "\n" + stars
 	start.visible = false
 	restart.visible = true
 	quit_btn.visible = true
