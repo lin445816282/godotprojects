@@ -46,6 +46,8 @@ func _pick(body):
 	$Mesh.visible = false
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	taken = false
 	$Mesh.visible = true
 	float_time = randf() * TAU

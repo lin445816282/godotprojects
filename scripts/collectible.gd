@@ -97,6 +97,8 @@ func _pick(body):
 	$Col.set_deferred("disabled", true)
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	taken = false
 	ptimer = 0.0
 	scale = Vector3(1, 1, 1)

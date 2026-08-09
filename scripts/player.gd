@@ -327,4 +327,6 @@ func collect_coin_effect():
 	pass
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	reset()
