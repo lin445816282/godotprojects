@@ -21,6 +21,9 @@ var listening_action = ""
 
 func _ready():
 	GameManager.state_changed.connect(_st)
+	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
+	if ls_btn:
+		ls_btn.pressed.connect(_show_level_select)
 	_connect_signals()
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var b = get_node_or_null("Panel/" + a + "Btn")
@@ -129,6 +132,11 @@ func _go_next():
 	else:
 		GameManager.load_level(-1)
 
+func _show_level_select():
+	var ls = get_node_or_null("../LevelSelect")
+	if ls and ls.has_method("_show"):
+		ls._show()
+
 func _back_to_menu():
 	GameManager.load_level(-1)
 
@@ -229,6 +237,11 @@ func _show():
 	if lvl3:
 		lvl3.visible = LevelManager.unlocked > 2
 		lvl3.disabled = LevelManager.unlocked <= 2
+	# Show Level Select button (replaces individual level buttons functionality)
+	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
+	if ls_btn:
+		ls_btn.visible = true
+		ls_btn.text = "Level Select"
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.25)
 	if panel:
@@ -252,6 +265,9 @@ func _end(txt, inf, can_next):
 		lvl2.visible = false
 	if lvl3:
 		lvl3.visible = false
+	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
+	if ls_btn:
+		ls_btn.visible = false
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.2)
 	if panel:
