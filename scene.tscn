@@ -439,85 +439,85 @@ align = 1
 
 [node name="move_forwardBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.8
+anchor_top = 0.78
 anchor_right = 0.45
-anchor_bottom = 0.8
+anchor_bottom = 0.78
 margin_bottom = 20.0
 text = "Forward: W"
 
 [node name="move_backwardBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.83
+anchor_top = 0.82
 anchor_right = 0.45
-anchor_bottom = 0.83
+anchor_bottom = 0.82
 margin_bottom = 20.0
 text = "Back: W"
 
 [node name="move_leftBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.87
+anchor_top = 0.86
 anchor_right = 0.45
-anchor_bottom = 0.87
+anchor_bottom = 0.86
 margin_bottom = 20.0
 text = "Left: W"
 
 [node name="move_rightBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.9
+anchor_top = 0.90
 anchor_right = 0.45
-anchor_bottom = 0.9
+anchor_bottom = 0.90
 margin_bottom = 20.0
 text = "Right: W"
 
 [node name="jumpBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.93
+anchor_top = 0.94
 anchor_right = 0.45
-anchor_bottom = 0.93
+anchor_bottom = 0.94
 margin_bottom = 20.0
 text = "Jump: W"
 
 [node name="SfxSlider" type="HSlider" parent="UI/Menu/Panel"]
 anchor_left = 0.55
-anchor_top = 0.89
+anchor_top = 0.95
 anchor_right = 0.95
-anchor_bottom = 0.89
-margin_bottom = 20.0
+anchor_bottom = 0.95
+margin_bottom = 24.0
 min_value = -30.0
 max_value = 0.0
 
 [node name="MusicSlider" type="HSlider" parent="UI/Menu/Panel"]
 anchor_left = 0.55
-anchor_top = 0.93
+anchor_top = 0.95
 anchor_right = 0.95
-anchor_bottom = 0.93
-margin_bottom = 20.0
+anchor_bottom = 0.95
+margin_bottom = 24.0
 min_value = -40.0
 max_value = 0.0
 value = -12.0
 
 [node name="VolLabel" type="Label" parent="UI/Menu/Panel"]
 anchor_left = 0.55
-anchor_top = 0.85
+anchor_top = 0.95
 anchor_right = 0.95
-anchor_bottom = 0.85
+anchor_bottom = 0.95
 margin_bottom = 24.0
-text = "SFX / Music Volume"
+text = ""
 
 [node name="SensLabel" type="Label" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.85
+anchor_top = 0.95
 anchor_right = 0.9
-anchor_bottom = 0.85
+anchor_bottom = 0.95
 margin_bottom = 24.0
-text = "Mouse Sensitivity"
+text = ""
 
 [node name="SensSlider" type="HSlider" parent="UI/Menu/Panel"]
 anchor_left = 0.05
-anchor_top = 0.89
+anchor_top = 0.95
 anchor_right = 0.95
-anchor_bottom = 0.89
-margin_bottom = 20.0
+anchor_bottom = 0.95
+margin_bottom = 24.0
 min_value = 0.05
 max_value = 1.0
 step = 0.05
@@ -525,7 +525,7 @@ value = 0.3
 
 [node name="StartBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.25
-anchor_top = 0.55
+anchor_top = 0.42
 anchor_right = 0.75
 anchor_bottom = 0.55
 margin_bottom = 30.0
@@ -534,18 +534,18 @@ text = "Start Game"
 [node name="Level2Btn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.25
-anchor_top = 0.62
+anchor_top = 0.50
 anchor_right = 0.75
-anchor_bottom = 0.62
+anchor_bottom = 0.50
 margin_bottom = 30.0
 text = "Level 2 (Floating)"
 
 [node name="Level3Btn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.25
-anchor_top = 0.7
+anchor_top = 0.58
 anchor_right = 0.75
-anchor_bottom = 0.7
+anchor_bottom = 0.58
 margin_bottom = 30.0
 text = "Level 3 (Fortress)"
 
@@ -561,9 +561,9 @@ text = "Next Level"
 [node name="BackMenuBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.25
-anchor_top = 0.72
+anchor_top = 0.66
 anchor_right = 0.75
-anchor_bottom = 0.72
+anchor_bottom = 0.66
 margin_bottom = 30.0
 text = "Back to Menu"
 
@@ -577,8 +577,8 @@ text = "Restart"
 
 [node name="QuitBtn" type="Button" parent="UI/Menu/Panel"]
 anchor_left = 0.25
-anchor_top = 0.75
+anchor_top = 0.74
 anchor_right = 0.75
-anchor_bottom = 0.75
+anchor_bottom = 0.74
 margin_bottom = 30.0
 text = "Quit"
