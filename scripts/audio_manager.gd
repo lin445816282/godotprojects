@@ -5,6 +5,25 @@ var players = {}
 var music = null
 var music_playing = ""
 
+var _muted = false
+
+func is_muted():
+	return _muted
+
+func mute():
+	_muted = true
+	for p in players.values():
+		p.volume_db = -80.0
+	if music:
+		music.volume_db = -80.0
+
+func unmute():
+	_muted = false
+	for p in players.values():
+		p.volume_db = SettingsManager.get_volume("sfx", 0.0)
+	if music:
+		music.volume_db = SettingsManager.get_volume("music", -12.0)
+
 func _ready():
 	for key in ["jump", "coin", "coin2", "coin3", "death", "win", "powerup"]:
 		var p = AudioStreamPlayer.new()

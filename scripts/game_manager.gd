@@ -113,6 +113,27 @@ func toggle_pause():
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
 func load_level(idx):
+	# Show loading overlay
+	var root = get_tree().current_scene
+	if root:
+		var loading = ColorRect.new()
+		loading.name = "LoadingOverlay"
+		loading.color = Color(0, 0, 0, 0.85)
+		loading.set_anchors_preset(Control.PRESET_FULL_RECT)
+		
+		var text = Label.new()
+		text.text = "Loading..."
+		if idx >= 0 and idx < LEVELS.size():
+			var names = ["Grasslands", "Floating Isles", "Fortress", "Frozen Wastes", "Boss Arena"]
+			text.text = "Entering Level " + str(idx + 1) + "\n" + names[idx]
+		text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		text.set_anchors_preset(Control.PRESET_FULL_RECT)
+		text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
+		text.add_theme_font_size_override("font_size", 28)
+		loading.add_child(text)
+		root.add_child(loading)
+	
 	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
 		get_tree().reload_current_scene()

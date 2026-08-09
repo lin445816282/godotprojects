@@ -18,12 +18,15 @@ var listening_action = ""
 @onready var sens = $Panel/SensSlider
 @onready var sfx = $Panel/SfxSlider
 @onready var music = $Panel/MusicSlider
+@onready var mute_btn = $Panel/MuteBtn
 
 func _ready():
 	GameManager.state_changed.connect(_st)
 	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
 	if ls_btn:
 		ls_btn.pressed.connect(_show_level_select)
+	if mute_btn:
+		mute_btn.pressed.connect(_toggle_mute)
 	_connect_signals()
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var b = get_node_or_null("Panel/" + a + "Btn")
@@ -131,6 +134,53 @@ func _go_next():
 		GameManager.load_level(n)
 	else:
 		GameManager.load_level(-1)
+
+
+func _show_tutorial():
+	var tut = Control.new()
+	tut.name = "TutorialOverlay"
+	tut.anchor_right = 1.0
+	tut.anchor_bottom = 1.0
+	
+	var bg = ColorRect.new()
+	bg.color = Color(0, 0, 0, 0.7)
+	bg.anchor_right = 1.0
+	bg.anchor_bottom = 1.0
+	tut.add_child(bg)
+	
+	var label = Label.new()
+	label.text = "WASD = Move\nSpace = Jump\nRight-Click = Look\nESC = Pause"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.anchor_right = 1.0
+	label.anchor_bottom = 1.0
+	label.add_theme_color_override("font_color", Color(1, 0.9, 0.3, 1))
+	label.add_theme_font_size_override("font_size", 24)
+	tut.add_child(label)
+	
+	var ok_btn = Button.new()
+	ok_btn.text = "Got it!"
+	ok_btn.anchor_left = 0.4
+	ok_btn.anchor_right = 0.6
+	ok_btn.anchor_top = 0.7
+	ok_btn.anchor_bottom = 0.7
+	ok_btn.pressed.connect(func():
+		SettingsManager.set_setting("tutorial_done", true)
+		tut.queue_free()
+	)
+	tut.add_child(ok_btn)
+	
+	add_child(tut)
+
+
+func _toggle_mute():
+	var muted = AudioManager.is_muted if AudioManager.has_method("is_muted") else false
+	if muted:
+		AudioManager.unmute()
+		if mute_btn: mute_btn.text = "Mute"
+	else:
+		AudioManager.mute()
+		if mute_btn: mute_btn.text = "Unmute"
 
 func _show_level_select():
 	var ls = get_node_or_null("../LevelSelect")
@@ -242,11 +292,17 @@ func _show():
 	if ls_btn:
 		ls_btn.visible = true
 		ls_btn.text = "Level Select"
+	if mute_btn:
+		mute_btn.visible = true
+		mute_btn.text = "Mute"
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.25)
 	if panel:
 		tw.tween_property(panel, "modulate:a", 1.0, 0.3)
 		tw.tween_property(panel, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# First-time tutorial
+	if not SettingsManager.has("tutorial_done"):
+		call_deferred("_show_tutorial")
 
 func _end(txt, inf, can_next):
 	visible = true
@@ -268,6 +324,9 @@ func _end(txt, inf, can_next):
 	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
 	if ls_btn:
 		ls_btn.visible = false
+	if mute_btn:
+		mute_btn.visible = true
+		mute_btn.text = "Mute"
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.2)
 	if panel:
