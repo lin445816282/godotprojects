@@ -18,7 +18,7 @@ func _ready():
 		pc = Color(0.8, 0.8, 0.1, 1)
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = pc
-	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.emission_enabled = true
 	mat.emission = pc
 	mat.emission_energy_multiplier = 1.3
