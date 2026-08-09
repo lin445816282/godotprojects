@@ -22,7 +22,6 @@ LevelManager="*res://scripts/level_manager.gd"
 SettingsManager="*res://scripts/settings_manager.gd"
 Achievements="*res://scripts/achievements.gd"
 I18n="*res://scripts/i18n.gd"
-UIManager="*res://scripts/ui_manager.gd"
 
 [display]
 
