@@ -163,6 +163,11 @@ func move_in_dir(dir, spd, dt):
 	pos.x += dir.x * spd * dt
 	pos.z += dir.z * spd * dt
 	pos.y = 0.7
+	# Clamp within level bounds (prevent walking through walls)
+	var margin = 1.0
+	var half_size = 8.0  # conservative: max level is 18x18 → ±9, minus margin
+	pos.x = clamp(pos.x, -half_size, half_size)
+	pos.z = clamp(pos.z, -half_size, half_size)
 	global_position = pos
 	rotation.y = atan2(dir.x, dir.z)
 
