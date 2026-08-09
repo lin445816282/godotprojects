@@ -13,7 +13,7 @@ size = Vector3( 30, 1, 30 )
 
 [sub_resource type="StandardMaterial3D" id=2]
 shading_mode = 0
-albedo_color = Color( 0.6, 0.8, 0.9, 1 )
+albedo_color = Color( 0.5, 0.65, 0.75, 1 )
 
 [sub_resource type="CapsuleShape3D" id=3]
 radius = 0.4
@@ -63,7 +63,7 @@ environment = ExtResource( 2 )
 
 [node name="Light" type="DirectionalLight3D" parent="."]
 transform = Transform( 0.866, -0.289, 0.408, 0.289, 0.957, 0.041, -0.408, -0.041, 0.912, 0, 12, 0 )
-light_energy = 4.0
+light_energy = 5.5
 shadow_enabled = true
 
 [node name="CameraOrbit" type="Camera3D" parent="."]
