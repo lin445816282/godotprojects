@@ -197,7 +197,7 @@ func _pause():
 	if panel:
 		panel.modulate.a = 0.0
 	title.text = "Paused"
-	info.text = "ESC = Resume"
+	info.text = "Controls:\nWASD = Move | Space = Jump\nRight-Click = Look | ESC = Resume"
 	start.visible = false
 	restart.visible = false
 	quit_btn.visible = true
