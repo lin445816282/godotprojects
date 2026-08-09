@@ -29,6 +29,7 @@ func _ready():
 			keybtns.append(a)
 	_style_buttons()
 	_show()
+
 func _connect_signals():
 	if start and not start.pressed.is_connected(GameManager.start_game):
 		start.pressed.connect(GameManager.start_game)
@@ -51,9 +52,7 @@ func _connect_signals():
 	if music and not music.value_changed.is_connected(_music_changed):
 		music.value_changed.connect(_music_changed)
 
-
 func _style_buttons():
-	# Apply consistent button styling
 	var buttons = [start, restart, quit_btn, lvl2, lvl3, next, backmenu]
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = Color(0.15, 0.15, 0.2, 1)
@@ -62,11 +61,7 @@ func _style_buttons():
 	normal_style.border_width_top = 1
 	normal_style.border_width_bottom = 1
 	normal_style.border_color = Color(0.3, 0.3, 0.4, 1)
-	normal_style.corner_radius_top_left = 6
-	normal_style.corner_radius_top_right = 6
-	normal_style.corner_radius_bottom_left = 6
-	normal_style.corner_radius_bottom_right = 6
-	
+	normal_style.set_corner_radius_all(6)
 	var hover_style = StyleBoxFlat.new()
 	hover_style.bg_color = Color(0.25, 0.25, 0.35, 1)
 	hover_style.border_width_left = 1
@@ -74,11 +69,7 @@ func _style_buttons():
 	hover_style.border_width_top = 1
 	hover_style.border_width_bottom = 1
 	hover_style.border_color = Color(0.5, 0.5, 0.6, 1)
-	hover_style.corner_radius_top_left = 6
-	hover_style.corner_radius_top_right = 6
-	hover_style.corner_radius_bottom_left = 6
-	hover_style.corner_radius_bottom_right = 6
-	
+	hover_style.set_corner_radius_all(6)
 	var pressed_style = StyleBoxFlat.new()
 	pressed_style.bg_color = Color(0.1, 0.1, 0.15, 1)
 	pressed_style.border_width_left = 1
@@ -86,11 +77,7 @@ func _style_buttons():
 	pressed_style.border_width_top = 1
 	pressed_style.border_width_bottom = 1
 	pressed_style.border_color = Color(0.4, 0.4, 0.5, 1)
-	pressed_style.corner_radius_top_left = 6
-	pressed_style.corner_radius_top_right = 6
-	pressed_style.corner_radius_bottom_left = 6
-	pressed_style.corner_radius_bottom_right = 6
-	
+	pressed_style.set_corner_radius_all(6)
 	for btn in buttons:
 		if btn:
 			btn.add_theme_stylebox_override("normal", normal_style)
@@ -116,11 +103,10 @@ func setup_nodes():
 	music = get_node_or_null("Panel/MusicSlider")
 	_connect_signals()
 
-
 func _st(st):
 	if st == GameManager.State.MENU:
 		_style_buttons()
-	_show()
+		_show()
 	elif st == GameManager.State.PLAYING or st == GameManager.State.COUNTDOWN:
 		visible = false
 	elif st == GameManager.State.PAUSED:
@@ -148,6 +134,10 @@ func _back_to_menu():
 
 func _pause():
 	visible = true
+	modulate.a = 0.0
+	var panel = get_node_or_null("Panel")
+	if panel:
+		panel.modulate.a = 0.0
 	title.text = "Paused"
 	info.text = "ESC = Resume"
 	start.visible = false
@@ -164,6 +154,10 @@ func _pause():
 	if sens: sens.visible = false
 	if sfx: sfx.visible = false
 	if music: music.visible = false
+	var t = create_tween().set_parallel(true)
+	t.tween_property(self, "modulate:a", 1.0, 0.2)
+	if panel:
+		t.tween_property(panel, "modulate:a", 1.0, 0.25)
 
 func _process(dt):
 	if visible and state_anim:
@@ -190,8 +184,7 @@ func _unhandled_input(event):
 	if listening_action != "" and event is InputEventKey:
 		SettingsManager.set_key(listening_action, event.keycode)
 		listening_action = ""
-		_style_buttons()
-	_show()
+		_show()
 		return
 	if listening_action == "" and event.is_action_pressed("ui_cancel") and visible:
 		GameManager.toggle_pause()
@@ -200,6 +193,12 @@ func _show():
 	state_anim = true
 	time = 0.0
 	visible = true
+	modulate.a = 0.0
+	var panel = get_node_or_null("Panel")
+	if panel:
+		panel.modulate.a = 0.0
+		panel.pivot_offset = panel.size / 2.0
+		panel.scale = Vector2(0.85, 0.85)
 	if sens:
 		sens.visible = false
 	if sfx:
@@ -223,9 +222,18 @@ func _show():
 	if lvl3:
 		lvl3.visible = LevelManager.unlocked > 2
 		lvl3.disabled = LevelManager.unlocked <= 2
+	var tw = create_tween().set_parallel(true)
+	tw.tween_property(self, "modulate:a", 1.0, 0.25)
+	if panel:
+		tw.tween_property(panel, "modulate:a", 1.0, 0.3)
+		tw.tween_property(panel, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _end(txt, inf, can_next):
 	visible = true
+	modulate.a = 0.0
+	var panel = get_node_or_null("Panel")
+	if panel:
+		panel.modulate.a = 0.0
 	title.text = txt
 	info.text = inf
 	start.visible = false
@@ -237,3 +245,7 @@ func _end(txt, inf, can_next):
 		lvl2.visible = false
 	if lvl3:
 		lvl3.visible = false
+	var tw = create_tween().set_parallel(true)
+	tw.tween_property(self, "modulate:a", 1.0, 0.2)
+	if panel:
+		tw.tween_property(panel, "modulate:a", 1.0, 0.25)

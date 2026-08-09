@@ -107,3 +107,9 @@
 
 ---
 *每完成一项勾选 `[x]`，每完成一个模块提交一次*
+
+### A1. Panel 样式美化 ✅
+- [x] scene.tscn: Panel 半透明深色 + Title 金色 + Info 浅灰
+- [x] level 脚本: panel.self_modulate 统一
+- [x] 按钮圆角 + hover/pressed 颜色反馈
+- [x] commit: 06c8497
