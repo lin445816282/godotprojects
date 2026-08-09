@@ -128,16 +128,19 @@ func show_loading(idx):
 	
 	var vbox = VBoxContainer.new()
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.set_anchors_preset(Control.PRESET_CENTER)
+	vbox.anchor_left = 0.5
+	vbox.anchor_top = 0.5
+	vbox.anchor_right = 0.5
+	vbox.anchor_bottom = 0.5
+	vbox.offset_left = -150
+	vbox.offset_top = -50
+	vbox.offset_right = 150
+	vbox.offset_bottom = 50
 	loading.add_child(vbox)
 	
 	var text = Label.new()
 	var names = I18n.t_arr("level_names")
-	var label_text = I18n.t("restart") if idx == GameManager.current_level else I18n.t("entering_level_text")
-	if idx == GameManager.current_level:
-		text.text = label_text + " " + names[idx]
-	else:
-		text.text = label_text + str(idx + 1) + " " + names[idx]
+	text.text = names[idx]
 	text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
 	text.add_theme_font_size_override("font_size", 28)
@@ -184,6 +187,7 @@ func load_level(idx):
 	else:
 		current_level = idx
 		get_tree().change_scene_to_file(LEVELS[idx])
+		_change(State.COUNTDOWN)
 
 func start_level_countdown():
 	score = 0
