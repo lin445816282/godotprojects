@@ -494,51 +494,62 @@ anchor_bottom = 0.93
 margin_bottom = 0.0
 text = "Jump: W"
 
+[node name="SfxLabel" type="Label" parent="UI/Menu/Panel"]
+visible = false
+anchor_left = 0.05
+anchor_top = 0.93
+anchor_right = 0.50
+anchor_bottom = 0.93
+margin_bottom = 20.0
+text = "SFX Volume"
+
 [node name="SfxSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.95
+anchor_top = 0.93
 anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_bottom = 0.93
 margin_bottom = 24.0
 min_value = -30.0
 max_value = 0.0
 
+[node name="MusicLabel" type="Label" parent="UI/Menu/Panel"]
+visible = false
+anchor_left = 0.05
+anchor_top = 0.96
+anchor_right = 0.50
+anchor_bottom = 0.96
+margin_bottom = 20.0
+text = "Music Volume"
+
 [node name="MusicSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.95
+anchor_top = 0.96
 anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_bottom = 0.96
 margin_bottom = 24.0
 min_value = -40.0
 max_value = 0.0
 value = -12.0
 
-[node name="VolLabel" type="Label" parent="UI/Menu/Panel"]
-visible = false
-anchor_left = 0.55
-anchor_top = 0.95
-anchor_right = 0.95
-anchor_bottom = 0.95
-margin_bottom = 24.0
-text = ""
+
 
 [node name="SensLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.95
-anchor_right = 0.9
-anchor_bottom = 0.95
-margin_bottom = 24.0
-text = ""
+anchor_top = 0.90
+anchor_right = 0.50
+anchor_bottom = 0.90
+margin_bottom = 20.0
+text = "Sensitivity"
 
 [node name="SensSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.95
+anchor_left = 0.55
+anchor_top = 0.90
 anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_bottom = 0.90
 margin_bottom = 24.0
 min_value = 0.05
 max_value = 1.0

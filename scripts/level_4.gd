@@ -144,12 +144,64 @@ func _create_ui():
 		btn.visible = d["vis"]
 		panel.add_child(btn)
 	
-	# Hidden settings
-	for n in ["SensLabel", "SensSlider", "SfxSlider", "MusicSlider", "VolLabel"]:
-		var ctrl = Control.new() if "Label" in n else HSlider.new() if "Slider" in n else Button.new()
-		ctrl.name = n
-		ctrl.visible = false
-		panel.add_child(ctrl)
+	# Settings sliders with labels
+	# SFX
+	var sfl = Label.new()
+	sfl.name = "SfxLabel"
+	sfl.anchor_left = 0.05
+	sfl.anchor_top = 0.93
+	sfl.anchor_right = 0.50
+	sfl.text = "SFX Volume"
+	sfl.visible = false
+	panel.add_child(sfl)
+	var sfxs = HSlider.new()
+	sfxs.name = "SfxSlider"
+	sfxs.anchor_left = 0.55
+	sfxs.anchor_top = 0.93
+	sfxs.anchor_right = 0.95
+	sfxs.min_value = -30.0
+	sfxs.max_value = 0.0
+	sfxs.visible = false
+	panel.add_child(sfxs)
+	# Music
+	var ml = Label.new()
+	ml.name = "MusicLabel"
+	ml.anchor_left = 0.05
+	ml.anchor_top = 0.96
+	ml.anchor_right = 0.50
+	ml.text = "Music Volume"
+	ml.visible = false
+	panel.add_child(ml)
+	var mus = HSlider.new()
+	mus.name = "MusicSlider"
+	mus.anchor_left = 0.55
+	mus.anchor_top = 0.96
+	mus.anchor_right = 0.95
+	mus.min_value = -40.0
+	mus.max_value = 0.0
+	mus.value = -12.0
+	mus.visible = false
+	panel.add_child(mus)
+	# Sensitivity
+	var sl = Label.new()
+	sl.name = "SensLabel"
+	sl.anchor_left = 0.05
+	sl.anchor_top = 0.90
+	sl.anchor_right = 0.50
+	sl.text = "Sensitivity"
+	sl.visible = false
+	panel.add_child(sl)
+	var ss = HSlider.new()
+	ss.name = "SensSlider"
+	ss.anchor_left = 0.55
+	ss.anchor_top = 0.90
+	ss.anchor_right = 0.95
+	ss.min_value = 0.05
+	ss.max_value = 1.0
+	ss.step = 0.05
+	ss.value = 0.3
+	ss.visible = false
+	panel.add_child(ss)
 	
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var kb = Button.new()

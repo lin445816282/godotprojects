@@ -199,12 +199,19 @@ func _show():
 		panel.modulate.a = 0.0
 		panel.pivot_offset = panel.size / 2.0
 		panel.scale = Vector2(0.85, 0.85)
+	# Show settings sliders
 	if sens:
-		sens.visible = false
+		sens.visible = true
+		var sl = get_node_or_null("Panel/SensLabel")
+		if sl: sl.visible = true
 	if sfx:
-		sfx.visible = false
+		sfx.visible = true
+		var sfl = get_node_or_null("Panel/SfxLabel")
+		if sfl: sfl.visible = true
 	if music:
-		music.visible = false
+		music.visible = true
+		var ml = get_node_or_null("Panel/MusicLabel")
+		if ml: ml.visible = true
 	if backmenu:
 		backmenu.visible = false
 	if next:
