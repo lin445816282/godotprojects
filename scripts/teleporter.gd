@@ -27,8 +27,8 @@ func _spawn_particles():
 	cp.direction = Vector3(0, 1, 0)
 	cp.spread = 180.0
 	cp.gravity = Vector3(0, -3, 0)
-	cp.initial_velocity = 3.0
-	cp.scale_amount = 0.1
+	cp.initial_velocity_min = 3.0
+	cp.scale_amount_min = 0.1
 	cp.color = Color(0.2, 0.9, 1, 1)
 	add_child(cp)
 	await get_tree().create_timer(0.8).timeout

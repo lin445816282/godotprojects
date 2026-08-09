@@ -304,8 +304,8 @@ func update_dust(dt):
 			cp.direction = Vector3(0, 1, 0)
 			cp.spread = 60.0
 			cp.gravity = Vector3(0, -2, 0)
-			cp.initial_velocity = 1.5
-			cp.scale_amount = 0.05
+			cp.initial_velocity_min = 1.5
+			cp.scale_amount_min = 0.05
 			cp.color = Color(0.75, 0.7, 0.6, 0.8)
 			cp.position = Vector3(0, 0.05, 0)
 			add_child(cp)
