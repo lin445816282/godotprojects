@@ -178,6 +178,10 @@ func show_loading(idx):
 	await get_tree().process_frame
 
 func load_level(idx):
+	# Force menu to hide before showing loading overlay
+	_change(State.COUNTDOWN)  # Hides menu via state_changed signal
+	await get_tree().process_frame
+	
 	show_loading(idx)
 	
 	if idx == -1 or idx >= LEVELS.size():
@@ -187,7 +191,6 @@ func load_level(idx):
 	else:
 		current_level = idx
 		get_tree().change_scene_to_file(LEVELS[idx])
-		_change(State.COUNTDOWN)
 
 func start_level_countdown():
 	score = 0
