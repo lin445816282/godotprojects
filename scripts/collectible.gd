@@ -18,7 +18,7 @@ func burst_particles():
 	cp.direction = Vector3(0, 1, 0)
 	cp.spread = 45.0
 	cp.gravity = Vector3(0, -9, 0)
-	cp.initial_velocity_min = 4.0
+	cp.velocity_min = 4.0
 	cp.scale_amount_min = 0.08
 	cp.color = Color(1, 0.85, 0.1, 1)
 	add_child(cp)
