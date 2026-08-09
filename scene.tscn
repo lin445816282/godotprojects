@@ -443,8 +443,6 @@ anchor_right = 0.9
 anchor_bottom = 0.2
 margin_bottom = 60.0
 text = "WASD = Move  Space = Jump\nRight-Click = Look"
-Right-Click = Look
-Collect coins to win!"
 align = 1
 
 [node name="move_forwardBtn" type="Button" parent="UI/Menu/Panel"]
