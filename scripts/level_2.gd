@@ -22,7 +22,8 @@ func _ready():
 	# 确保 UI 存在
 	if not has_node("UI"):
 		_create_ui()
-	# Start countdown after scene fully loads
+	# Start countdown AFTER UI is fully created
+	await get_tree().process_frame
 	GameManager.start_level_countdown()
 
 func _create_ui():
