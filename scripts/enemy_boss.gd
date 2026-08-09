@@ -23,6 +23,8 @@ func _ready():
 	$Mesh.scale = Vector3(2.0, 2.5, 2.0)
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	health = max_health
 	phase = 1
 	atk_cd = 2.0

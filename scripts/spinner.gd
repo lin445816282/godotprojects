@@ -21,4 +21,6 @@ func _hit(body):
 		hit_cooldown = 0.5
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	hit_cooldown = 0.0

@@ -36,6 +36,8 @@ func _setup_glow():
 	origin = global_position
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	state = State.PATROL
 	idx = 0
 	waiting = false
@@ -43,7 +45,7 @@ func _on_game_started():
 	pulse = 0.0
 	player = null
 	global_position = origin
-	if $Mesh.material_override: if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
+	if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
 
 func _process(dt):
 	pulse += dt

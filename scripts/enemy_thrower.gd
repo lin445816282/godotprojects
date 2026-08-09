@@ -10,6 +10,8 @@ func _ready():
 	GameManager.game_started.connect(_on_game_started)
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	timer = fire_rate * randf()
 
 func _process(dt):

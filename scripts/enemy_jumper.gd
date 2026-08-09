@@ -24,5 +24,7 @@ func _hit(body):
 		body.take_hit(Vector3(0, 0, 0))
 
 func _on_game_started():
+	if not is_inside_tree():
+		return
 	t = 0.0
 	global_position.y = base_y
