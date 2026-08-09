@@ -337,4 +337,18 @@ func collect_coin_effect():
 func _on_game_started():
 	if not is_inside_tree():
 		return
-	reset()
+	dead = false
+	velocity = Vector3.ZERO
+	anim_time = 0.0
+	is_moving = false
+	is_jumping = false
+	invuln_timer = 0.0
+	hit_flash = 0.0
+	hits_taken = 0
+	jumps_left = 1
+	has_shield = false
+	speed_boost_timer = 0.0
+	magnet_timer = 0.0
+	set_body_visible(true)
+	if magnet_ring:
+		magnet_ring.visible = false
