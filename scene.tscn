@@ -441,8 +441,8 @@ anchor_left = 0.1
 anchor_top = 0.2
 anchor_right = 0.9
 anchor_bottom = 0.2
-margin_bottom = 40.0
-text = "WASD = Move  Space = Jump
+margin_bottom = 60.0
+text = "WASD = Move  Space = Jump\nRight-Click = Look"
 Right-Click = Look
 Collect coins to win!"
 align = 1
