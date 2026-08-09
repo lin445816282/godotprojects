@@ -96,6 +96,7 @@ func _create_ui():
 	panel.anchor_top = 0.15
 	panel.anchor_right = 0.70
 	panel.anchor_bottom = 0.85
+	panel.self_modulate = Color(0.05, 0.05, 0.08, 0.88)
 	menu.add_child(panel)
 	
 	var title = Label.new()
@@ -104,6 +105,8 @@ func _create_ui():
 	title.anchor_top = 0.05
 	title.anchor_right = 0.90
 	title.anchor_bottom = 0.10
+	title.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
+	title.add_theme_font_size_override("font_size", 28)
 	title.text = "Coin Quest"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(title)
@@ -114,6 +117,8 @@ func _create_ui():
 	info.anchor_top = 0.15
 	info.anchor_right = 0.90
 	info.anchor_bottom = 0.30
+	info.add_theme_color_override("font_color", Color(0.65, 0.65, 0.7, 1))
+	info.add_theme_font_size_override("font_size", 14)
 	info.text = "WASD = Move  Space = Jump"
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(info)
@@ -157,3 +162,5 @@ func _create_ui():
 	# Re-bind menu signals now that all buttons exist
 	if menu.has_method("setup_nodes"):
 		menu.setup_nodes()
+	if menu.has_method("_style_buttons"):
+		menu._style_buttons()

@@ -27,6 +27,7 @@ func _ready():
 		if b:
 			b.pressed.connect(start_listen.bind(a))
 			keybtns.append(a)
+	_style_buttons()
 	_show()
 func _connect_signals():
 	if start and not start.pressed.is_connected(GameManager.start_game):
@@ -50,6 +51,56 @@ func _connect_signals():
 	if music and not music.value_changed.is_connected(_music_changed):
 		music.value_changed.connect(_music_changed)
 
+
+func _style_buttons():
+	# Apply consistent button styling
+	var buttons = [start, restart, quit_btn, lvl2, lvl3, next, backmenu]
+	var normal_style = StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.15, 0.15, 0.2, 1)
+	normal_style.border_width_left = 1
+	normal_style.border_width_right = 1
+	normal_style.border_width_top = 1
+	normal_style.border_width_bottom = 1
+	normal_style.border_color = Color(0.3, 0.3, 0.4, 1)
+	normal_style.corner_radius_top_left = 6
+	normal_style.corner_radius_top_right = 6
+	normal_style.corner_radius_bottom_left = 6
+	normal_style.corner_radius_bottom_right = 6
+	
+	var hover_style = StyleBoxFlat.new()
+	hover_style.bg_color = Color(0.25, 0.25, 0.35, 1)
+	hover_style.border_width_left = 1
+	hover_style.border_width_right = 1
+	hover_style.border_width_top = 1
+	hover_style.border_width_bottom = 1
+	hover_style.border_color = Color(0.5, 0.5, 0.6, 1)
+	hover_style.corner_radius_top_left = 6
+	hover_style.corner_radius_top_right = 6
+	hover_style.corner_radius_bottom_left = 6
+	hover_style.corner_radius_bottom_right = 6
+	
+	var pressed_style = StyleBoxFlat.new()
+	pressed_style.bg_color = Color(0.1, 0.1, 0.15, 1)
+	pressed_style.border_width_left = 1
+	pressed_style.border_width_right = 1
+	pressed_style.border_width_top = 1
+	pressed_style.border_width_bottom = 1
+	pressed_style.border_color = Color(0.4, 0.4, 0.5, 1)
+	pressed_style.corner_radius_top_left = 6
+	pressed_style.corner_radius_top_right = 6
+	pressed_style.corner_radius_bottom_left = 6
+	pressed_style.corner_radius_bottom_right = 6
+	
+	for btn in buttons:
+		if btn:
+			btn.add_theme_stylebox_override("normal", normal_style)
+			btn.add_theme_stylebox_override("hover", hover_style)
+			btn.add_theme_stylebox_override("pressed", pressed_style)
+			btn.add_theme_color_override("font_color", Color(0.9, 0.9, 0.95, 1))
+			btn.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
+			btn.add_theme_color_override("font_pressed_color", Color(0.7, 0.7, 0.75, 1))
+			btn.add_theme_font_size_override("font_size", 16)
+
 func setup_nodes():
 	title = get_node_or_null("Panel/Title")
 	info = get_node_or_null("Panel/Info")
@@ -68,7 +119,8 @@ func setup_nodes():
 
 func _st(st):
 	if st == GameManager.State.MENU:
-		_show()
+		_style_buttons()
+	_show()
 	elif st == GameManager.State.PLAYING or st == GameManager.State.COUNTDOWN:
 		visible = false
 	elif st == GameManager.State.PAUSED:
@@ -138,7 +190,8 @@ func _unhandled_input(event):
 	if listening_action != "" and event is InputEventKey:
 		SettingsManager.set_key(listening_action, event.keycode)
 		listening_action = ""
-		_show()
+		_style_buttons()
+	_show()
 		return
 	if listening_action == "" and event.is_action_pressed("ui_cancel") and visible:
 		GameManager.toggle_pause()
