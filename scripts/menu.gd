@@ -82,6 +82,12 @@ func _pause():
 	quit_btn.visible = true
 	if backmenu:
 		backmenu.visible = true
+	if next:
+		next.visible = false
+	if lvl2:
+		lvl2.visible = false
+	if lvl3:
+		lvl3.visible = false
 	if sens: sens.visible = false
 	if sfx: sfx.visible = false
 	if music: music.visible = false
@@ -128,6 +134,8 @@ func _show():
 		music.visible = false
 	if backmenu:
 		backmenu.visible = false
+	if next:
+		next.visible = false
 	title.text = "Coin Quest"
 	var best1 = LevelManager.best_for(0)
 	info.text = "Unlocked: " + str(LevelManager.unlocked) + "/" + str(LevelManager.LEVEL_COUNT) + "\nBest Lv1: " + str(best1) + " pts\nWASD = Move  Space = Jump"

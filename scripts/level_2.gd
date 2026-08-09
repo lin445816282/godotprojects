@@ -8,29 +8,22 @@ func _ready():
 	var we = get_node_or_null("WorldEnv")
 	if we and we.environment:
 		var env = we.environment
-		env.background_mode = Environment.BG_SKY
-		var sky = Sky.new()
-		var sky_mat = PanoramaSkyMaterial.new()
-		var img = Image.new()
-		var w = 256
-		var h = 128
-		img.create(w, h, false, Image.FORMAT_RGB8)
-		if img.get_width() == 0:
-			return
-		for y in range(h):
-			var tt = float(y) / h
-			var c = Color(0.2, 0.4, 0.9).lerp(Color(0.6, 0.8, 1.0), tt)
-			for x in range(w):
-				img.set_pixel(x, y, c)
-		var tex = ImageTexture.new()
-		tex.create_from_image(img)
-		sky_mat.panorama = tex
-		sky.sky_material = sky_mat
-		env.sky = sky
+		env.background_mode = Environment.BG_COLOR
+		env.background_color = Color(0.15, 0.35, 0.6, 1)
+		env.ambient_light_color = Color(0.3, 0.35, 0.45, 1)
+		env.ambient_light_energy = 0.5
+		env.fog_enabled = true
+		env.fog_mode = Environment.FOG_MODE_DEPTH
+		env.fog_density = 0.015
+		env.fog_light_color = Color(0.25, 0.35, 0.55, 1)
+		env.fog_depth_begin = 15.0
+		env.fog_depth_end = 35.0
 
 	# 确保 UI 存在
 	if not has_node("UI"):
 		_create_ui()
+	# Start countdown after scene fully loads
+	GameManager.start_level_countdown()
 
 func _create_ui():
 	var ui = Control.new()
@@ -125,13 +118,13 @@ func _create_ui():
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": "Start Game", "pos": 0.40, "vis": true},
-		"NextBtn": {"text": "Next Level", "pos": 0.40, "vis": false},
-		"RestartBtn": {"text": "Restart", "pos": 0.47, "vis": false},
-		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.57, "vis": false},
-		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.67, "vis": false},
-		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.77, "vis": false},
-		"QuitBtn": {"text": "Quit", "pos": 0.77, "vis": false},
+		"StartBtn": {"text": "Start Game", "pos": 0.42, "vis": true},
+		"NextBtn": {"text": "Next Level", "pos": 0.42, "vis": false},
+		"RestartBtn": {"text": "Restart", "pos": 0.50, "vis": false},
+		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.50, "vis": false},
+		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.58, "vis": false},
+		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.66, "vis": false},
+		"QuitBtn": {"text": "Quit", "pos": 0.74, "vis": false},
 	}
 	for btn_name in buttons_data:
 		var d = buttons_data[btn_name]

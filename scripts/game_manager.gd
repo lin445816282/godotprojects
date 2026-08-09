@@ -119,14 +119,16 @@ func load_level(idx):
 		_change(State.MENU)
 	else:
 		current_level = idx
-		score = 0
-		time_left = duration
-		countdown_left = countdown_time
-		emit_signal("score_changed", 0)
-		emit_signal("timer_changed", duration)
-		emit_signal("countdown_tick", int(ceil(countdown_left)))
 		get_tree().change_scene_to_file(LEVELS[idx])
-		_change(State.COUNTDOWN)
+
+func start_level_countdown():
+	score = 0
+	time_left = duration
+	countdown_left = countdown_time
+	emit_signal("score_changed", 0)
+	emit_signal("timer_changed", duration)
+	emit_signal("countdown_tick", int(ceil(countdown_left)))
+	_change(State.COUNTDOWN)
 
 func quit_game():
 	get_tree().quit()

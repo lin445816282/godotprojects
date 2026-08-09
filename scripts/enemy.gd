@@ -164,8 +164,12 @@ func move_in_dir(dir, spd, dt):
 	pos.z += dir.z * spd * dt
 	pos.y = 0.7
 	# Clamp within level bounds (prevent walking through walls)
-	var margin = 1.0
-	var half_size = 8.0  # conservative: max level is 18x18 → ±9, minus margin
+	# Dynamically determine half-size from ground mesh if available
+	var half_size = 8.0
+	var ground = get_tree().current_scene.get_node_or_null("Ground")
+	if ground and ground.mesh:
+		var mesh_size = ground.mesh.size
+		half_size = min(abs(mesh_size.x), abs(mesh_size.z)) / 2.0 - 2.0
 	pos.x = clamp(pos.x, -half_size, half_size)
 	pos.z = clamp(pos.z, -half_size, half_size)
 	global_position = pos

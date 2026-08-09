@@ -43,7 +43,10 @@ func play_music(kind):
 		bytes[i * 2 + 1] = (s16 >> 8) & 0xFF
 		t += dt
 	var sample = AudioStreamWAV.new()
-	# sample.data assignment skipped for Godot 4
+	sample.format = AudioStreamWAV.FORMAT_16_BITS
+	sample.mix_rate = sr
+	sample.stereo = false
+	sample.data = bytes
 	music.stream = sample
 	music.play()
 	music_playing = kind
@@ -105,7 +108,10 @@ func _gen(name):
 		bytes[i * 2 + 1] = (s >> 8) & 0xFF
 		t += dt
 	var sample = AudioStreamWAV.new()
-	# sample.data assignment skipped for Godot 4
+	sample.format = AudioStreamWAV.FORMAT_16_BITS
+	sample.mix_rate = sr
+	sample.stereo = false
+	sample.data = bytes
 	cache[name] = sample
 	return sample
 
