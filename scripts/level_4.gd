@@ -111,21 +111,21 @@ func _create_ui():
 	var info = Label.new()
 	info.name = "Info"
 	info.anchor_left = 0.10
-	info.anchor_top = 0.20
+	info.anchor_top = 0.15
 	info.anchor_right = 0.90
-	info.anchor_bottom = 0.35
+	info.anchor_bottom = 0.30
 	info.text = "WASD = Move  Space = Jump"
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": "Play Level 1", "pos": 0.42, "vis": true},
-		"NextBtn": {"text": "Next Level", "pos": 0.42, "vis": false},
-		"RestartBtn": {"text": "Restart", "pos": 0.52, "vis": false},
-		"Level2Btn": {"text": "Level 2 - Floating Isles", "pos": 0.52, "vis": false},
-		"Level3Btn": {"text": "Level 3 - Fortress", "pos": 0.62, "vis": false},
-		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.62, "vis": false},
-		"QuitBtn": {"text": "Quit", "pos": 0.77, "vis": false},
+		"StartBtn": {"text": "Play Level 1", "pos": 0.38, "vis": true},
+		"NextBtn": {"text": "Next Level", "pos": 0.38, "vis": false},
+		"RestartBtn": {"text": "Restart", "pos": 0.47, "vis": false},
+		"Level2Btn": {"text": "Level 2 - Floating Isles", "pos": 0.47, "vis": false},
+		"Level3Btn": {"text": "Level 3 - Fortress", "pos": 0.56, "vis": false},
+		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.56, "vis": false},
+		"QuitBtn": {"text": "Quit", "pos": 0.67, "vis": false},
 	}
 	for btn_name in buttons_data:
 		var d = buttons_data[btn_name]
