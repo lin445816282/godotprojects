@@ -15,5 +15,5 @@ func _ready():
 	tex.create_from_image(img)
 	var mat = StandardMaterial3D.new()
 	mat.albedo_texture = tex
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material_override = mat
