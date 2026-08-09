@@ -220,6 +220,17 @@ func _create_ui():
 		panel.add_child(kb)
 	
 	ui.add_child(menu)
+	
+	# Touch controls
+	var joystick = Control.new()
+	joystick.name = "TouchJoystick"
+	joystick.set_script(load("res://scripts/touch_joystick.gd"))
+	ui.add_child(joystick)
+	var jbtn = Control.new()
+	jbtn.name = "JumpButton"
+	jbtn.set_script(load("res://scripts/touch_button.gd"))
+	ui.add_child(jbtn)
+	
 	add_child(ui)
 	# Re-bind menu signals now that all buttons exist
 	if menu.has_method("setup_nodes"):
