@@ -112,86 +112,37 @@ func toggle_pause():
 
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
-func show_loading(idx):
-	if idx < 0 or idx >= LEVELS.size():
-		return
-	var layer = CanvasLayer.new()
-	layer.name = "LoadingLayer"
-	layer.layer = 128
-	get_tree().current_scene.add_child(layer)
+func load_level(idx):
+	# Use a simple Popup for loading feedback
+	var popup = Popup.new()
+	popup.name = "LoadingPopup"
+	popup.popup_exclusive = true
+	popup.transparent_bg = true
+	popup.set_anchors_preset(Control.PRESET_FULL_RECT)
+	get_tree().current_scene.add_child(popup)
+	popup.popup_centered()
 	
-	var loading = ColorRect.new()
-	loading.name = "LoadingOverlay"
-	loading.color = Color(0, 0, 0, 0.85)
-	loading.set_anchors_preset(Control.PRESET_FULL_RECT)
-	layer.add_child(loading)
-	
-	var vbox = VBoxContainer.new()
-	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.anchor_left = 0.5
-	vbox.anchor_top = 0.5
-	vbox.anchor_right = 0.5
-	vbox.anchor_bottom = 0.5
-	vbox.offset_left = -150
-	vbox.offset_top = -50
-	vbox.offset_right = 150
-	vbox.offset_bottom = 50
-	loading.add_child(vbox)
-	
-	var text = Label.new()
-	var names = I18n.t_arr("level_names")
-	text.text = names[idx]
-	text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
-	text.add_theme_font_size_override("font_size", 28)
-	vbox.add_child(text)
-	
-	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 12)
-	vbox.add_child(spacer)
-	
-	var progress = ProgressBar.new()
-	progress.name = "LoadProgress"
-	progress.custom_minimum_size = Vector2(260, 22)
-	progress.value = 0.0
-	# Theme overrides so the bar is actually visible
-	var bg = StyleBoxFlat.new()
-	bg.bg_color = Color(0.15, 0.15, 0.2, 1)
-	bg.set_corner_radius_all(4)
-	progress.add_theme_stylebox_override("background", bg)
-	var fill = StyleBoxFlat.new()
-	fill.bg_color = Color(1, 0.85, 0.1, 1)
-	fill.set_corner_radius_all(4)
-	progress.add_theme_stylebox_override("fill", fill)
-	vbox.add_child(progress)
+	var bg = ColorRect.new()
+	bg.color = Color(0, 0, 0, 0.85)
+	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	popup.add_child(bg)
 	
 	var label = Label.new()
-	label.name = "LoadLabel"
+	var names = I18n.t_arr("level_names") if idx >= 0 and idx < LEVELS.size() else []
+	label.text = names[idx] if idx >= 0 and idx < LEVELS.size() and idx < names.size() else "..."
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))
-	label.add_theme_font_size_override("font_size", 14)
-	label.text = "0%"
-	vbox.add_child(label)
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_preset(Control.PRESET_CENTER)
+	label.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
+	label.add_theme_font_size_override("font_size", 32)
+	popup.add_child(label)
 	
-	var tween = loading.create_tween()
-	tween.tween_property(progress, "value", 1.0, 0.7).set_ease(Tween.EASE_IN_OUT)
-	var timer = 0.0
-	while timer < 0.7 and is_instance_valid(layer):
-		timer += get_process_delta_time()
-		var pct = min(timer / 0.7 * 100.0, 99.0)
-		if is_instance_valid(label):
-			label.text = str(int(pct)) + "%"
-		await get_tree().process_frame
-	if is_instance_valid(label):
-		label.text = "100%"
+	# Force process one frame so popup renders
 	await get_tree().process_frame
-
-func load_level(idx):
-	# Force menu to hide before showing loading overlay
-	_change(State.COUNTDOWN)  # Hides menu via state_changed signal
 	await get_tree().process_frame
 	
-	show_loading(idx)
+	if is_instance_valid(popup):
+		popup.queue_free()
 	
 	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
