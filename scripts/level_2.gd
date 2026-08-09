@@ -92,48 +92,48 @@ func _create_ui():
 	
 	var panel = Panel.new()
 	panel.name = "Panel"
-	panel.anchor_left = 0.20
-	panel.anchor_top = 0.20
-	panel.anchor_right = 0.80
-	panel.anchor_bottom = 0.80
+	panel.anchor_left = 0.30
+	panel.anchor_top = 0.15
+	panel.anchor_right = 0.70
+	panel.anchor_bottom = 0.85
 	menu.add_child(panel)
 	
 	var title = Label.new()
 	title.name = "Title"
-	title.anchor_left = 0.1
+	title.anchor_left = 0.10
 	title.anchor_top = 0.05
-	title.anchor_right = 0.9
-	title.anchor_bottom = 0.05
+	title.anchor_right = 0.90
+	title.anchor_bottom = 0.10
 	title.text = "Coin Quest"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(title)
 	
 	var info = Label.new()
 	info.name = "Info"
-	info.anchor_left = 0.1
+	info.anchor_left = 0.10
 	info.anchor_top = 0.20
-	info.anchor_right = 0.9
-	info.anchor_bottom = 0.20
+	info.anchor_right = 0.90
+	info.anchor_bottom = 0.35
 	info.text = "WASD = Move  Space = Jump"
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": "Start Game", "pos": 0.42, "vis": true},
+		"StartBtn": {"text": "Play Level 1", "pos": 0.42, "vis": true},
 		"NextBtn": {"text": "Next Level", "pos": 0.42, "vis": false},
-		"RestartBtn": {"text": "Restart", "pos": 0.50, "vis": false},
-		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.50, "vis": false},
-		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.58, "vis": false},
-		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.66, "vis": false},
-		"QuitBtn": {"text": "Quit", "pos": 0.74, "vis": false},
+		"RestartBtn": {"text": "Restart", "pos": 0.52, "vis": false},
+		"Level2Btn": {"text": "Level 2 - Floating Isles", "pos": 0.52, "vis": false},
+		"Level3Btn": {"text": "Level 3 - Fortress", "pos": 0.62, "vis": false},
+		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.62, "vis": false},
+		"QuitBtn": {"text": "Quit", "pos": 0.77, "vis": false},
 	}
 	for btn_name in buttons_data:
 		var d = buttons_data[btn_name]
 		var btn = Button.new()
 		btn.name = btn_name
-		btn.anchor_left = 0.25
+		btn.anchor_left = 0.20
 		btn.anchor_top = d["pos"]
-		btn.anchor_right = 0.75
+		btn.anchor_right = 0.80
 		btn.anchor_bottom = d["pos"]
 		btn.text = d["text"]
 		btn.visible = d["vis"]

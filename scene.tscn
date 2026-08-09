@@ -422,72 +422,72 @@ mouse_filter = 2
 color = Color( 1, 1, 1, 0 )
 
 [node name="Panel" type="Panel" parent="UI/Menu"]
-anchor_left = 0.35
-anchor_top = 0.20
-anchor_right = 0.65
-anchor_bottom = 0.80
+anchor_left = 0.30
+anchor_top = 0.15
+anchor_right = 0.70
+anchor_bottom = 0.85
 
 [node name="Title" type="Label" parent="UI/Menu/Panel"]
-anchor_left = 0.1
+anchor_left = 0.10
 anchor_top = 0.05
-anchor_right = 0.9
-anchor_bottom = 0.05
-margin_bottom = 30.0
+anchor_right = 0.90
+anchor_bottom = 0.10
+margin_bottom = 0.0
 text = "Coin Quest"
 align = 1
 
 [node name="Info" type="Label" parent="UI/Menu/Panel"]
-anchor_left = 0.1
-anchor_top = 0.2
-anchor_right = 0.9
-anchor_bottom = 0.2
-margin_bottom = 50.0
+anchor_left = 0.10
+anchor_top = 0.20
+anchor_right = 0.90
+anchor_bottom = 0.35
+margin_bottom = 0.0
 text = "WASD = Move  Space = Jump\nRight-Click = Look"
 align = 1
 
 [node name="move_forwardBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.84
+anchor_left = 0.10
+anchor_top = 0.85
 anchor_right = 0.45
-anchor_bottom = 0.78
-margin_bottom = 20.0
+anchor_bottom = 0.89
+margin_bottom = 0.0
 text = "Forward: W"
 
 [node name="move_backwardBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.88
+anchor_left = 0.10
+anchor_top = 0.89
 anchor_right = 0.45
-anchor_bottom = 0.82
-margin_bottom = 20.0
+anchor_bottom = 0.93
+margin_bottom = 0.0
 text = "Back: W"
 
 [node name="move_leftBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.92
+anchor_left = 0.10
+anchor_top = 0.93
 anchor_right = 0.45
-anchor_bottom = 0.86
-margin_bottom = 20.0
+anchor_bottom = 0.97
+margin_bottom = 0.0
 text = "Left: W"
 
 [node name="move_rightBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.96
-anchor_right = 0.45
-anchor_bottom = 0.90
-margin_bottom = 20.0
+anchor_left = 0.55
+anchor_top = 0.85
+anchor_right = 0.90
+anchor_bottom = 0.89
+margin_bottom = 0.0
 text = "Right: W"
 
 [node name="jumpBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.05
-anchor_top = 0.94
-anchor_right = 0.45
-anchor_bottom = 0.94
-margin_bottom = 20.0
+anchor_left = 0.55
+anchor_top = 0.89
+anchor_right = 0.90
+anchor_bottom = 0.93
+margin_bottom = 0.0
 text = "Jump: W"
 
 [node name="SfxSlider" type="HSlider" parent="UI/Menu/Panel"]
@@ -542,62 +542,62 @@ step = 0.05
 value = 0.3
 
 [node name="StartBtn" type="Button" parent="UI/Menu/Panel"]
-anchor_left = 0.25
+anchor_left = 0.20
 anchor_top = 0.42
-anchor_right = 0.75
-anchor_bottom = 0.42
-margin_bottom = 30.0
-text = "Start Game"
+anchor_right = 0.80
+anchor_bottom = 0.48
+margin_bottom = 0.0
+text = "Play Level 1"
 
 [node name="Level2Btn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.25
-anchor_top = 0.50
-anchor_right = 0.75
-anchor_bottom = 0.50
-margin_bottom = 30.0
-text = "Level 2 (Floating)"
+anchor_left = 0.20
+anchor_top = 0.52
+anchor_right = 0.80
+anchor_bottom = 0.58
+margin_bottom = 0.0
+text = "Level 2 - Floating Isles"
 
 [node name="Level3Btn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.25
-anchor_top = 0.58
-anchor_right = 0.75
-anchor_bottom = 0.58
-margin_bottom = 30.0
-text = "Level 3 (Fortress)"
+anchor_left = 0.20
+anchor_top = 0.62
+anchor_right = 0.80
+anchor_bottom = 0.68
+margin_bottom = 0.0
+text = "Level 3 - Fortress"
 
 [node name="NextBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.25
+anchor_left = 0.20
 anchor_top = 0.42
-anchor_right = 0.75
-anchor_bottom = 0.42
-margin_bottom = 30.0
+anchor_right = 0.80
+anchor_bottom = 0.48
+margin_bottom = 0.0
 text = "Next Level"
 
 [node name="BackMenuBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
-anchor_left = 0.25
-anchor_top = 0.66
-anchor_right = 0.75
-anchor_bottom = 0.66
-margin_bottom = 30.0
+anchor_left = 0.20
+anchor_top = 0.62
+anchor_right = 0.80
+anchor_bottom = 0.68
+margin_bottom = 0.0
 text = "Back to Menu"
 
 
 [node name="RestartBtn" type="Button" parent="UI/Menu/Panel"]
-anchor_left = 0.25
-anchor_top = 0.50
-anchor_right = 0.75
-anchor_bottom = 0.50
-margin_bottom = 30.0
+anchor_left = 0.20
+anchor_top = 0.52
+anchor_right = 0.80
+anchor_bottom = 0.58
+margin_bottom = 0.0
 text = "Restart"
 
 [node name="QuitBtn" type="Button" parent="UI/Menu/Panel"]
-anchor_left = 0.25
-anchor_top = 0.74
-anchor_right = 0.75
-anchor_bottom = 0.74
-margin_bottom = 30.0
+anchor_left = 0.20
+anchor_top = 0.77
+anchor_right = 0.80
+anchor_bottom = 0.83
+margin_bottom = 0.0
 text = "Quit"
