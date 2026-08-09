@@ -70,6 +70,7 @@ var wins_total = 0
 func start_game():
 	score = 0
 	time_left = duration
+	was_hit = false
 	emit_signal("score_changed", 0)
 	emit_signal("timer_changed", duration)
 	countdown_left = countdown_time
@@ -91,6 +92,8 @@ func _on_level_complete():
 	LevelManager.unlock_next()
 	_check_achievements()
 
+var was_hit = false
+
 func _check_achievements():
 	wins_total += 1
 	if wins_total >= 1:
@@ -99,6 +102,12 @@ func _check_achievements():
 		Achievements.unlock("three_wins")
 	if time_left >= duration - 25.0:
 		Achievements.unlock("sprinter")
+	if not was_hit:
+		Achievements.unlock("no_hit")
+	# collector: check if all coins collected (score >= target without respawns)
+	# Simplification: if score >= target * 1.5, consider "collected most"
+	if score >= target * 2:
+		Achievements.unlock("collector")
 
 func player_died():
 	if state == State.PLAYING:

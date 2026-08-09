@@ -287,17 +287,20 @@ func _show():
 		panel.modulate.a = 0.0
 		panel.pivot_offset = panel.size / 2.0
 		panel.scale = Vector2(0.85, 0.85)
-	# Show settings sliders
+	# Show settings sliders with synced values
 	if sens:
 		sens.visible = true
+		sens.value = SettingsManager.get_setting("sensitivity", 0.3)
 		var sl = get_node_or_null("Panel/SensLabel")
 		if sl: sl.visible = true
 	if sfx:
 		sfx.visible = true
+		sfx.value = SettingsManager.get_volume("sfx", 0.0)
 		var sfl = get_node_or_null("Panel/SfxLabel")
 		if sfl: sfl.visible = true
 	if music:
 		music.visible = true
+		music.value = SettingsManager.get_volume("music", -12.0)
 		var ml = get_node_or_null("Panel/MusicLabel")
 		if ml: ml.visible = true
 	if backmenu:

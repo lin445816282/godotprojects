@@ -275,6 +275,7 @@ func update_animation(dt):
 func take_hit(from : Vector3):
 	if dead or invuln_timer > 0.0:
 		return
+	GameManager.was_hit = true
 	if has_shield:
 		has_shield = false
 		AudioManager.play("powerup")
