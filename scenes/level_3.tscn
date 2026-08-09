@@ -52,11 +52,6 @@ script = ExtResource( 7 )
 transform = Transform( 0.7, 0, 0.7, 0.35, 0.87, -0.35, -0.61, 0.5, 0.61, 0, 8, 0 )
 light_energy = 8.0
 shadow_enabled = true
-[node name="CameraOrbit" type="Camera3D" parent="."]
-current = true
-script = ExtResource( 7 )
-
-
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 material_override = SubResource( 7 )
