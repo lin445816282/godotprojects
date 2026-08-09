@@ -12,4 +12,5 @@ static func checker(rows = 8, cols = 8, a = Color(0.35, 0.6, 0.35), b = Color(0.
 	tex.create_from_image(img)
 	var mat = StandardMaterial3D.new()
 	mat.albedo_texture = tex
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	return mat

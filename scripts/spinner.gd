@@ -8,6 +8,12 @@ var hit_cooldown = 0.0
 func _ready():
 	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
+	# 给 spinner 添加可见材质
+	if not $Mesh.material_override:
+		var spin_mat = StandardMaterial3D.new()
+		spin_mat.albedo_color = Color(0.7, 0.3, 0.1, 1)
+		spin_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		$Mesh.material_override = spin_mat
 
 func _process(dt):
 	if GameManager.state != GameManager.State.PLAYING:

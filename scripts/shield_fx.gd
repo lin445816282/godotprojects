@@ -15,6 +15,7 @@ func _ready():
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = Color(0.2, 0.8, 0.2, 0.3)
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		mat.emission_enabled = true
 		mat.emission = Color(0.2, 0.8, 0.2, 0.3)
 		sphere.material_override = mat
