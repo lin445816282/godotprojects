@@ -93,12 +93,12 @@ func _pick(body):
 	burst_particles()
 	if body.has_method("collect_coin_effect"):
 		body.collect_coin_effect()
-	$Col.disabled = true
+	$Col.set_deferred("disabled", true)
 
 func _on_game_started():
 	taken = false
 	ptimer = 0.0
 	scale = Vector3(1, 1, 1)
 	$Mesh.visible = true
-	$Col.disabled = false
+	$Col.set_deferred("disabled", false)
 	base_y = global_position.y

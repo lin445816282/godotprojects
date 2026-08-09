@@ -28,5 +28,5 @@ func _pick(body):
 		if n.has_method("unlock"):
 			n.unlock()
 	$Mesh.visible = false
-	$Col.disabled = true
+	$Col.set_deferred("disabled", true)
 	AudioManager.play("coin3")

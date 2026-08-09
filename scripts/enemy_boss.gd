@@ -30,7 +30,7 @@ func _on_game_started():
 	if $Mesh.material_override:
 		$Mesh.material_override.albedo_color = Color(1, 0.1, 0.1, 1)
 	$Mesh.visible = true
-	$Col.disabled = false
+	$Col.set_deferred("disabled", false)
 
 func _process(dt):
 	if GameManager.state != GameManager.State.PLAYING:
@@ -123,7 +123,7 @@ func take_damage(amount):
 	AudioManager.play("death")
 	if health <= 0:
 		$Mesh.visible = false
-		$Col.disabled = true
+		$Col.set_deferred("disabled", true)
 		for c in get_parent().get_children():
 			if c.is_in_group("boss_projectiles"):
 				c.queue_free()
