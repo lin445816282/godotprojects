@@ -113,36 +113,40 @@ func toggle_pause():
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
 func load_level(idx):
-	# Use a simple Popup for loading feedback
-	var popup = Popup.new()
-	popup.name = "LoadingPopup"
-	popup.popup_exclusive = true
-	popup.transparent_bg = true
-	popup.set_anchors_preset(Control.PRESET_FULL_RECT)
-	get_tree().current_scene.add_child(popup)
-	popup.popup_centered()
+	# Find or create a UI root to attach loading screen
+	var ui_root = get_tree().current_scene.get_node_or_null("UI")
+	if not ui_root:
+		ui_root = Control.new()
+		ui_root.name = "LoadingUI"
+		ui_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+		ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		get_tree().current_scene.add_child(ui_root)
 	
-	var bg = ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.85)
-	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	popup.add_child(bg)
+	var overlay = ColorRect.new()
+	overlay.name = "LoadingOverlay"
+	overlay.color = Color(0, 0, 0, 0.85)
+	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	ui_root.add_child(overlay)
 	
 	var label = Label.new()
+	label.name = "LoadingLabel"
 	var names = I18n.t_arr("level_names") if idx >= 0 and idx < LEVELS.size() else []
-	label.text = names[idx] if idx >= 0 and idx < LEVELS.size() and idx < names.size() else "..."
+	var txt = names[idx] if idx >= 0 and idx < LEVELS.size() and idx < names.size() else "..."
+	label.text = txt + "\n" + I18n.t("loading_text")
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.set_anchors_preset(Control.PRESET_CENTER)
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	label.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
 	label.add_theme_font_size_override("font_size", 32)
-	popup.add_child(label)
+	overlay.add_child(label)
 	
-	# Force process one frame so popup renders
+	# Render two frames
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
-	if is_instance_valid(popup):
-		popup.queue_free()
+	overlay.queue_free()
+	if ui_root.name == "LoadingUI":
+		ui_root.queue_free()
 	
 	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
