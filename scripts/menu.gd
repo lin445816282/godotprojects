@@ -21,29 +21,50 @@ var listening_action = ""
 
 func _ready():
 	GameManager.state_changed.connect(_st)
-	start.pressed.connect(GameManager.start_game)
-	restart.pressed.connect(GameManager.start_game)
-	quit_btn.pressed.connect(GameManager.quit_game)
-	if lvl2:
-		lvl2.pressed.connect(_go_lvl2)
-	if backmenu:
-		backmenu.pressed.connect(_back_to_menu)
-	if next:
-		next.pressed.connect(_go_next)
-	if lvl3:
-		lvl3.pressed.connect(_go_lvl3)
-	if sens:
-		sens.value_changed.connect(_sens_changed)
-	if sfx:
-		sfx.value_changed.connect(_sfx_changed)
-	if music:
-		music.value_changed.connect(_music_changed)
+	_connect_signals()
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var b = get_node_or_null("Panel/" + a + "Btn")
 		if b:
 			b.pressed.connect(start_listen.bind(a))
 			keybtns.append(a)
 	_show()
+func _connect_signals():
+	if start and not start.pressed.is_connected(GameManager.start_game):
+		start.pressed.connect(GameManager.start_game)
+	if restart and not restart.pressed.is_connected(GameManager.start_game):
+		restart.pressed.connect(GameManager.start_game)
+	if quit_btn and not quit_btn.pressed.is_connected(GameManager.quit_game):
+		quit_btn.pressed.connect(GameManager.quit_game)
+	if lvl2 and not lvl2.pressed.is_connected(_go_lvl2):
+		lvl2.pressed.connect(_go_lvl2)
+	if backmenu and not backmenu.pressed.is_connected(_back_to_menu):
+		backmenu.pressed.connect(_back_to_menu)
+	if next and not next.pressed.is_connected(_go_next):
+		next.pressed.connect(_go_next)
+	if lvl3 and not lvl3.pressed.is_connected(_go_lvl3):
+		lvl3.pressed.connect(_go_lvl3)
+	if sens and not sens.value_changed.is_connected(_sens_changed):
+		sens.value_changed.connect(_sens_changed)
+	if sfx and not sfx.value_changed.is_connected(_sfx_changed):
+		sfx.value_changed.connect(_sfx_changed)
+	if music and not music.value_changed.is_connected(_music_changed):
+		music.value_changed.connect(_music_changed)
+
+func setup_nodes():
+	title = get_node_or_null("Panel/Title")
+	info = get_node_or_null("Panel/Info")
+	start = get_node_or_null("Panel/StartBtn")
+	restart = get_node_or_null("Panel/RestartBtn")
+	quit_btn = get_node_or_null("Panel/QuitBtn")
+	lvl2 = get_node_or_null("Panel/Level2Btn")
+	backmenu = get_node_or_null("Panel/BackMenuBtn")
+	next = get_node_or_null("Panel/NextBtn")
+	lvl3 = get_node_or_null("Panel/Level3Btn")
+	sens = get_node_or_null("Panel/SensSlider")
+	sfx = get_node_or_null("Panel/SfxSlider")
+	music = get_node_or_null("Panel/MusicSlider")
+	_connect_signals()
+
 
 func _st(st):
 	if st == GameManager.State.MENU:

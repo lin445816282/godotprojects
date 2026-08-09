@@ -153,3 +153,6 @@ func _create_ui():
 	
 	ui.add_child(menu)
 	add_child(ui)
+	# Re-bind menu signals now that all buttons exist
+	if menu.has_method("setup_nodes"):
+		menu.setup_nodes()
