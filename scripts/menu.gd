@@ -82,6 +82,9 @@ func _pause():
 	quit_btn.visible = true
 	if backmenu:
 		backmenu.visible = true
+	if sens: sens.visible = false
+	if sfx: sfx.visible = false
+	if music: music.visible = false
 
 func _process(dt):
 	if visible and state_anim:
@@ -118,11 +121,11 @@ func _show():
 	time = 0.0
 	visible = true
 	if sens:
-		sens.value = SettingsManager.get_setting("sensitivity", 0.3)
+		sens.visible = false
 	if sfx:
-		sfx.value = SettingsManager.get_volume("sfx", 0.0)
+		sfx.visible = false
 	if music:
-		music.value = SettingsManager.get_volume("music", -12.0)
+		music.visible = false
 	if backmenu:
 		backmenu.visible = false
 	title.text = "Coin Quest"

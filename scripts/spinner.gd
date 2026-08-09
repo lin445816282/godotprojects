@@ -11,7 +11,7 @@ func _ready():
 	# 给 spinner 添加可见材质
 	if not $Mesh.material_override:
 		var spin_mat = StandardMaterial3D.new()
-		spin_mat.albedo_color = Color(0.7, 0.3, 0.1, 1)
+		spin_mat.albedo_color = Color(0.55, 0.35, 0.2, 1)
 		spin_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		$Mesh.material_override = spin_mat
 
