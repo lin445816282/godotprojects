@@ -93,6 +93,7 @@ func _create_ui():
 	shade.anchor_right = 1.0
 	shade.anchor_bottom = 1.0
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	shade.color = Color(1, 1, 1, 0)
 	menu.add_child(shade)
 	
 	var panel = Panel.new()
@@ -127,7 +128,7 @@ func _create_ui():
 		"StartBtn": {"text": "Start Game", "pos": 0.40, "vis": true},
 		"NextBtn": {"text": "Next Level", "pos": 0.40, "vis": false},
 		"RestartBtn": {"text": "Restart", "pos": 0.47, "vis": false},
-		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.47, "vis": false},
+		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.57, "vis": false},
 		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.57, "vis": false},
 		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.77, "vis": false},
 		"QuitBtn": {"text": "Quit", "pos": 0.67, "vis": false},
