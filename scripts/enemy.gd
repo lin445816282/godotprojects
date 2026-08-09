@@ -78,7 +78,7 @@ func _process(dt):
 			if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.05, 0.05, 1)
 		if dist_to_origin() < 0.3:
 			state = State.PATROL
-			if $Mesh.material_override: if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
+			if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
 			idx = find_nearest_waypoint()
 
 	match state:
