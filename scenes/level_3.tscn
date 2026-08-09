@@ -90,7 +90,6 @@ shadow_enabled = true
 material_override = SubResource( 7 )
 script = ExtResource( 6 )
 mesh = SubResource( 8 )
-script = ExtResource( 6 )
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -146,7 +145,6 @@ script = ExtResource( 5 )
 
 [node name="Mesh" type="MeshInstance3D" parent="Plat"]
 material_override = SubResource( 7 )
-script = ExtResource( 6 )
 mesh = SubResource( 8 )
 
 [node name="Col" type="CollisionShape3D" parent="Plat"]
