@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource path="res://scripts/level_2.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -146,3 +146,57 @@ mesh = SubResource( 9 )
 
 [node name="Col" type="CollisionShape3D" parent="PortalB"]
 shape = SubResource( 10 )
+
+[sub_resource type="StandardMaterial3D" id=13]
+shading_mode = 0
+albedo_color = Color( 0.55, 0.35, 0.2, 1 )
+
+[sub_resource type="CubeMesh" id=14]
+size = Vector3( 24.3, 3, 0.3 )
+
+[sub_resource type="BoxShape" id=15]
+extents = Vector3( 12.15, 1.5, 0.15 )
+
+[node name="Wall_N" type="MeshInstance3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -12 )
+material_override = SubResource( 13 )
+mesh = SubResource( 14 )
+
+[node name="Wall_N_Col" type="StaticBody3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -12 )
+
+[node name="Shape" type="CollisionShape3D" parent="Wall_N_Col"]
+shape = SubResource( 15 )
+
+[node name="Wall_S" type="MeshInstance3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 12 )
+material_override = SubResource( 13 )
+mesh = SubResource( 14 )
+
+[node name="Wall_S_Col" type="StaticBody3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 12 )
+
+[node name="Shape" type="CollisionShape3D" parent="Wall_S_Col"]
+shape = SubResource( 15 )
+
+[node name="Wall_E" type="MeshInstance3D" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 12, 1.5, 0 )
+material_override = SubResource( 13 )
+mesh = SubResource( 14 )
+
+[node name="Wall_E_Col" type="StaticBody3D" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 12, 1.5, 0 )
+
+[node name="Shape" type="CollisionShape3D" parent="Wall_E_Col"]
+shape = SubResource( 15 )
+
+[node name="Wall_W" type="MeshInstance3D" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 1.5, 0 )
+material_override = SubResource( 13 )
+mesh = SubResource( 14 )
+
+[node name="Wall_W_Col" type="StaticBody3D" parent="."]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 1.5, 0 )
+
+[node name="Shape" type="CollisionShape3D" parent="Wall_W_Col"]
+shape = SubResource( 15 )
