@@ -113,14 +113,23 @@ func toggle_pause():
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
 func load_level(idx):
+	# Immediately hide menu
+	var root = get_tree().current_scene
+	var menu = root.get_node_or_null("UI/Menu")
+	if menu:
+		menu.visible = false
+	var ls = root.get_node_or_null("UI/LevelSelect")
+	if ls:
+		ls.visible = false
+	
 	# Find or create a UI root to attach loading screen
-	var ui_root = get_tree().current_scene.get_node_or_null("UI")
+	var ui_root = root.get_node_or_null("UI")
 	if not ui_root:
 		ui_root = Control.new()
 		ui_root.name = "LoadingUI"
 		ui_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 		ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		get_tree().current_scene.add_child(ui_root)
+		root.add_child(ui_root)
 	
 	var overlay = ColorRect.new()
 	overlay.name = "LoadingOverlay"

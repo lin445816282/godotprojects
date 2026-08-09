@@ -84,10 +84,7 @@ func damage_flash():
 func _process(dt):
 	if visible:
 		pulse += dt
-		var prev_hits = hits
 		_sync_hits()
-		if hits != prev_hits:
-			_update_health_bars()
 		if red_flash and flash_timer > 0.0:
 			flash_timer -= dt
 			red_flash.color.a = flash_timer / 0.3 * 0.4
@@ -153,6 +150,7 @@ func _update_health_bars():
 
 func _gs():
 	_update_level()
+	_update_health_bars()
 	s.text = I18n.t("coins_prefix") + "0/" + str(GameManager.target)
 	t.text = I18n.t("time_prefix") + str(int(GameManager.duration)) + "s"
 	t.add_theme_color_override("font_color", Color(1, 1, 1, 1))
