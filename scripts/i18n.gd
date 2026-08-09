@@ -47,6 +47,12 @@ var strings = {
 		"score_text": "Score: ",
 		"press_a_key": "Press a key: ",
 		"unlocked_text": "Unlocked: ",
+		"achievement_unlocked": "Achievement Unlocked!",
+		"first_win_desc": "First Win",
+		"three_wins_desc": "Hat Trick",
+		"sprinter_desc": "Sprinter",
+		"no_hit_desc": "Untouchable",
+		"collector_desc": "Collector",
 	},
 	"zh": {
 		"coin_quest": "金币探险",
@@ -92,6 +98,12 @@ var strings = {
 		"score_text": "分数: ",
 		"press_a_key": "请按键: ",
 		"unlocked_text": "已解锁: ",
+		"achievement_unlocked": "成就解锁!",
+		"first_win_desc": "首次通关",
+		"three_wins_desc": "帽子戏法",
+		"sprinter_desc": "短跑选手",
+		"no_hit_desc": "不可触碰",
+		"collector_desc": "收集狂",
 	}
 }
 

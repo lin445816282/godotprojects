@@ -312,9 +312,11 @@ func _show():
 	if lvl2:
 		lvl2.visible = LevelManager.unlocked > 1
 		lvl2.disabled = LevelManager.unlocked <= 1
+		lvl2.text = I18n.t_arr("level_names")[1]
 	if lvl3:
 		lvl3.visible = LevelManager.unlocked > 2
 		lvl3.disabled = LevelManager.unlocked <= 2
+		lvl3.text = I18n.t_arr("level_names")[2]
 	# Show Level Select button (replaces individual level buttons functionality)
 	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
 	if ls_btn:

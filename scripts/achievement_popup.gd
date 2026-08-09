@@ -27,7 +27,7 @@ func _show_next():
 		panel.self_modulate = Color(0, 0, 0, 0.85)
 	add_child(panel)
 	var label = Label.new()
-	label.text = "Achievement Unlocked!\n" + desc
+	label.text = I18n.t("achievement_unlocked") + "\n" + (I18n.t(desc) if I18n.t(desc) != desc else desc)
 	label.align = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.anchor_right = 1.0

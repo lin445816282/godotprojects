@@ -50,14 +50,14 @@ func _create_ui():
 	score_label.name = "Score"
 	score_label.anchor_left = 0.02
 	score_label.anchor_top = 0.02
-	score_label.text = "Coins: 0/5"
+	score_label.text = I18n.t("coins_prefix") + "0/" + str(GameManager.target)
 	hud.add_child(score_label)
 	
 	var timer_label = Label.new()
 	timer_label.name = "Timer"
 	timer_label.anchor_left = 0.98
 	timer_label.anchor_top = 0.02
-	timer_label.text = "Time: 60s"
+	timer_label.text = I18n.t("time_prefix") + str(int(GameManager.duration)) + "s"
 	timer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	hud.add_child(timer_label)
 	
@@ -66,7 +66,7 @@ func _create_ui():
 	level_label.visible = true
 	level_label.anchor_left = 0.02
 	level_label.anchor_top = 0.07
-	level_label.text = "Level 1   Hits left: 3"
+	level_label.text = I18n.t("level_prefix") + str(GameManager.current_level + 1) + "   " + I18n.t("hits_left_prefix") + "3"
 	hud.add_child(level_label)
 	
 	var count_label = Label.new()
@@ -113,7 +113,7 @@ func _create_ui():
 	title.anchor_bottom = 0.10
 	title.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
 	title.add_theme_font_size_override("font_size", 28)
-	title.text = "Coin Quest"
+	title.text = I18n.t("coin_quest")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(title)
 	
@@ -125,7 +125,7 @@ func _create_ui():
 	info.anchor_bottom = 0.30
 	info.add_theme_color_override("font_color", Color(0.65, 0.65, 0.7, 1))
 	info.add_theme_font_size_override("font_size", 14)
-	info.text = "WASD = Move  Space = Jump"
+	info.text = I18n.t("wasd_hint")
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(info)
 	
@@ -215,7 +215,7 @@ func _create_ui():
 	lb.anchor_left = 0.20
 	lb.anchor_top = 0.90
 	lb.anchor_right = 0.80
-	lb.text = "中文"
+	lb.text = I18n.t("lang_zh") if I18n.lang == "en" else I18n.t("lang_en")
 	lb.visible = false
 	panel.add_child(lb)
 	
