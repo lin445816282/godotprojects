@@ -5,6 +5,8 @@ extends CharacterBody3D
 @export var gravity = 20.0
 
 var dead = false
+var left_eye: MeshInstance3D = null
+var right_eye: MeshInstance3D = null
 var left_arm: MeshInstance3D = null
 var right_arm: MeshInstance3D = null
 var left_leg: MeshInstance3D = null
@@ -63,6 +65,7 @@ func build_body():
 	em.height = 0.1
 	for ox in [-0.12, 0.12]:
 		var eye = MeshInstance3D.new()
+		if ox == -0.12: left_eye = eye else: right_eye = eye
 		eye.mesh = em
 		eye.material_override = eye_mat
 		eye.position = Vector3(ox, 1.28, -0.3)
@@ -147,6 +150,8 @@ func activate_magnet():
 func set_body_visible(v):
 	if torso: torso.visible = v
 	if head: head.visible = v
+	if left_eye: left_eye.visible = v
+	if right_eye: right_eye.visible = v
 	if left_arm: left_arm.visible = v
 	if right_arm: right_arm.visible = v
 	if left_leg: left_leg.visible = v
