@@ -264,7 +264,7 @@ func _music_changed(v):
 
 func start_listen(action):
 	listening_action = action
-	info.text = "Press a key: " + action
+	info.text = I18n.t("press_a_key") + action
 
 func _unhandled_input(event):
 	if listening_action != "" and event is InputEventKey:
@@ -344,7 +344,7 @@ func _end(txt, inf, can_next):
 	title.text = txt
 	# Append star rating
 	var stars = _calc_stars()
-	info.text = inf + "\n" + stars
+	info.text = I18n.t("score_text") + str(GameManager.score) + "\n" + stars
 	start.visible = false
 	restart.visible = true
 	quit_btn.visible = true

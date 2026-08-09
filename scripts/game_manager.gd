@@ -122,10 +122,10 @@ func load_level(idx):
 		loading.set_anchors_preset(Control.PRESET_FULL_RECT)
 		
 		var text = Label.new()
-		text.text = "Loading..."
+		text.text = I18n.t("loading_text")
 		if idx >= 0 and idx < LEVELS.size():
-			var names = ["Grasslands", "Floating Isles", "Fortress", "Frozen Wastes", "Boss Arena"]
-			text.text = "Entering Level " + str(idx + 1) + "\n" + names[idx]
+			var names = I18n.t_arr("level_names")
+			text.text = I18n.t("entering_level_text") + str(idx + 1) + "\n" + names[idx]
 		text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		text.set_anchors_preset(Control.PRESET_FULL_RECT)

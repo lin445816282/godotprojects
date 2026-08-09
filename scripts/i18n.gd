@@ -37,6 +37,16 @@ var strings = {
 		"lang_en": "English",
 		"lang_zh": "中文",
 		"wasd_hint": "WASD = Move  Space = Jump",
+		"coins_prefix": "Coins: ",
+		"time_prefix": "Time: ",
+		"level_prefix": "Level ",
+		"hits_left_prefix": "Hits left: ",
+		"go_text": "GO!",
+		"loading_text": "Loading...",
+		"entering_level_text": "Entering Level ",
+		"score_text": "Score: ",
+		"press_a_key": "Press a key: ",
+		"unlocked_text": "Unlocked: ",
 	},
 	"zh": {
 		"coin_quest": "金币探险",
@@ -72,6 +82,16 @@ var strings = {
 		"lang_en": "English",
 		"lang_zh": "中文",
 		"wasd_hint": "WASD = 移动  空格 = 跳跃",
+		"coins_prefix": "金币: ",
+		"time_prefix": "时间: ",
+		"level_prefix": "关卡 ",
+		"hits_left_prefix": "剩余生命: ",
+		"go_text": "开始!",
+		"loading_text": "加载中...",
+		"entering_level_text": "进入第 ",
+		"score_text": "分数: ",
+		"press_a_key": "请按键: ",
+		"unlocked_text": "已解锁: ",
 	}
 }
 

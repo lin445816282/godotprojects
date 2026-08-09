@@ -70,7 +70,7 @@ func _build_cards():
 		# Play button
 		if is_unlocked:
 			var btn = Button.new()
-			btn.text = "Play"
+			btn.text = I18n.t("play")
 			btn.add_theme_font_size_override("font_size", 14)
 			var level_idx = i
 			btn.pressed.connect(func(): _play_level(level_idx))

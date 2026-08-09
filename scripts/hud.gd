@@ -34,7 +34,7 @@ func _sc(v):
 	var prev = int(s.text.split("//")[0].replace("Coins: ", "").split("/")[0]) if "/" in s.text else 0
 	if v > prev:
 		spawn_feedback(v - prev)
-	s.text = "Coins: " + str(v) + "/" + str(GameManager.target)
+	s.text = I18n.t("coins_prefix") + str(v) + "/" + str(GameManager.target)
 
 func spawn_feedback(delta):
 	var lbl = Label.new()
@@ -58,7 +58,7 @@ func spawn_feedback(delta):
 
 func _tm(v):
 	var sec = int(ceil(v))
-	t.text = "Time: " + str(sec) + "s"
+	t.text = I18n.t("time_prefix") + str(sec) + "s"
 	if v <= 10.0:
 		var c = abs(sin(pulse * 6.0))
 		t.add_theme_color_override("font_color", Color(1, c * 0.5, c * 0.5, 1))
@@ -97,7 +97,7 @@ func _ct(v):
 		if v > 0:
 			count.text = str(v)
 		else:
-			count.text = "GO!"
+			count.text = I18n.t("go_text")
 		count.visible = true
 
 func _gd():
@@ -107,11 +107,11 @@ func _gd():
 func _update_level():
 	if lvl:
 		var cur = GameManager.current_level
-		lvl.text = "Level " + str(cur + 1) + "   Hits left: " + str(max(hits, 0))
+		lvl.text = I18n.t("level_prefix") + str(cur + 1) + "   " + I18n.t("hits_left_prefix") + str(max(hits, 0))
 		lvl.visible = true
 
 func _gs():
 	_update_level()
-	s.text = "Coins: 0/" + str(GameManager.target)
-	t.text = "Time: " + str(int(GameManager.duration)) + "s"
+	s.text = I18n.t("coins_prefix") + "0/" + str(GameManager.target)
+	t.text = I18n.t("time_prefix") + str(int(GameManager.duration)) + "s"
 	t.add_theme_color_override("font_color", Color(1, 1, 1, 1))
