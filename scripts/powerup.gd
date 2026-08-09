@@ -11,17 +11,17 @@ func _ready():
 	GameManager.game_started.connect(_on_game_started)
 	base_y = global_position.y
 	float_time = randf() * TAU
-	var mat = StandardMaterial3D.new()
-	$Mesh.material_override = mat
-	var c = Color(0.8, 0.3, 0.8, 1)
+	var pc = Color(0.8, 0.3, 0.8, 1)
 	if power_type == Type.SHIELD:
-		c = Color(0.2, 0.8, 0.2, 1)
+		pc = Color(0.2, 0.8, 0.2, 1)
 	elif power_type == Type.SPEED:
-		c = Color(0.8, 0.8, 0.1, 1)
-	$Mesh.material_override.albedo_color = c
-	$Mesh.material_override
-	$Mesh.material_override.emission_color = c
-	$Mesh.material_override.emission_energy = 1.3
+		pc = Color(0.8, 0.8, 0.1, 1)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = pc
+	mat.emission_enabled = true
+	mat.emission = pc
+	mat.emission_energy_multiplier = 1.3
+	$Mesh.material_override = mat
 
 func _process(dt):
 	if taken:

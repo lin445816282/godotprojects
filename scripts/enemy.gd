@@ -24,11 +24,12 @@ func _ready():
 	_setup_glow()
 
 func _setup_glow():
-	if $Mesh.material_override:
-		var m = $Mesh.material_override.duplicate()
-		m.emission_color = Color(1, 0.2, 0.2, 1)
-		m.emission_energy = 2.0
-		$Mesh.material_override = m
+	var m = StandardMaterial3D.new()
+	m.albedo_color = Color(1, 0.15, 0.15, 1)
+	m.emission_enabled = true
+	m.emission = Color(1, 0.2, 0.2, 1)
+	m.emission_energy_multiplier = 2.0
+	$Mesh.material_override = m
 	for c in get_children():
 		if c is Marker3D and c.name.begins_with("WP"):
 			wps.append(c.global_position)
@@ -42,7 +43,7 @@ func _on_game_started():
 	pulse = 0.0
 	player = null
 	global_position = origin
-	$Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
+	if $Mesh.material_override: if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
 
 func _process(dt):
 	pulse += dt
@@ -59,7 +60,7 @@ func _process(dt):
 	if state == State.CHASE:
 		if dist_to_player > detect_range * 1.5:
 			state = State.RETURN
-			$Mesh.material_override.albedo_color = Color(1, 0.5, 0.1, 1)
+			if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.5, 0.1, 1)
 		elif dist_to_player <= 0.8 and attack_timer <= 0.0:
 			_hit(player)
 			attack_timer = attack_cooldown
@@ -67,14 +68,14 @@ func _process(dt):
 	elif state == State.PATROL:
 		if player and dist_to_player < detect_range:
 			state = State.CHASE
-			$Mesh.material_override.albedo_color = Color(1, 0.05, 0.05, 1)
+			if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.05, 0.05, 1)
 	elif state == State.RETURN:
 		if dist_to_player < detect_range:
 			state = State.CHASE
-			$Mesh.material_override.albedo_color = Color(1, 0.05, 0.05, 1)
+			if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.05, 0.05, 1)
 		if dist_to_origin() < 0.3:
 			state = State.PATROL
-			$Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
+			if $Mesh.material_override: if $Mesh.material_override: $Mesh.material_override.albedo_color = Color(1, 0.15, 0.15, 1)
 			idx = find_nearest_waypoint()
 
 	match state:

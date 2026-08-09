@@ -39,8 +39,9 @@ func fire():
 	mesh.mesh = sm
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color(1, 0.3, 0.1, 1)
-	mat.emission_color = Color(1, 0.2, 0.0, 1)
-	mat.emission_energy = 1.5
+	mat.emission_enabled = true
+	mat.emission = Color(1, 0.2, 0.0, 1)
+	mat.emission_energy_multiplier = 1.5
 	mesh.material_override = mat
 	b.add_child(mesh)
 	var col = CollisionShape3D.new()

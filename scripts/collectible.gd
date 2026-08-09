@@ -45,14 +45,11 @@ func _apply_tier():
 		_:
 			col = Color(1, 0.6, 0.1, 1)
 			worth = 1
-	var m
-	if $Mesh.material_override == null:
-		m = StandardMaterial3D.new()
-	else:
-		m = $Mesh.material_override.duplicate()
+	var m = StandardMaterial3D.new()
 	m.albedo_color = col
-	m.emission_color = col
-	m.emission_energy = 1.5
+	m.emission_enabled = true
+	m.emission = col
+	m.emission_energy_multiplier = 1.5
 	$Mesh.material_override = m
 
 func _process(dt):

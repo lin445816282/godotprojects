@@ -18,8 +18,8 @@ func _ready():
 		$Mesh.material_override = $Mesh.material_override.duplicate()
 		$Mesh.material_override.albedo_color = Color(1, 0.1, 0.1, 1)
 		$Mesh.material_override
-		$Mesh.material_override.emission_color = Color(1, 0.05, 0.05, 1)
-		$Mesh.material_override.emission_energy = 3.0
+		$Mesh.material_override.emission = Color(1, 0.05, 0.05, 1)
+		$Mesh.material_override.emission_energy_multiplier = 3.0
 	$Mesh.scale = Vector3(2.0, 2.5, 2.0)
 
 func _on_game_started():
@@ -83,8 +83,9 @@ func shoot_pattern(count, cd):
 		mesh.mesh = sm
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = Color(1, 0.2, 0.2, 1)
-		mat.emission_color = Color(1, 0.1, 0.1, 1)
-		mat.emission_energy = 2.0
+		mat.emission_enabled = true
+		mat.emission = Color(1, 0.1, 0.1, 1)
+		mat.emission_energy_multiplier = 2.0
 		mesh.material_override = mat
 		b.add_child(mesh)
 		# Collision
