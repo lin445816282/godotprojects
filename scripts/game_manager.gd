@@ -154,6 +154,15 @@ func show_loading(idx):
 	progress.name = "LoadProgress"
 	progress.custom_minimum_size = Vector2(260, 22)
 	progress.value = 0.0
+	# Theme overrides so the bar is actually visible
+	var bg = StyleBoxFlat.new()
+	bg.bg_color = Color(0.15, 0.15, 0.2, 1)
+	bg.set_corner_radius_all(4)
+	progress.add_theme_stylebox_override("background", bg)
+	var fill = StyleBoxFlat.new()
+	fill.bg_color = Color(1, 0.85, 0.1, 1)
+	fill.set_corner_radius_all(4)
+	progress.add_theme_stylebox_override("fill", fill)
 	vbox.add_child(progress)
 	
 	var label = Label.new()

@@ -84,7 +84,10 @@ func damage_flash():
 func _process(dt):
 	if visible:
 		pulse += dt
+		var prev_hits = hits
 		_sync_hits()
+		if hits != prev_hits:
+			_update_health_bars()
 		if red_flash and flash_timer > 0.0:
 			flash_timer -= dt
 			red_flash.color.a = flash_timer / 0.3 * 0.4
@@ -107,8 +110,46 @@ func _gd():
 func _update_level():
 	if lvl:
 		var cur = GameManager.current_level
-		lvl.text = I18n.t("level_prefix") + str(cur + 1) + "   " + I18n.t("hits_left_prefix") + str(max(hits, 0))
+		lvl.text = I18n.t("level_prefix") + str(cur + 1)
 		lvl.visible = true
+	_update_health_bars()
+
+var health_bars = []
+
+func _update_health_bars():
+	var players = get_tree().get_nodes_in_group("player")
+	var max_hits = 3
+	var cur_hits = hits
+	if players.size() > 0 and players[0].has_method("get_hits"):
+		max_hits = 3
+		cur_hits = players[0].get_hits()
+	cur_hits = max(cur_hits, 0)
+	# Remove old bars
+	for b in health_bars:
+		if is_instance_valid(b):
+			b.queue_free()
+	health_bars.clear()
+	# Create health bar container
+	var hbox = HBoxContainer.new()
+	hbox.name = "HealthBars"
+	hbox.anchor_left = 0.02
+	hbox.anchor_top = 0.12
+	hbox.custom_minimum_size = Vector2(120, 10)
+	add_child(hbox)
+	health_bars.append(hbox)
+	for i in range(max_hits):
+		var seg = ColorRect.new()
+		seg.custom_minimum_size = Vector2(30, 8)
+		if i < cur_hits:
+			seg.color = Color(0.2, 0.9, 0.2, 1)
+		else:
+			seg.color = Color(0.3, 0.1, 0.1, 1)
+		hbox.add_child(seg)
+		var gap = ColorRect.new()
+		gap.custom_minimum_size = Vector2(3, 8)
+		gap.color = Color(0, 0, 0, 0)
+		hbox.add_child(gap)
+		health_bars.append(gap)
 
 func _gs():
 	_update_level()
