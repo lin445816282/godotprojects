@@ -144,7 +144,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -4 )
 script = ExtResource( 5 )
 
 [node name="Mesh" type="MeshInstance3D" parent="Plat"]
-material_override = SubResource( 7 )
+material_override = SubResource( 23 )
 mesh = SubResource( 8 )
 
 [node name="Col" type="CollisionShape3D" parent="Plat"]
