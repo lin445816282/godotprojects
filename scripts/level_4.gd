@@ -3,7 +3,7 @@ extends Node3D
 # 关卡4：冰原 — 低摩擦移动平台、大量旋转障碍、磁铁道具密集
 func _ready():
 	GameManager.current_level = 3
-	GameManager.target = 22
+	GameManager.target = 15
 	GameManager.duration = 55.0
 	var we = get_node_or_null("WorldEnv")
 	if we and we.environment:
