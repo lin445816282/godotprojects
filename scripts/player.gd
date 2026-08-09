@@ -65,9 +65,9 @@ func build_body():
 	em.height = 0.1
 	for ox in [-0.12, 0.12]:
 		var eye = MeshInstance3D.new()
-		if ox == -0.12:
+		if ox < 0:
 			left_eye = eye
-		else:
+		elif ox > 0:
 			right_eye = eye
 		eye.mesh = em
 		eye.material_override = eye_mat
