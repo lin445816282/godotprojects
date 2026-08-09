@@ -36,6 +36,7 @@ func _ready():
 func build_body():
 	var body_mat = StandardMaterial3D.new()
 	body_mat.albedo_color = Color(0.15, 0.45, 0.9, 1)
+	body_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	torso = MeshInstance3D.new()
 	var tm = BoxMesh.new()
 	tm.size = Vector3(0.9, 0.8, 0.5)
@@ -45,6 +46,7 @@ func build_body():
 	add_child(torso)
 	var head_mat = StandardMaterial3D.new()
 	head_mat.albedo_color = Color(0.25, 0.6, 1.0, 1)
+	head_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	head = MeshInstance3D.new()
 	var hm = SphereMesh.new()
 	hm.radius = 0.35
@@ -55,6 +57,7 @@ func build_body():
 	add_child(head)
 	var eye_mat = StandardMaterial3D.new()
 	eye_mat.albedo_color = Color(0.05, 0.05, 0.05, 1)
+	eye_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var em = SphereMesh.new()
 	em.radius = 0.07
 	em.height = 0.1
@@ -66,6 +69,7 @@ func build_body():
 		add_child(eye)
 	var arm_mat = StandardMaterial3D.new()
 	arm_mat.albedo_color = Color(0.12, 0.4, 0.85, 1)
+	arm_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var am = BoxMesh.new()
 	am.size = Vector3(0.22, 0.6, 0.22)
 	left_arm = MeshInstance3D.new()
@@ -80,6 +84,7 @@ func build_body():
 	add_child(right_arm)
 	var leg_mat = StandardMaterial3D.new()
 	leg_mat.albedo_color = Color(0.08, 0.25, 0.6, 1)
+	leg_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var lm = BoxMesh.new()
 	lm.size = Vector3(0.24, 0.5, 0.24)
 	left_leg = MeshInstance3D.new()

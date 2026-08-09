@@ -26,6 +26,7 @@ func _ready():
 func _setup_glow():
 	var m = StandardMaterial3D.new()
 	m.albedo_color = Color(1, 0.15, 0.15, 1)
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	m.emission_enabled = true
 	m.emission = Color(1, 0.2, 0.2, 1)
 	m.emission_energy_multiplier = 2.0

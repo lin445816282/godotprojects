@@ -47,6 +47,7 @@ func _apply_tier():
 			worth = 1
 	var m = StandardMaterial3D.new()
 	m.albedo_color = col
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	m.emission_enabled = true
 	m.emission = col
 	m.emission_energy_multiplier = 1.5
