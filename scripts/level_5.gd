@@ -9,15 +9,15 @@ func _ready():
 	if we and we.environment:
 		var env = we.environment
 		env.background_mode = Environment.BG_COLOR
-		env.background_color = Color(0.08, 0.04, 0.06, 1)
-		env.ambient_light_color = Color(0.35, 0.1, 0.08, 1)
-		env.ambient_light_energy = 0.6
+		env.background_color = Color(0.05, 0.08, 0.2, 1)
+		env.ambient_light_color = Color(0.15, 0.12, 0.35, 1)
+		env.ambient_light_energy = 0.5
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_DEPTH
-		env.fog_density = 0.02
-		env.fog_light_color = Color(0.4, 0.08, 0.06, 1)
-		env.fog_depth_begin = 12.0
-		env.fog_depth_end = 30.0
+		env.fog_density = 0.018
+		env.fog_light_color = Color(0.1, 0.12, 0.35, 1)
+		env.fog_depth_begin = 10.0
+		env.fog_depth_end = 28.0
 
 	# 确保 UI 存在
 	if not has_node("UI"):
