@@ -113,13 +113,18 @@ func toggle_pause():
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
 func load_level(idx):
-	# Show loading overlay with progress bar
-	var root = get_tree().current_scene
-	if root and idx >= 0 and idx < LEVELS.size():
+	# Show loading overlay with progress bar via CanvasLayer
+	if idx >= 0 and idx < LEVELS.size():
+		var layer = CanvasLayer.new()
+		layer.name = "LoadingLayer"
+		layer.layer = 128  # Above everything
+		get_tree().current_scene.add_child(layer)
+		
 		var loading = ColorRect.new()
 		loading.name = "LoadingOverlay"
 		loading.color = Color(0, 0, 0, 0.85)
 		loading.set_anchors_preset(Control.PRESET_FULL_RECT)
+		layer.add_child(loading)
 		
 		# Container for text + progress bar
 		var vbox = VBoxContainer.new()
@@ -156,15 +161,12 @@ func load_level(idx):
 		label.text = "0%"
 		vbox.add_child(label)
 		
-		root.add_child(loading)
-		
 		# Animate progress bar over ~0.6s then switch scene
-		var tween = root.create_tween()
+		var tween = loading.create_tween()
 		tween.tween_property(progress, "value", 1.0, 0.6).set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(progress, "value", 1.0, 0.0)
 		# Update percentage text
 		var timer = 0.0
-		while timer < 0.6 and is_instance_valid(loading):
+		while timer < 0.6 and is_instance_valid(layer):
 			timer += get_process_delta_time()
 			var pct = min(timer / 0.6 * 100.0, 99.0)
 			if is_instance_valid(label):
