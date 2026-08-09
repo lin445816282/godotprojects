@@ -5,6 +5,7 @@ extends Area3D
 @export var hop_freq = 1.0
 var base_y = 0.0
 var t = 0.0
+var hit_cooldown = 0.0
 
 func _ready():
 	body_entered.connect(_hit)
@@ -15,16 +16,19 @@ func _process(dt):
 	if GameManager.state != GameManager.State.PLAYING:
 		return
 	t += dt
+	hit_cooldown = max(hit_cooldown - dt, 0.0)
 	var pos = global_position
 	pos.y = base_y + abs(sin(t * hop_freq)) * hop_amp
 	global_position = pos
 
 func _hit(body):
-	if body.is_in_group("player") and body.has_method("take_hit"):
+	if body.is_in_group("player") and body.has_method("take_hit") and hit_cooldown <= 0.0:
 		body.take_hit(Vector3(0, 0, 0))
+		hit_cooldown = 0.5
 
 func _on_game_started():
 	if not is_inside_tree():
 		return
 	t = 0.0
+	hit_cooldown = 0.0
 	global_position.y = base_y
