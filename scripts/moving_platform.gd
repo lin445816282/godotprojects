@@ -14,6 +14,12 @@ func _ready():
 	if a:
 		a.body_entered.connect(_on_Area_body_entered)
 		a.body_exited.connect(_on_Area_body_exited)
+	# 给平台添加可见材质
+	if has_node("Mesh") and not $Mesh.material_override:
+		var plat_mat = StandardMaterial3D.new()
+		plat_mat.albedo_color = Color(0.55, 0.35, 0.2, 1)
+		plat_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		$Mesh.material_override = plat_mat
 
 func _physics_process(dt):
 	phase += dt * speed
