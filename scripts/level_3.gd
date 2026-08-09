@@ -3,7 +3,7 @@ extends Node3D
 # Level 3 — procedurally generated
 func _ready():
 	GameManager.current_level = 2
-	GameManager.target = 14
+	GameManager.target = 18
 	GameManager.duration = 45.0
 	var we = get_node_or_null("WorldEnv")
 	if we and we.environment:
