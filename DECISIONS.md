@@ -30,3 +30,22 @@
 - A) 每个关卡场景自包含 Player + UI（冗余但简单）
 - B) Player/UI 作为 autoload 或独立场景叠加（避免重复但架构变复杂）
 
+
+## 2026-08-09: Player float/hang fix
+
+**Problem**: 进入 Level 3 后人物悬在半空，吃几分后跳回中间悬挂。
+
+**Root cause chain**:
+1. `player.gd:_ready()` calls `reset()` → `position = (0, 2, 0)`
+2. GameManager enters COUNTDOWN state after scene load
+3. Player physics was blocked during COUNTDOWN → gravity didn't apply → player hung at y=2
+4. `_on_game_started` called `reset()` again → re-teleported player to (0, 2, 0) even after gravity pulled them down
+5. After collecting coins to reach target → WIN state → player teleported to (0, 2, 0)
+
+**Fixes applied**:
+- Player physics now runs during COUNTDOWN (not blocked)
+- `_on_game_started` no longer calls `reset()` — keeps the player's current position, only resets gameplay state (dead, hits, powerups)
+- MENU/WIN/LOSE state still teleports player to (0, 2, 0) by design (for menu scene reset)
+
+**Remaining**: Level 3 enemy patrol runs outside walls — enemies use direct `global_position` manipulation without collision, need to constrain or switch to physics-based movement.
+
