@@ -164,7 +164,7 @@ func _physics_process(dt):
 	if GameManager.state == GameManager.State.PAUSED:
 		velocity = Vector3.ZERO
 		return
-	if GameManager.state != GameManager.State.PLAYING:
+	if GameManager.state != GameManager.State.PLAYING and GameManager.state != GameManager.State.COUNTDOWN:
 		velocity = Vector3.ZERO
 		if GameManager.state == GameManager.State.MENU or GameManager.state == GameManager.State.WIN or GameManager.state == GameManager.State.LOSE:
 			position = Vector3(0, 2.0, 0)
