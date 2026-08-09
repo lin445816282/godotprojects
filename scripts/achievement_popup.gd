@@ -13,7 +13,7 @@ func _on_achievement(name):
 		_show_next()
 
 func _show_next():
-	if achievements_queue.empty():
+	if achievements_queue.is_empty():
 		showing = false
 		return
 	showing = true

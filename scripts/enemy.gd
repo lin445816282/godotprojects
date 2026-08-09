@@ -105,7 +105,7 @@ func dist_to_origin():
 	return (global_position - origin).length()
 
 func find_nearest_waypoint():
-	if wps.empty():
+	if wps.is_empty():
 		return 0
 	var best = 0
 	var best_dist = 9999.0
@@ -117,7 +117,7 @@ func find_nearest_waypoint():
 	return best
 
 func do_patrol(dt):
-	if wps.empty():
+	if wps.is_empty():
 		return
 	if waiting:
 		wtimer -= dt
