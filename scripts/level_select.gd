@@ -105,5 +105,5 @@ func _hide():
 	_build_cards()
 
 func _play_level(idx):
-	GameManager.load_level(idx)
 	visible = false
+	GameManager.load_level(idx)
