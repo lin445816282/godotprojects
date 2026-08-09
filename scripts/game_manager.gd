@@ -112,69 +112,70 @@ func toggle_pause():
 
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
-func load_level(idx):
-	# Show loading overlay with progress bar via CanvasLayer
-	if idx >= 0 and idx < LEVELS.size():
-		var layer = CanvasLayer.new()
-		layer.name = "LoadingLayer"
-		layer.layer = 128  # Above everything
-		get_tree().current_scene.add_child(layer)
-		
-		var loading = ColorRect.new()
-		loading.name = "LoadingOverlay"
-		loading.color = Color(0, 0, 0, 0.85)
-		loading.set_anchors_preset(Control.PRESET_FULL_RECT)
-		layer.add_child(loading)
-		
-		# Container for text + progress bar
-		var vbox = VBoxContainer.new()
-		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-		vbox.set_anchors_preset(Control.PRESET_CENTER)
-		vbox.custom_minimum_size = Vector2(300, 100)
-		loading.add_child(vbox)
-		
-		var text = Label.new()
-		var names = I18n.t_arr("level_names")
-		text.text = I18n.t("entering_level_text") + str(idx + 1) + " " + names[idx]
-		text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
-		text.add_theme_font_size_override("font_size", 28)
-		vbox.add_child(text)
-		
-		# Spacer
-		var spacer = Control.new()
-		spacer.custom_minimum_size = Vector2(0, 12)
-		vbox.add_child(spacer)
-		
-		# Progress bar
-		var progress = ProgressBar.new()
-		progress.name = "LoadProgress"
-		progress.custom_minimum_size = Vector2(200, 20)
-		progress.value = 0.0
-		vbox.add_child(progress)
-		
-		var label = Label.new()
-		label.name = "LoadLabel"
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))
-		label.add_theme_font_size_override("font_size", 14)
-		label.text = "0%"
-		vbox.add_child(label)
-		
-		# Animate progress bar over ~0.6s then switch scene
-		var tween = loading.create_tween()
-		tween.tween_property(progress, "value", 1.0, 0.6).set_ease(Tween.EASE_IN_OUT)
-		# Update percentage text
-		var timer = 0.0
-		while timer < 0.6 and is_instance_valid(layer):
-			timer += get_process_delta_time()
-			var pct = min(timer / 0.6 * 100.0, 99.0)
-			if is_instance_valid(label):
-				label.text = str(int(pct)) + "%"
-			await get_tree().process_frame
+func show_loading(idx):
+	if idx < 0 or idx >= LEVELS.size():
+		return
+	var layer = CanvasLayer.new()
+	layer.name = "LoadingLayer"
+	layer.layer = 128
+	get_tree().current_scene.add_child(layer)
+	
+	var loading = ColorRect.new()
+	loading.name = "LoadingOverlay"
+	loading.color = Color(0, 0, 0, 0.85)
+	loading.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(loading)
+	
+	var vbox = VBoxContainer.new()
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.set_anchors_preset(Control.PRESET_CENTER)
+	loading.add_child(vbox)
+	
+	var text = Label.new()
+	var names = I18n.t_arr("level_names")
+	var label_text = I18n.t("restart") if idx == GameManager.current_level else I18n.t("entering_level_text")
+	if idx == GameManager.current_level:
+		text.text = label_text + " " + names[idx]
+	else:
+		text.text = label_text + str(idx + 1) + " " + names[idx]
+	text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
+	text.add_theme_font_size_override("font_size", 28)
+	vbox.add_child(text)
+	
+	var spacer = Control.new()
+	spacer.custom_minimum_size = Vector2(0, 12)
+	vbox.add_child(spacer)
+	
+	var progress = ProgressBar.new()
+	progress.name = "LoadProgress"
+	progress.custom_minimum_size = Vector2(260, 22)
+	progress.value = 0.0
+	vbox.add_child(progress)
+	
+	var label = Label.new()
+	label.name = "LoadLabel"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))
+	label.add_theme_font_size_override("font_size", 14)
+	label.text = "0%"
+	vbox.add_child(label)
+	
+	var tween = loading.create_tween()
+	tween.tween_property(progress, "value", 1.0, 0.7).set_ease(Tween.EASE_IN_OUT)
+	var timer = 0.0
+	while timer < 0.7 and is_instance_valid(layer):
+		timer += get_process_delta_time()
+		var pct = min(timer / 0.7 * 100.0, 99.0)
 		if is_instance_valid(label):
-			label.text = "100%"
+			label.text = str(int(pct)) + "%"
 		await get_tree().process_frame
+	if is_instance_valid(label):
+		label.text = "100%"
+	await get_tree().process_frame
+
+func load_level(idx):
+	show_loading(idx)
 	
 	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
