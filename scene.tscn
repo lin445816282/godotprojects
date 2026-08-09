@@ -449,7 +449,7 @@ anchor_bottom = 0.85
 anchor_left = 0.10
 anchor_top = 0.05
 anchor_right = 0.90
-anchor_bottom = 0.10
+anchor_bottom = 0.12
 margin_bottom = 0.0
 text = ""
 align = 1
@@ -458,9 +458,9 @@ theme_override_font_sizes/font_size = 28
 
 [node name="Info" type="Label" parent="UI/Menu/Panel"]
 anchor_left = 0.10
-anchor_top = 0.15
+anchor_top = 0.14
 anchor_right = 0.90
-anchor_bottom = 0.30
+anchor_bottom = 0.32
 margin_bottom = 0.0
 text = ""
 align = 1
@@ -470,63 +470,63 @@ theme_override_font_sizes/font_size = 14
 [node name="move_forwardBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.10
-anchor_top = 0.85
+anchor_top = 0.95
 anchor_right = 0.45
-anchor_bottom = 0.89
+anchor_bottom = 0.99
 margin_bottom = 0.0
 text = ""
 
 [node name="move_backwardBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.10
-anchor_top = 0.89
+anchor_top = 0.99
 anchor_right = 0.45
-anchor_bottom = 0.93
+anchor_bottom = 1.03
 margin_bottom = 0.0
 text = ""
 
 [node name="move_leftBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.10
-anchor_top = 0.93
+anchor_top = 0.95
 anchor_right = 0.45
-anchor_bottom = 0.97
+anchor_bottom = 0.99
 margin_bottom = 0.0
 text = ""
 
 [node name="move_rightBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.85
+anchor_top = 0.95
 anchor_right = 0.90
-anchor_bottom = 0.89
+anchor_bottom = 0.99
 margin_bottom = 0.0
 text = ""
 
 [node name="jumpBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.89
+anchor_top = 0.99
 anchor_right = 0.90
-anchor_bottom = 0.93
+anchor_bottom = 1.03
 margin_bottom = 0.0
 text = ""
 
 [node name="SfxLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.93
+anchor_top = 0.88
 anchor_right = 0.50
-anchor_bottom = 0.93
+anchor_bottom = 0.88
 margin_bottom = 20.0
 text = ""
 
 [node name="SfxSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.93
+anchor_top = 0.88
 anchor_right = 0.95
-anchor_bottom = 0.93
+anchor_bottom = 0.88
 margin_bottom = 24.0
 min_value = -30.0
 max_value = 0.0
@@ -534,18 +534,18 @@ max_value = 0.0
 [node name="MusicLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.96
+anchor_top = 0.92
 anchor_right = 0.50
-anchor_bottom = 0.96
+anchor_bottom = 0.92
 margin_bottom = 20.0
 text = ""
 
 [node name="MusicSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.96
+anchor_top = 0.92
 anchor_right = 0.95
-anchor_bottom = 0.96
+anchor_bottom = 0.92
 margin_bottom = 24.0
 min_value = -40.0
 max_value = 0.0
@@ -554,18 +554,18 @@ value = -12.0
 [node name="MuteBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.83
+anchor_top = 0.69
 anchor_right = 0.80
-anchor_bottom = 0.83
+anchor_bottom = 0.75
 margin_bottom = 0.0
 text = ""
 
 [node name="LangBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.87
+anchor_top = 0.77
 anchor_right = 0.80
-anchor_bottom = 0.87
+anchor_bottom = 0.83
 margin_bottom = 0.0
 text = ""
 
@@ -574,18 +574,18 @@ text = ""
 [node name="SensLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.91
+anchor_top = 0.84
 anchor_right = 0.50
-anchor_bottom = 0.91
+anchor_bottom = 0.84
 margin_bottom = 20.0
 text = ""
 
 [node name="SensSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.90
+anchor_top = 0.84
 anchor_right = 0.95
-anchor_bottom = 0.90
+anchor_bottom = 0.84
 margin_bottom = 24.0
 min_value = 0.05
 max_value = 1.0
@@ -595,9 +595,9 @@ value = 0.3
 [node name="StartBtn" type="Button" parent="UI/Menu/Panel"]
 theme_override_styles/normal = null
 anchor_left = 0.20
-anchor_top = 0.38
+anchor_top = 0.35
 anchor_right = 0.80
-anchor_bottom = 0.44
+anchor_bottom = 0.41
 margin_bottom = 0.0
 text = ""
 
@@ -605,9 +605,9 @@ text = ""
 theme_override_styles/normal = null
 visible = false
 anchor_left = 0.20
-anchor_top = 0.47
+anchor_top = 0.43
 anchor_right = 0.80
-anchor_bottom = 0.53
+anchor_bottom = 0.49
 margin_bottom = 0.0
 text = ""
 
@@ -615,9 +615,9 @@ text = ""
 theme_override_styles/normal = null
 visible = false
 anchor_left = 0.20
-anchor_top = 0.56
+anchor_top = 0.51
 anchor_right = 0.80
-anchor_bottom = 0.62
+anchor_bottom = 0.57
 margin_bottom = 0.0
 text = ""
 
@@ -625,9 +625,9 @@ text = ""
 theme_override_styles/normal = null
 visible = false
 anchor_left = 0.20
-anchor_top = 0.38
+anchor_top = 0.35
 anchor_right = 0.80
-anchor_bottom = 0.44
+anchor_bottom = 0.41
 margin_bottom = 0.0
 text = ""
 
@@ -635,18 +635,18 @@ text = ""
 theme_override_styles/normal = null
 visible = false
 anchor_left = 0.20
-anchor_top = 0.56
+anchor_top = 0.59
 anchor_right = 0.80
-anchor_bottom = 0.62
+anchor_bottom = 0.65
 margin_bottom = 0.0
 text = ""
 
 [node name="LevelSelectBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.52
+anchor_top = 0.51
 anchor_right = 0.80
-anchor_bottom = 0.58
+anchor_bottom = 0.57
 margin_bottom = 0.0
 text = ""
 
@@ -654,17 +654,17 @@ text = ""
 [node name="RestartBtn" type="Button" parent="UI/Menu/Panel"]
 theme_override_styles/normal = null
 anchor_left = 0.20
-anchor_top = 0.47
+anchor_top = 0.43
 anchor_right = 0.80
-anchor_bottom = 0.53
+anchor_bottom = 0.49
 margin_bottom = 0.0
 text = ""
 
 [node name="QuitBtn" type="Button" parent="UI/Menu/Panel"]
 theme_override_styles/normal = null
 anchor_left = 0.20
-anchor_top = 0.67
+anchor_top = 0.59
 anchor_right = 0.80
-anchor_bottom = 0.73
+anchor_bottom = 0.65
 margin_bottom = 0.0
 text = ""
