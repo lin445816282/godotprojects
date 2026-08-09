@@ -63,7 +63,7 @@ func _create_ui():
 	
 	var level_label = Label.new()
 	level_label.name = "LevelLabel"
-	level_label.visible = false
+	level_label.visible = true
 	level_label.anchor_left = 0.02
 	level_label.anchor_top = 0.07
 	level_label.text = "Level 1   Hits left: 3"
