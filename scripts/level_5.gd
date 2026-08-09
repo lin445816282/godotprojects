@@ -125,7 +125,7 @@ func _create_ui():
 	
 	var buttons_data = {
 		"StartBtn": {"text": "Start Game", "pos": 0.40, "vis": true},
-		"NextBtn": {"text": "Next Level", "pos": 0.32, "vis": false},
+		"NextBtn": {"text": "Next Level", "pos": 0.40, "vis": false},
 		"RestartBtn": {"text": "Restart", "pos": 0.42, "vis": false},
 		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.52, "vis": false},
 		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.62, "vis": false},
