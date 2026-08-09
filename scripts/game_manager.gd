@@ -113,26 +113,66 @@ func toggle_pause():
 const LEVELS = ["res://scene.tscn", "res://scenes/level_2.tscn", "res://scenes/level_3.tscn", "res://scenes/level_4.tscn", "res://scenes/level_5.tscn"]
 
 func load_level(idx):
-	# Show loading overlay
+	# Show loading overlay with progress bar
 	var root = get_tree().current_scene
-	if root:
+	if root and idx >= 0 and idx < LEVELS.size():
 		var loading = ColorRect.new()
 		loading.name = "LoadingOverlay"
 		loading.color = Color(0, 0, 0, 0.85)
 		loading.set_anchors_preset(Control.PRESET_FULL_RECT)
 		
+		# Container for text + progress bar
+		var vbox = VBoxContainer.new()
+		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		vbox.set_anchors_preset(Control.PRESET_CENTER)
+		vbox.custom_minimum_size = Vector2(300, 100)
+		loading.add_child(vbox)
+		
 		var text = Label.new()
-		text.text = I18n.t("loading_text")
-		if idx >= 0 and idx < LEVELS.size():
-			var names = I18n.t_arr("level_names")
-			text.text = I18n.t("entering_level_text") + str(idx + 1) + "\n" + names[idx]
+		var names = I18n.t_arr("level_names")
+		text.text = I18n.t("entering_level_text") + str(idx + 1) + " " + names[idx]
 		text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		text.set_anchors_preset(Control.PRESET_FULL_RECT)
 		text.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
 		text.add_theme_font_size_override("font_size", 28)
-		loading.add_child(text)
+		vbox.add_child(text)
+		
+		# Spacer
+		var spacer = Control.new()
+		spacer.custom_minimum_size = Vector2(0, 12)
+		vbox.add_child(spacer)
+		
+		# Progress bar
+		var progress = ProgressBar.new()
+		progress.name = "LoadProgress"
+		progress.custom_minimum_size = Vector2(200, 20)
+		progress.value = 0.0
+		vbox.add_child(progress)
+		
+		var label = Label.new()
+		label.name = "LoadLabel"
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))
+		label.add_theme_font_size_override("font_size", 14)
+		label.text = "0%"
+		vbox.add_child(label)
+		
 		root.add_child(loading)
+		
+		# Animate progress bar over ~0.6s then switch scene
+		var tween = root.create_tween()
+		tween.tween_property(progress, "value", 1.0, 0.6).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(progress, "value", 1.0, 0.0)
+		# Update percentage text
+		var timer = 0.0
+		while timer < 0.6 and is_instance_valid(loading):
+			timer += get_process_delta_time()
+			var pct = min(timer / 0.6 * 100.0, 99.0)
+			if is_instance_valid(label):
+				label.text = str(int(pct)) + "%"
+			await get_tree().process_frame
+		if is_instance_valid(label):
+			label.text = "100%"
+		await get_tree().process_frame
 	
 	if idx == -1 or idx >= LEVELS.size():
 		current_level = 0
