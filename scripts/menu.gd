@@ -19,6 +19,7 @@ var listening_action = ""
 @onready var sfx = $Panel/SfxSlider
 @onready var music = $Panel/MusicSlider
 @onready var mute_btn = $Panel/MuteBtn
+@onready var lang_btn = $Panel/LangBtn
 
 func _ready():
 	GameManager.state_changed.connect(_st)
@@ -27,6 +28,8 @@ func _ready():
 		ls_btn.pressed.connect(_show_level_select)
 	if mute_btn:
 		mute_btn.pressed.connect(_toggle_mute)
+	if lang_btn:
+		lang_btn.pressed.connect(_toggle_lang)
 	_connect_signals()
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var b = get_node_or_null("Panel/" + a + "Btn")
@@ -118,9 +121,9 @@ func _st(st):
 	elif st == GameManager.State.PAUSED:
 		_pause()
 	elif st == GameManager.State.WIN:
-		_end("You Win!", "Score: " + str(GameManager.score), true)
+		_end(I18n.t("win"), "Score: " + str(GameManager.score), true)
 	elif st == GameManager.State.LOSE:
-		_end("Game Over", "Score: " + str(GameManager.score) + "/" + str(GameManager.target), false)
+		_end(I18n.t("lose"), "Score: " + str(GameManager.score) + "/" + str(GameManager.target), false)
 
 func _go_lvl2():
 	GameManager.load_level(1)
@@ -149,7 +152,7 @@ func _show_tutorial():
 	tut.add_child(bg)
 	
 	var label = Label.new()
-	label.text = "WASD = Move\nSpace = Jump\nRight-Click = Look\nESC = Pause"
+	label.text = I18n.t("tutorial_text")
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.anchor_right = 1.0
@@ -159,7 +162,7 @@ func _show_tutorial():
 	tut.add_child(label)
 	
 	var ok_btn = Button.new()
-	ok_btn.text = "Got it!"
+	ok_btn.text = I18n.t("tutorial_got_it")
 	ok_btn.anchor_left = 0.4
 	ok_btn.anchor_right = 0.6
 	ok_btn.anchor_top = 0.7
@@ -173,14 +176,21 @@ func _show_tutorial():
 	add_child(tut)
 
 
+
+func _toggle_lang():
+	if I18n.lang == "en":
+		I18n.set_lang("zh")
+	else:
+		I18n.set_lang("en")
+
 func _toggle_mute():
 	var muted = AudioManager.is_muted if AudioManager.has_method("is_muted") else false
 	if muted:
 		AudioManager.unmute()
-		if mute_btn: mute_btn.text = "Mute"
+		if mute_btn: mute_btn.text = I18n.t("mute")
 	else:
 		AudioManager.mute()
-		if mute_btn: mute_btn.text = "Unmute"
+		if mute_btn: mute_btn.text = I18n.t("unmute")
 
 
 func _calc_stars() -> String:
@@ -214,8 +224,8 @@ func _pause():
 	var panel = get_node_or_null("Panel")
 	if panel:
 		panel.modulate.a = 0.0
-	title.text = "Paused"
-	info.text = "Controls:\nWASD = Move | Space = Jump\nRight-Click = Look | ESC = Resume"
+	title.text = I18n.t("paused")
+	info.text = I18n.t("pause_controls")
 	start.visible = false
 	restart.visible = false
 	quit_btn.visible = true
@@ -254,7 +264,7 @@ func _music_changed(v):
 
 func start_listen(action):
 	listening_action = action
-	info.text = "Press a key for: " + action
+	info.text = "Press a key: " + action
 
 func _unhandled_input(event):
 	if listening_action != "" and event is InputEventKey:
@@ -292,11 +302,11 @@ func _show():
 		backmenu.visible = false
 	if next:
 		next.visible = false
-	title.text = "Coin Quest"
+	title.text = I18n.t("coin_quest")
 	var best1 = LevelManager.best_for(0)
-	info.text = "Unlocked: " + str(LevelManager.unlocked) + "/" + str(LevelManager.LEVEL_COUNT) + "\nBest Lv1: " + str(best1) + " pts\nWASD = Move  Space = Jump"
+	info.text = I18n.t("wasd_hint")
 	start.visible = true
-	start.text = "Play Level 1"
+	start.text = I18n.t("play_level_1")
 	restart.visible = false
 	quit_btn.visible = false
 	if lvl2:
@@ -309,10 +319,13 @@ func _show():
 	var ls_btn = get_node_or_null("Panel/LevelSelectBtn")
 	if ls_btn:
 		ls_btn.visible = true
-		ls_btn.text = "Level Select"
+		ls_btn.text = I18n.t("level_select")
 	if mute_btn:
 		mute_btn.visible = true
-		mute_btn.text = "Mute"
+		mute_btn.text = I18n.t("mute")
+	if lang_btn:
+		lang_btn.visible = true
+		lang_btn.text = I18n.t("lang_zh") if I18n.lang == "en" else I18n.t("lang_en")
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.25)
 	if panel:
@@ -346,7 +359,10 @@ func _end(txt, inf, can_next):
 		ls_btn.visible = false
 	if mute_btn:
 		mute_btn.visible = true
-		mute_btn.text = "Mute"
+		mute_btn.text = I18n.t("mute")
+	if lang_btn:
+		lang_btn.visible = true
+		lang_btn.text = I18n.t("lang_zh") if I18n.lang == "en" else I18n.t("lang_en")
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "modulate:a", 1.0, 0.2)
 	if panel:

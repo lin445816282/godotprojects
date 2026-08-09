@@ -24,7 +24,7 @@ func _build_cards():
 	grid.alignment = BoxContainer.ALIGNMENT_CENTER
 	add_child(grid)
 	
-	var level_names = ["Grasslands", "Floating Isles", "Fortress", "Frozen Wastes", "Boss Arena"]
+	var level_names = I18n.t_arr("level_names")
 	
 	for i in range(LevelManager.LEVEL_COUNT):
 		var card = Panel.new()
@@ -61,7 +61,7 @@ func _build_cards():
 		# Best score
 		var score_label = Label.new()
 		var best = LevelManager.best_for(i)
-		score_label.text = "Best: " + str(best) if is_unlocked else "Locked"
+		score_label.text = I18n.t("best") + str(best) if is_unlocked else I18n.t("locked")
 		score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		score_label.add_theme_font_size_override("font_size", 11)
 		score_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.55, 1) if is_unlocked else Color(0.2, 0.2, 0.2, 1))
@@ -82,7 +82,7 @@ func _build_cards():
 	
 	# Back button
 	var back_btn = Button.new()
-	back_btn.text = "Back"
+	back_btn.text = I18n.t("back_to_menu")
 	back_btn.anchor_left = 0.4
 	back_btn.anchor_right = 0.6
 	back_btn.anchor_top = 0.82

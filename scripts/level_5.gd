@@ -124,13 +124,13 @@ func _create_ui():
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": "Play Level 1", "pos": 0.38, "vis": true},
-		"NextBtn": {"text": "Next Level", "pos": 0.38, "vis": false},
-		"RestartBtn": {"text": "Restart", "pos": 0.47, "vis": false},
-		"Level2Btn": {"text": "Level 2 - Floating Isles", "pos": 0.47, "vis": false},
-		"Level3Btn": {"text": "Level 3 - Fortress", "pos": 0.56, "vis": false},
-		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.56, "vis": false},
-		"QuitBtn": {"text": "Quit", "pos": 0.67, "vis": false},
+		"StartBtn": {"text": I18n.t("play_level_1"), "pos": 0.38, "vis": true},
+		"NextBtn": {"text": I18n.t("next_level"), "pos": 0.38, "vis": false},
+		"RestartBtn": {"text": I18n.t("restart"), "pos": 0.47, "vis": false},
+		"Level2Btn": {"text": I18n.t_arr("level_names")[1], "pos": 0.47, "vis": false},
+		"Level3Btn": {"text": I18n.t_arr("level_names")[2], "pos": 0.56, "vis": false},
+		"BackMenuBtn": {"text": I18n.t("back_to_menu"), "pos": 0.56, "vis": false},
+		"QuitBtn": {"text": I18n.t("quit"), "pos": 0.67, "vis": false},
 	}
 	for btn_name in buttons_data:
 		var d = buttons_data[btn_name]
@@ -151,7 +151,7 @@ func _create_ui():
 	sfl.anchor_left = 0.05
 	sfl.anchor_top = 0.93
 	sfl.anchor_right = 0.50
-	sfl.text = "SFX Volume"
+	sfl.text = I18n.t("sfx_volume")
 	sfl.visible = false
 	panel.add_child(sfl)
 	var sfxs = HSlider.new()
@@ -169,7 +169,7 @@ func _create_ui():
 	ml.anchor_left = 0.05
 	ml.anchor_top = 0.96
 	ml.anchor_right = 0.50
-	ml.text = "Music Volume"
+	ml.text = I18n.t("music_volume")
 	ml.visible = false
 	panel.add_child(ml)
 	var mus = HSlider.new()
@@ -188,7 +188,7 @@ func _create_ui():
 	sl.anchor_left = 0.05
 	sl.anchor_top = 0.90
 	sl.anchor_right = 0.50
-	sl.text = "Sensitivity"
+	sl.text = I18n.t("sensitivity")
 	sl.visible = false
 	panel.add_child(sl)
 	var ss = HSlider.new()
@@ -202,6 +202,16 @@ func _create_ui():
 	ss.value = 0.3
 	ss.visible = false
 	panel.add_child(ss)
+	
+		# Language toggle button
+	var lb = Button.new()
+	lb.name = "LangBtn"
+	lb.anchor_left = 0.20
+	lb.anchor_top = 0.90
+	lb.anchor_right = 0.80
+	lb.text = "中文"
+	lb.visible = false
+	panel.add_child(lb)
 	
 	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var kb = Button.new()
