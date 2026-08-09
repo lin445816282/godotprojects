@@ -9,13 +9,13 @@ func _ready():
 	if we and we.environment:
 		var env = we.environment
 		env.background_mode = Environment.BG_COLOR
-		env.background_color = Color(0.3, 0.5, 0.7, 1)
-		env.ambient_light_color = Color(0.3, 0.35, 0.45, 1)
-		env.ambient_light_energy = 0.5
+		env.background_color = Color(0.65, 0.75, 0.85, 1)
+		env.ambient_light_color = Color(0.6, 0.65, 0.8, 1)
+		env.ambient_light_energy = 0.65
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_DEPTH
 		env.fog_density = 0.015
-		env.fog_light_color = Color(0.35, 0.5, 0.65, 1)
+		env.fog_light_color = Color(0.55, 0.65, 0.75, 1)
 		env.fog_depth_begin = 15.0
 		env.fog_depth_end = 35.0
 
