@@ -116,7 +116,9 @@ func _st(st):
 	if st == GameManager.State.MENU:
 		_style_buttons()
 		_show()
-	elif st == GameManager.State.PLAYING or st == GameManager.State.COUNTDOWN:
+	elif st == GameManager.State.COUNTDOWN:
+		visible = false
+	elif st == GameManager.State.PLAYING:
 		visible = false
 	elif st == GameManager.State.PAUSED:
 		_pause()
