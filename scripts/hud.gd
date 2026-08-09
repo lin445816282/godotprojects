@@ -39,14 +39,12 @@ func _sc(v):
 func spawn_feedback(delta):
 	var lbl = Label.new()
 	lbl.text = "+" + str(delta)
-	lbl.add_color_override("font_color", Color(1, 0.85, 0.1, 1))
+	lbl.add_theme_color_override("font_color", Color(1, 0.85, 0.1, 1))
 	lbl.anchor_left = 0.5
 	lbl.anchor_top = 0.5
 	lbl.anchor_right = 0.5
 	lbl.anchor_bottom = 0.5
-	offset_left = -0.0
-	offset_top = -0.0
-	lbl.rect_position = Vector2(-40, -20)
+	lbl.position = Vector2(-40, -20)
 	lbl.align = 1
 	add_child(lbl)
 	await get_tree().create_timer(0.1).timeout
@@ -54,7 +52,7 @@ func spawn_feedback(delta):
 		var t = 0.0
 		while t < 0.7 and is_instance_valid(lbl):
 			t += get_process_delta_time()
-			lbl.rect_position.y -= 1.2
+			lbl.position.y -= 1.2
 			lbl.modulate.a = 1.0 - t / 0.7
 		lbl.queue_free()
 
@@ -63,9 +61,9 @@ func _tm(v):
 	t.text = "Time: " + str(sec) + "s"
 	if v <= 10.0:
 		var c = abs(sin(pulse * 6.0))
-		t.add_color_override("font_color", Color(1, c * 0.5, c * 0.5, 1))
+		t.add_theme_color_override("font_color", Color(1, c * 0.5, c * 0.5, 1))
 	else:
-		t.add_color_override("font_color", Color(1, 1, 1, 1))
+		t.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 
 var red_flash = null
 
@@ -116,4 +114,4 @@ func _gs():
 	_update_level()
 	s.text = "Coins: 0/" + str(GameManager.target)
 	t.text = "Time: " + str(int(GameManager.duration)) + "s"
-	t.add_color_override("font_color", Color(1, 1, 1, 1))
+	t.add_theme_color_override("font_color", Color(1, 1, 1, 1))

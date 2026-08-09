@@ -39,7 +39,6 @@ func fire():
 	mesh.mesh = sm
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color(1, 0.3, 0.1, 1)
-	mat
 	mat.emission_color = Color(1, 0.2, 0.0, 1)
 	mat.emission_energy = 1.5
 	mesh.material_override = mat

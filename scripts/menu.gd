@@ -90,7 +90,7 @@ func _process(dt):
 		title.scale = Vector2(s, s)
 
 func _sens_changed(v):
-	SettingsManager._set_setting("sensitivity", v)
+	SettingsManager.set_setting("sensitivity", v)
 
 func _sfx_changed(v):
 	SettingsManager.set_volume("sfx", v)

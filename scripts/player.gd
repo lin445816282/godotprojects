@@ -174,7 +174,7 @@ func _physics_process(dt):
 	if dead:
 		velocity.x = lerp(velocity.x, 0.0, 0.1)
 		velocity.z = lerp(velocity.z, 0.0, 0.1)
-		move_and_slide()
+		var _vel = move_and_slide()
 		return
 	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and is_on_floor():
 		velocity.y = jump_speed
@@ -214,7 +214,7 @@ func _physics_process(dt):
 		velocity.z = 0
 		is_moving = false
 	is_jumping = not is_on_floor()
-	move_and_slide()
+	var _vel = move_and_slide()
 	update_animation(dt)
 	update_dust(dt)
 	if global_position.y < -8.0:

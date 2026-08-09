@@ -83,7 +83,6 @@ func shoot_pattern(count, cd):
 		mesh.mesh = sm
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = Color(1, 0.2, 0.2, 1)
-		mat
 		mat.emission_color = Color(1, 0.1, 0.1, 1)
 		mat.emission_energy = 2.0
 		mesh.material_override = mat

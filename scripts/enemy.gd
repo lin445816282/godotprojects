@@ -26,7 +26,6 @@ func _ready():
 func _setup_glow():
 	if $Mesh.material_override:
 		var m = $Mesh.material_override.duplicate()
-		m
 		m.emission_color = Color(1, 0.2, 0.2, 1)
 		m.emission_energy = 2.0
 		$Mesh.material_override = m

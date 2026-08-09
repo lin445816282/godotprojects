@@ -51,7 +51,6 @@ func _apply_tier():
 	else:
 		m = $Mesh.material_override.duplicate()
 	m.albedo_color = col
-	m
 	m.emission_color = col
 	m.emission_energy = 1.5
 	$Mesh.material_override = m

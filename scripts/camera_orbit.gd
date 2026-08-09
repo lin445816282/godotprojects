@@ -10,7 +10,7 @@ func _ready():
 	# 从本地设置读取灵敏度
 	if SettingsManager.has("sensitivity"):
 		sensitivity = SettingsManager.get_setting("sensitivity")
-	set_process_input(true)
+	# Input handled via _input() callback
 	find_player()
 	# Default position behind spawn point so camera isn't stuck underground
 	global_position = Vector3(0, 7.0, 7.5)

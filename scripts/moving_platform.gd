@@ -26,7 +26,7 @@ func _physics_process(dt):
 	# 带动附着的玩家/物体
 	if attached and is_instance_valid(attached):
 		attached.global_position += motion
-	move_and_slide()
+	var _vel = move_and_slide()
 
 func _on_Area_body_entered(body):
 	if body.is_in_group("player"):

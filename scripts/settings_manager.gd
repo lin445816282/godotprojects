@@ -27,7 +27,7 @@ func has(key):
 func get_setting(key, default_val = null):
 	return data.get(key, default_val)
 
-func _set_setting(key, value):
+func set_setting(key, value):
 	data[key] = value
 	save()
 
