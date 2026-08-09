@@ -276,7 +276,7 @@ func take_hit(from : Vector3):
 		die()
 
 func _hud_flash():
-	var hud = get_tree().current_scene.find_node("HUD", true, false)
+	var hud = get_tree().current_scene.find_child("HUD", true, false)
 	if hud and hud.has_method("damage_flash"):
 		hud.damage_flash()
 
