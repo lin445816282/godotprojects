@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource path="res://scripts/level_5.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -20,7 +20,7 @@ height = 1.6
 
 [sub_resource type="StandardMaterial3D" id=4]
 shading_mode = 0
-albedo_color = Color( 0.6, 0.15, 0.15, 1 )
+albedo_color = Color( 0.35, 0.08, 0.04, 1 )
 
 [sub_resource type="CubeMesh" id=5]
 size = Vector3( 20.3, 3, 0.3 )
@@ -49,6 +49,9 @@ shading_mode = 0
 [sub_resource type="BoxShape" id=12]
 extents = Vector3( 0.6, 0.6, 0.6 )
 
+[sub_resource type="StandardMaterial3D" id=18]
+shading_mode = 0
+albedo_color = Color( 0.15, 0.05, 0.05, 1 )
 [node name="Level5" type="Node3D"]
 script = ExtResource( 1 )
 
@@ -83,7 +86,7 @@ shape = SubResource( 3 )
 
 [node name="Wall_N" type="MeshInstance3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10 )
-material_override = SubResource( 4 )
+material_override = SubResource( 18 )
 mesh = SubResource( 5 )
 
 [node name="Wall_N_Col" type="StaticBody3D" parent="."]
@@ -94,7 +97,7 @@ shape = SubResource( 6 )
 
 [node name="Wall_S" type="MeshInstance3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10 )
-material_override = SubResource( 4 )
+material_override = SubResource( 18 )
 mesh = SubResource( 5 )
 
 [node name="Wall_S_Col" type="StaticBody3D" parent="."]
@@ -105,7 +108,7 @@ shape = SubResource( 6 )
 
 [node name="Wall_E" type="MeshInstance3D" parent="."]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 10, 1.5, 0 )
-material_override = SubResource( 4 )
+material_override = SubResource( 18 )
 mesh = SubResource( 5 )
 
 [node name="Wall_E_Col" type="StaticBody3D" parent="."]
@@ -116,7 +119,7 @@ shape = SubResource( 6 )
 
 [node name="Wall_W" type="MeshInstance3D" parent="."]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -10, 1.5, 0 )
-material_override = SubResource( 4 )
+material_override = SubResource( 18 )
 mesh = SubResource( 5 )
 
 [node name="Wall_W_Col" type="StaticBody3D" parent="."]
