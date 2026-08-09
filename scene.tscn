@@ -46,6 +46,7 @@ radius = 0.6
 
 [sub_resource type="StandardMaterial3D" id=18]
 albedo_color = Color( 1, 0.15, 0.15, 1 )
+shading_mode = 0
 
 [sub_resource type="CubeMesh" id=19]
 size = Vector3( 0.8, 1.5, 0.8 )

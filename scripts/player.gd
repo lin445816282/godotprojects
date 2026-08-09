@@ -108,6 +108,7 @@ func make_magnet_ring():
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color(0.8, 0.3, 0.8, 0.3)
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	magnet_ring.material_override = mat
 	magnet_ring.position = Vector3(0, 0.1, 0)
 	magnet_ring.visible = false
