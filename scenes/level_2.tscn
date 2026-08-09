@@ -101,7 +101,7 @@ shape = SubResource( 10 )
 [node name="PortalA" type="Area3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 0 )
 script = ExtResource( 4 )
-target = NodePath("../../PortalB")
+target = NodePath("../PortalB")
 
 [node name="Mesh" type="MeshInstance3D" parent="PortalA"]
 material_override = SubResource( 11 )
