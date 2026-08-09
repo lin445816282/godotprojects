@@ -30,7 +30,7 @@ func find_player():
 
 func fire():
 	var dir = (player.global_position - global_position).normalized()
-	var b = Area.new()
+	var b = Area3D.new()
 	b.position = global_position + Vector3(0, 0.8, 0)
 	var mesh = MeshInstance3D.new()
 	var sm = SphereMesh.new()
@@ -45,7 +45,7 @@ func fire():
 	mesh.material_override = mat
 	b.add_child(mesh)
 	var col = CollisionShape3D.new()
-	var cs = SphereShape.new()
+	var cs = SphereShape3D.new()
 	cs.radius = 0.25
 	col.shape = cs
 	b.add_child(col)

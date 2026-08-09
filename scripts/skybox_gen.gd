@@ -2,7 +2,7 @@ extends Node
 
 # 程序化天空盒生成：在WorldEnvironment中应用渐变天空
 static func apply_gradient_sky(env: Environment, top_color = Color(0.2, 0.4, 0.9), horizon_color = Color(0.6, 0.8, 1.0), bottom_color = Color(0.3, 0.5, 0.4)):
-	var sky = PanoramaSky.new()
+	var sky = Sky.new()
 	var img = Image.new()
 	var w = 256
 	var h = 128

@@ -11,7 +11,7 @@ var float_t = 0.0
 
 
 func _ready():
-	connect("body_entered", self, "_hit")
+	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
 	origin = global_position
 	if $Mesh.material_override:
@@ -73,7 +73,7 @@ func shoot_pattern(count, cd):
 	for i in range(count):
 		var ang = deg_to_rad((i - (count - 1) / 2.0) * 15.0)
 		var d = base_dir.rotated(Vector3.UP, ang)
-		var b = Area.new()
+		var b = Area3D.new()
 		b.position = global_position + Vector3(0, 1.5, 0)
 		# Bullet mesh
 		var mesh = MeshInstance3D.new()
@@ -90,7 +90,7 @@ func shoot_pattern(count, cd):
 		b.add_child(mesh)
 		# Collision
 		var col = CollisionShape3D.new()
-		var cs = SphereShape.new()
+		var cs = SphereShape3D.new()
 		cs.radius = 0.3
 		col.shape = cs
 		b.add_child(col)

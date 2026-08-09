@@ -7,7 +7,7 @@ var base_y = 0.0
 var t = 0.0
 
 func _ready():
-	connect("body_entered", self, "_hit")
+	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
 	base_y = global_position.y
 

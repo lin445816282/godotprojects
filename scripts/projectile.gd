@@ -5,7 +5,7 @@ var velocity = Vector3.FORWARD * 6.0
 var lifetime = 4.0
 
 func _ready():
-	connect("body_entered", self, "_hit")
+	body_entered.connect(_hit)
 
 func _physics_process(dt):
 	lifetime -= dt

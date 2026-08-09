@@ -43,7 +43,7 @@ func _show_next():
 		t += get_process_delta_time()
 		if t > 2.5:
 			panel.modulate.a = (3.0 - t) / 0.5
-		await(get_tree(), "idle_frame")
+		await get_tree().process_frame
 	if is_instance_valid(panel):
 		panel.queue_free()
 	_show_next()

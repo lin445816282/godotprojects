@@ -6,7 +6,7 @@ extends Area3D
 var hit_cooldown = 0.0
 
 func _ready():
-	connect("body_entered", self, "_hit")
+	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
 
 func _process(dt):

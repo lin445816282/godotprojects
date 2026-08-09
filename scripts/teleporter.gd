@@ -1,11 +1,11 @@
 extends Area3D
 
 # 传送门：玩家进入后传送到目标点
-@export var target: NodePath = null
+@export var target: NodePath
 var dest = null
 
 func _ready():
-	connect("body_entered", self, "_teleport")
+	body_entered.connect(_teleport)
 	if target:
 		dest = get_node(target)
 
