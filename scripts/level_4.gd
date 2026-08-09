@@ -124,10 +124,10 @@ func _create_ui():
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": "Start Game", "pos": 0.45, "vis": true},
-		"NextBtn": {"text": "Next Level", "pos": 0.45, "vis": false},
+		"StartBtn": {"text": "Start Game", "pos": 0.40, "vis": true},
+		"NextBtn": {"text": "Next Level", "pos": 0.40, "vis": false},
 		"RestartBtn": {"text": "Restart", "pos": 0.47, "vis": false},
-		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.57, "vis": false},
+		"Level2Btn": {"text": "Level 2 (Floating)", "pos": 0.47, "vis": false},
 		"Level3Btn": {"text": "Level 3 (Fortress)", "pos": 0.67, "vis": false},
 		"BackMenuBtn": {"text": "Back to Menu", "pos": 0.77, "vis": false},
 		"QuitBtn": {"text": "Quit", "pos": 0.67, "vis": false},
