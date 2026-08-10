@@ -195,7 +195,6 @@ func _physics_process(dt):
 	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and is_on_floor():
 		velocity.y = jump_speed
 		jumps_left = 1
-	ice_mode = false
 		AudioManager.play("jump")
 	elif (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and jumps_left > 0:
 		jumps_left -= 1
