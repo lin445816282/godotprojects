@@ -127,7 +127,13 @@ func _bullet_hit(body, bullet):
 		if is_instance_valid(bullet):
 			bullet.queue_free()
 
+var _find_timer = 0.0
+
 func find_player():
+	_find_timer -= 0.0
+	if _find_timer > 0 and player and is_instance_valid(player):
+		return
+	_find_timer = 0.3
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player = players[0]

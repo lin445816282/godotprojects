@@ -94,7 +94,13 @@ func attack_dir() -> Vector3:
 		return (global_position - player.global_position).normalized()
 	return Vector3.ZERO
 
+var _find_timer = 0.0
+
 func find_player():
+	_find_timer -= 0.0
+	if _find_timer > 0 and player and is_instance_valid(player):
+		return
+	_find_timer = 0.5
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player = players[0]
