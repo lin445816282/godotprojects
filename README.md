@@ -1,43 +1,38 @@
 # CoinQuest - 3D Platformer Game
 
-Built with Godot 4 + GDScript. 5 levels, procedurally generated assets, full audio, achievements.
+Built with Godot 4.7 + GDScript. 5 levels, procedurally generated assets, full audio, achievements.
 
-## What's built
+## Current State (审计30轮后)
 
 ### Core
 - WASD + mouse orbit camera, double-jump, controller support
 - 5 levels: Grassland → Floating Isles → Castle → Frozen → Boss Arena
-- AI enemies: Patrol/Chase/Return state machine, Jumper, Thrower, Boss (3-phase bullet hell)
-- Collectibles: Copper/Silver/Gold coins with particle FX
+- AI enemies: Patrol/Chase/Return, Jumper, Thrower, Boss (3-phase bullet hell)
+- Coins with 12s respawn mechanism
 - Powerups: Shield, Speed Boost, Magnet
 - Keys + Gates, Teleporters, Moving Platforms, Spinners
+- Health bar UI (3 hits), death particles, hit knockback
 
 ### Systems
-- GameManager: countdown, win/lose, pause, level switching
+- GameManager: countdown, win/lose, pause, level switching with loading screen
 - LevelManager: unlock progression, best-score persist
-- AudioManager: procedural BGM + SFX (no asset files)
-- SettingsManager: volume, sensitivity, key rebinding
-- Achievements: 5 achievements with popup notifications
-- HUD: coin count, timer, hit flash, level label
+- AudioManager: procedural BGM + SFX with pooling
+- SettingsManager: volume, sensitivity, key rebinding with value sync
+- Achievements: 5 types (first_win, three_wins, sprinter, no_hit, collector)
+- HUD: coin count, timer, health bars, damage flash
+- i18n: 51 keys, Chinese/English full coverage
 
 ### Visual
-- Procedural skybox per level theme
-- Checkerboard ground textures
+- Per-level environment tuning (colors, fog, ambient)
 - Player body animation (arm/leg swing, jump pose)
-- Dust particles on movement
-- Hit flash / invuln frames
+- Dust particles on movement, death explosion
+- Procedural skybox, checkerboard ground textures
 
 ## Running
 
 Open in Godot 4 editor: `godot --path .`
 Or run: `godot`
 
-## Godogen workflow
-
-This project uses [godogen](https://github.com/htdt/godogen) — describe a feature, the agent builds it, generates assets, runs Godot, and proves results.
-
-See `AGENTS.md` and `godot.md` for the runtime guide.
-
 ## Credit
 
-Built with Codex + Godot 4. godogen runtime by [@alex_erm](https://x.com/alex_erm).
+Built with Codex + Godot 4.
