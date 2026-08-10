@@ -357,9 +357,15 @@ func _end(txt, inf, can_next):
 	info.text = I18n.t("score_text") + str(GameManager.score) + "\n" + stars
 	start.visible = false
 	restart.visible = true
+	restart.text = I18n.t("restart")
 	quit_btn.visible = true
+	quit_btn.text = I18n.t("quit")
 	if next:
 		next.visible = can_next
+		next.text = I18n.t("next_level")
+	if backmenu:
+		backmenu.visible = can_next
+		backmenu.text = I18n.t("back_to_menu")
 	if lvl2:
 		lvl2.visible = false
 	if lvl3:
