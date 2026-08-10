@@ -30,6 +30,12 @@ func _ready():
 			e.patrol_speed = 3.0
 			e.chase_speed = 5.5
 			e.detect_range = 5.5
+	# Spawn level-specific obstacles
+	_spawn_spinner(Vector3(-4, 1, -4), 60.0)
+	_spawn_spinner(Vector3(5, 1, 3), -80.0)
+	_spawn_thrower(Vector3(-7, 0, 5))
+	_spawn_key_gate(Vector3(-5, 1, -3), Vector3(8, 2, 0))
+	
 	GameManager.start_level_countdown()
 
 func _create_ui():
