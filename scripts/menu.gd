@@ -292,17 +292,23 @@ func _show():
 		sens.visible = true
 		sens.value = SettingsManager.get_setting("sensitivity", 0.3)
 		var sl = get_node_or_null("Panel/SensLabel")
-		if sl: sl.visible = true
+		if sl:
+			sl.visible = true
+			sl.text = I18n.t("sensitivity")
 	if sfx:
 		sfx.visible = true
 		sfx.value = SettingsManager.get_volume("sfx", 0.0)
 		var sfl = get_node_or_null("Panel/SfxLabel")
-		if sfl: sfl.visible = true
+		if sfl:
+			sfl.visible = true
+			sfl.text = I18n.t("sfx_volume")
 	if music:
 		music.visible = true
 		music.value = SettingsManager.get_volume("music", -12.0)
 		var ml = get_node_or_null("Panel/MusicLabel")
-		if ml: ml.visible = true
+		if ml:
+			ml.visible = true
+			ml.text = I18n.t("music_volume")
 	if backmenu:
 		backmenu.visible = false
 	if next:
