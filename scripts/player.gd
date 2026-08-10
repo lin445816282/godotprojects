@@ -266,6 +266,9 @@ func update_animation(dt):
 		right_arm.rotation_degrees.x = -sw*30.0
 		left_leg.rotation_degrees.x = -sw*25.0
 		right_leg.rotation_degrees.x = sw*25.0
+		# Subtle body bob
+		if torso:
+			torso.position.y = 0.5 + abs(sw) * 0.08
 	else:
 		left_arm.rotation_degrees.x = lerp(left_arm.rotation_degrees.x, 0.0, 8.0*dt)
 		right_arm.rotation_degrees.x = lerp(right_arm.rotation_degrees.x, 0.0, 8.0*dt)
