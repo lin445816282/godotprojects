@@ -23,8 +23,32 @@ func _process(dt):
 
 func _hit(body):
 	if body.is_in_group("player") and body.has_method("take_hit") and hit_cooldown <= 0.0:
-		body.take_hit(Vector3(0, 0, 0))
-		hit_cooldown = 0.5
+		if body.global_position.y > global_position.y + 1.0:
+			kill()
+		else:
+			body.take_hit(Vector3(0, 0, 0))
+			hit_cooldown = 0.5
+
+func kill():
+	var dp = CPUParticles3D.new()
+	dp.one_shot = true
+	dp.emitting = true
+	dp.amount = 20
+	dp.lifetime = 0.5
+	dp.local_coords = true
+	dp.direction = Vector3(0, 2, 0)
+	dp.spread = 100.0
+	dp.gravity = Vector3(0, -5, 0)
+	dp.velocity_min = 2.0
+	dp.color = Color(0.2, 0.8, 0.9, 1)
+	dp.position = Vector3(0, 0.5, 0)
+	add_child(dp)
+	AudioManager.play("death")
+	GameManager.add_score(2)
+	$Mesh.visible = false
+	$Col.set_deferred("disabled", true)
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
 
 func _on_game_started():
 	if not is_inside_tree():

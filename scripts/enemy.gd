@@ -184,4 +184,30 @@ func move_in_dir(dir, spd, dt):
 
 func _hit(body):
 	if body.is_in_group("player") and body.has_method("take_hit"):
-		body.take_hit(attack_dir())
+		# Check if player is above (stomp kill)
+		if body.global_position.y > global_position.y + 1.0:
+			kill()
+		else:
+			body.take_hit(attack_dir())
+
+func kill():
+	# Death effect
+	var dp = CPUParticles3D.new()
+	dp.one_shot = true
+	dp.emitting = true
+	dp.amount = 25
+	dp.lifetime = 0.6
+	dp.local_coords = true
+	dp.direction = Vector3(0, 2, 0)
+	dp.spread = 120.0
+	dp.gravity = Vector3(0, -6, 0)
+	dp.velocity_min = 2.0
+	dp.color = Color(1, 0.3, 0.1, 1)
+	dp.position = Vector3(0, 1, 0)
+	add_child(dp)
+	AudioManager.play("death")
+	GameManager.add_score(3)
+	$Mesh.visible = false
+	$Col.set_deferred("disabled", true)
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
