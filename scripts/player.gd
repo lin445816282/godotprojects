@@ -21,7 +21,6 @@ var hit_flash = 0.0
 var hits_taken = 0
 var dust_timer = 0.0
 var jumps_left = 1
-	ice_mode = false
 var ice_mode = false
 
 # Powerups
