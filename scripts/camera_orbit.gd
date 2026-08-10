@@ -31,8 +31,14 @@ func _process(_dt):
 	if not player:
 		find_player()
 	if not player:
-		# Still no player, stay at default view
 		return
+	
+	# Scroll wheel zoom
+	if Input.is_action_just_released("ui_up"):
+		distance = max(distance - 1.0, 3.0)
+	if Input.is_action_just_released("ui_down"):
+		distance = min(distance + 1.0, 15.0)
+	
 	var tp = player.global_position + Vector3(0, 1.5, 0)
 	var r = deg_to_rad(yaw)
 	var p = deg_to_rad(pitch)
