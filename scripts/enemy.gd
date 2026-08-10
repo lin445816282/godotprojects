@@ -19,6 +19,7 @@ var player = null
 var attack_timer = 0.0
 
 func _ready():
+	add_to_group("enemies")
 	body_entered.connect(_hit)
 	GameManager.game_started.connect(_on_game_started)
 	_setup_glow()
