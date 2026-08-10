@@ -334,6 +334,13 @@ func _show():
 	if panel:
 		tw.tween_property(panel, "modulate:a", 1.0, 0.3)
 		tw.tween_property(panel, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# Show key rebind buttons
+	for a in keybtns:
+		var b = get_node_or_null("Panel/" + a + "Btn")
+		if b:
+			b.visible = true
+			b.text = a.replace("move_", "").capitalize() + ": " + OS.get_keycode_string(SettingsManager.get_key(a))
+	
 	# First-time tutorial
 	if not SettingsManager.has("tutorial_done"):
 		call_deferred("_show_tutorial")
