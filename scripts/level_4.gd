@@ -36,6 +36,28 @@ func _ready():
 		if p.has_method("set_ice_mode"):
 			p.ice_mode = true
 	
+	# Spawn moving ice platforms
+	_spawn_moving_platform(Vector3(-8, 0, -5), Vector3(8, 0, -5), 4.0)
+	_spawn_moving_platform(Vector3(8, 0, 5), Vector3(-8, 0, 5), 6.0)
+	_spawn_moving_platform(Vector3(-8, 0, 8), Vector3(-8, 0, -8), 5.0)
+	
+	# Spawn ice spike traps (periodic falling)
+	_spawn_ice_spike(Vector3(0, 8, -8))
+	_spawn_ice_spike(Vector3(8, 8, 0))
+	_spawn_ice_spike(Vector3(-8, 8, 8))
+	
+	# Blizzard particles
+	_spawn_blizzard()
+	
+	# More spinners for difficulty
+	_spawn_spinner(Vector3(0, 1.5, 4), 90.0)
+	_spawn_spinner(Vector3(-7, 1.5, -2), -70.0)
+	_spawn_spinner(Vector3(7, 1.5, -7), 80.0)
+	
+	# More jumpers
+	_spawn_jumper(Vector3(4, 0, -4), 3.5, 1.8)
+	_spawn_jumper(Vector3(-3, 0, 7), 3.0, 2.2)
+	
 	GameManager.start_level_countdown()
 
 func _create_ui():
@@ -256,6 +278,89 @@ func _create_ui():
 	if menu.has_method("_style_buttons"):
 		menu._style_buttons()
 
+
+func _spawn_moving_platform(from_pos: Vector3, to_pos: Vector3, speed: float):
+	var mp = StaticBody3D.new()
+	mp.name = "MovingPlatform"
+	mp.position = from_pos
+	var scr = load("res://scripts/moving_platform.gd")
+	mp.set_script(scr)
+	mp.point_a = from_pos
+	mp.point_b = to_pos
+	mp.move_speed = speed
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(3, 0.3, 1.5)
+	mesh.mesh = box
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.35, 0.65, 0.85, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mesh.material_override = mat
+	mp.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(3, 0.3, 1.5)
+	col.shape = shape
+	mp.add_child(col)
+	add_child(mp)
+
+func _spawn_ice_spike(pos: Vector3):
+	# Ice spike that falls periodically
+	var spike = Area3D.new()
+	spike.name = "IceSpike"
+	spike.position = pos
+	spike.set_meta("origin_y", pos.y)
+	spike.set_meta("falling", false)
+	spike.set_meta("fall_timer", randf() * 3.0)
+	spike.set_meta("warn_timer", 0.0)
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var cone = CylinderMesh.new()
+	cone.top_radius = 0.05
+	cone.bottom_radius = 0.4
+	cone.height = 1.5
+	mesh.mesh = cone
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.7, 0.85, 0.95, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mesh.material_override = mat
+	mesh.rotation_degrees.x = 180
+	spike.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var cs = CylinderShape3D.new()
+	cs.radius = 0.5
+	cs.height = 0.8
+	col.shape = cs
+	spike.add_child(col)
+	spike.body_entered.connect(func(body):
+		if body.is_in_group("player") and body.has_method("take_hit"):
+			body.take_hit(Vector3(0, -1, 0)))
+	add_child(spike)
+
+func _spawn_blizzard():
+	var snow = CPUParticles3D.new()
+	snow.name = "Blizzard"
+	snow.amount = 200
+	snow.lifetime = 3.0
+	snow.emitting = true
+	snow.one_shot = false
+	snow.explosiveness = 0.0
+	snow.spread = 90.0
+	snow.gravity = Vector3(0, -2, 0)
+	snow.initial_velocity_min = 2.0
+	snow.initial_velocity_max = 6.0
+	snow.direction = Vector3(0.3, -1, 0.2)
+	snow.position = Vector3(0, 12, 0)
+	snow.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
+	snow.emission_box_extents = Vector3(20, 1, 20)
+	snow.scale_amount_min = 0.05
+	snow.scale_amount_max = 0.15
+	snow.color = Color(0.9, 0.95, 1, 0.7)
+	snow.draw_pass_1 = SphereMesh.new()
+	add_child(snow)
 
 func _spawn_spinner(pos, speed):
 	var s = Area3D.new()

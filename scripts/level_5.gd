@@ -26,6 +26,22 @@ func _ready():
 	await get_tree().process_frame
 	_spawn_powerup(Vector3(-6, 1, -6), 1)
 	_spawn_powerup(Vector3(6, 1, 6), 2)
+	
+	# Spawn arena hazards
+	_spawn_lava_crack(Vector3(3, 0.01, -4))
+	_spawn_lava_crack(Vector3(-5, 0.01, 5))
+	_spawn_lava_crack(Vector3(-3, 0.01, -6))
+	
+	# Phase 2/3 minion spawn points (hidden initially)
+	_spawn_minion_spawner(Vector3(-7, 0, -7))
+	_spawn_minion_spawner(Vector3(7, 0, 7))
+	
+	# Boss arena dramatic lighting
+	var lt = get_node_or_null("Light")
+	if lt:
+		lt.light_color = Color(1, 0.3, 0.15, 1)
+		lt.light_energy = 6.0
+	
 	GameManager.start_level_countdown()
 
 func _create_ui():
@@ -277,3 +293,39 @@ func _spawn_powerup(pos, ptype):
 	col.shape = shape
 	p.add_child(col)
 	add_child(p)
+func _spawn_lava_crack(pos: Vector3):
+	var crack = Area3D.new()
+	crack.name = "LavaCrack"
+	crack.position = pos
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(1.5, 0.05, 3.0)
+	mesh.mesh = box
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(1, 0.2, 0.05, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.emission_enabled = true
+	mat.emission = Color(1, 0.3, 0.1, 1)
+	mat.emission_energy_multiplier = 2.0
+	mesh.material_override = mat
+	crack.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(1.5, 0.3, 3.0)
+	col.shape = shape
+	crack.add_child(col)
+	crack.body_entered.connect(func(body):
+		if body.is_in_group("player") and body.has_method("take_hit"):
+			body.take_hit(Vector3(0, 1, 0)))
+	add_child(crack)
+
+func _spawn_minion_spawner(pos: Vector3):
+	# Hidden spawner that activates during boss phases 2 and 3
+	var spawner = Node3D.new()
+	spawner.name = "MinionSpawner"
+	spawner.position = pos
+	spawner.set_meta("spawn_cd", 8.0)
+	spawner.set_meta("active", false)
+	add_child(spawner)

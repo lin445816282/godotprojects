@@ -54,10 +54,12 @@ func _process(dt):
 	# Phase transitions
 	if health <= max_health * 0.66 and phase == 1:
 		phase = 2
+		_spawn_minions(2)
 		if $Mesh.material_override:
 			$Mesh.material_override.albedo_color = Color(1, 0.4, 0.1, 1)
 	elif health <= max_health * 0.33 and phase == 2:
 		phase = 3
+		_spawn_minions(3)
 		if $Mesh.material_override:
 			$Mesh.material_override.albedo_color = Color(0.8, 0.8, 0.1, 1)
 
@@ -126,6 +128,50 @@ func _bullet_hit(body, bullet):
 		body.take_hit(Vector3(0, 0, 1))
 		if is_instance_valid(bullet):
 			bullet.queue_free()
+
+func _spawn_minions(count: int):
+	var spawners = []
+	for c in get_parent().get_children():
+		if c.name == "MinionSpawner":
+			spawners.append(c)
+	if spawners.size() == 0:
+		return
+	for i in range(count):
+		var sp = spawners[i % spawners.size()]
+		var e = Area3D.new()
+		e.name = "Minion"
+		e.position = sp.position + Vector3(randf_range(-1, 1), 1, randf_range(-1, 1))
+		var scr = load("res://scripts/enemy.gd")
+		e.set_script(scr)
+		e.patrol_speed = 2.5
+		e.chase_speed = 4.5
+		e.detect_range = 5.0
+		var mesh = MeshInstance3D.new()
+		mesh.name = "Mesh"
+		var cm = CapsuleMesh.new()
+		cm.radius = 0.3
+		cm.height = 1.2
+		mesh.mesh = cm
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(0.8, 0.2, 0.2, 1)
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mesh.material_override = mat
+		e.add_child(mesh)
+		var col = CollisionShape3D.new()
+		col.name = "Col"
+		var cs = CapsuleShape3D.new()
+		cs.radius = 0.35
+		cs.height = 1.3
+		col.shape = cs
+		e.add_child(col)
+		e.add_to_group("enemies")
+		get_parent().add_child(e)
+		# WP points for patrol
+		for j in range(3):
+			var wp = Marker3D.new()
+			wp.name = "WP_" + str(j+1)
+			wp.position = sp.position + Vector3(randf_range(-3, 3), 0, randf_range(-3, 3))
+			e.add_child(wp)
 
 var _find_timer = 0.0
 
