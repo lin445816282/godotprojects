@@ -69,7 +69,7 @@ func _process(dt):
 			match phase:
 				1: shoot_pattern(1, 1.5)
 				2: shoot_pattern(3, 1.2)
-				3: shoot_pattern(5, 0.8)
+				3: shoot_pattern(5, 1.0)
 
 
 func _charge_attack():
@@ -90,7 +90,7 @@ func shoot_pattern(count, cd):
 		return
 	var base_dir = (player.global_position - global_position).normalized()
 	for i in range(count):
-		var ang = deg_to_rad((i - (count - 1) / 2.0) * 15.0)
+		var ang = deg_to_rad((i - (count - 1) / 2.0) * 20.0)
 		var d = base_dir.rotated(Vector3.UP, ang)
 		var b = Area3D.new()
 		b.position = global_position + Vector3(0, 1.5, 0)
@@ -140,7 +140,10 @@ func find_player():
 
 func _hit(body):
 	if body.is_in_group("player") and body.has_method("take_hit"):
-		body.take_hit((body.global_position - global_position).normalized())
+		if body.global_position.y > global_position.y + 1.5:
+			take_damage(5)
+		else:
+			body.take_hit((body.global_position - global_position).normalized())
 
 func take_damage(amount):
 	if GameManager.state != GameManager.State.PLAYING or health <= 0:
