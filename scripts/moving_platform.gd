@@ -22,6 +22,8 @@ func _ready():
 		$Mesh.material_override = plat_mat
 
 func _physics_process(dt):
+	if GameManager.state != GameManager.State.PLAYING:
+		return
 	phase += dt * speed
 	var offset = Vector3(sin(phase), 0, 0) * dist
 	if vertical:
