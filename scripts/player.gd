@@ -21,6 +21,8 @@ var hit_flash = 0.0
 var hits_taken = 0
 var dust_timer = 0.0
 var jumps_left = 1
+	ice_mode = false
+var ice_mode = false
 
 # Powerups
 var has_shield = false
@@ -132,6 +134,7 @@ func reset():
 	hit_flash = 0.0
 	hits_taken = 0
 	jumps_left = 1
+	ice_mode = false
 	has_shield = false
 	speed_boost_timer = 0.0
 	magnet_timer = 0.0
@@ -193,6 +196,7 @@ func _physics_process(dt):
 	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and is_on_floor():
 		velocity.y = jump_speed
 		jumps_left = 1
+	ice_mode = false
 		AudioManager.play("jump")
 	elif (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("gamepad_jump")) and jumps_left > 0:
 		jumps_left -= 1
@@ -220,8 +224,12 @@ func _physics_process(dt):
 			rotation.y = atan2(-mv.x, -mv.z)
 			is_moving = true
 		else:
-			velocity.x = 0
-			velocity.z = 0
+			if ice_mode:
+				velocity.x *= 0.98
+				velocity.z *= 0.98
+			else:
+				velocity.x = 0
+				velocity.z = 0
 			is_moving = false
 	else:
 		velocity.x = 0
@@ -349,6 +357,9 @@ func update_dust(dt):
 func get_hits():
 	return 3 - hits_taken
 
+func set_ice_mode(v):
+	ice_mode = v
+
 func collect_coin_effect():
 	pass
 
@@ -364,6 +375,7 @@ func _on_game_started():
 	hit_flash = 0.0
 	hits_taken = 0
 	jumps_left = 1
+	ice_mode = false
 	has_shield = false
 	speed_boost_timer = 0.0
 	magnet_timer = 0.0

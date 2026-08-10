@@ -31,6 +31,11 @@ func _ready():
 			e.chase_speed = 6.5
 			e.detect_range = 6.5
 	_spawn_powerup(Vector3(2, 1, 2), 2)
+	# Activate ice physics
+	for p in get_tree().get_nodes_in_group("player"):
+		if p.has_method("set_ice_mode"):
+			p.ice_mode = true
+	
 	GameManager.start_level_countdown()
 
 func _create_ui():
