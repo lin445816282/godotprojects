@@ -134,10 +134,34 @@ func _gen(name):
 	cache[name] = sample
 	return sample
 
+var _pool = {}
+
+func _get_pool(name, count):
+	if not _pool.has(name):
+		_pool[name] = []
+		var existing = players.get(name)
+		if existing:
+			_pool[name].append(existing)
+		for i in range(count - 1):
+			var p = AudioStreamPlayer.new()
+			add_child(p)
+			_pool[name].append(p)
+	return _pool[name]
+
 func play(name):
 	if not players.has(name):
 		return
-	var p : AudioStreamPlayer = players[name]
+	# Use pool for overlapping sounds
+	var pool_size = 1
+	if name in ["coin", "coin2", "coin3"]:
+		pool_size = 2
+	var pool = _get_pool(name, pool_size)
+	var p : AudioStreamPlayer = pool[0]
+	# Find a free player
+	for candidate in pool:
+		if not candidate.playing:
+			p = candidate
+			break
 	p.volume_db = SettingsManager.get_volume("sfx", 0.0)
 	p.stream = _gen(name)
 	p.play()
