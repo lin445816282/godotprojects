@@ -300,6 +300,20 @@ func die():
 		return
 	dead = true
 	AudioManager.play("death")
+	# Death particle effect
+	var dp = CPUParticles3D.new()
+	dp.one_shot = true
+	dp.emitting = true
+	dp.amount = 40
+	dp.lifetime = 0.8
+	dp.local_coords = true
+	dp.direction = Vector3(0, 2, 0)
+	dp.spread = 180.0
+	dp.gravity = Vector3(0, -5, 0)
+	dp.velocity_min = 3.0
+	dp.color = Color(1, 0.2, 0.1, 1)
+	dp.position = Vector3(0, 1, 0)
+	add_child(dp)
 	set_body_visible(false)
 	await get_tree().create_timer(0.6).timeout
 	if dead:
@@ -330,7 +344,7 @@ func update_dust(dt):
 		dust_timer = 0.0
 
 func get_hits():
-	return hits_taken
+	return 3 - hits_taken
 
 func collect_coin_effect():
 	pass
