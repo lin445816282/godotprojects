@@ -220,16 +220,16 @@ func _create_ui():
 	lb.visible = false
 	panel.add_child(lb)
 	
-	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
+	for a in ["move_forward", "move_left", "move_backward", "move_right", "jump"]:
 		var kb = Button.new()
 		kb.name = a + "Btn"
 		kb.visible = false
 		match a:
-			"move_forward":  kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.73; kb.anchor_bottom = 0.78
-			"move_backward": kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.79; kb.anchor_bottom = 0.84
-			"move_left":     kb.anchor_left = 0.43; kb.anchor_right = 0.65; kb.anchor_top = 0.73; kb.anchor_bottom = 0.78
-			"move_right":    kb.anchor_left = 0.43; kb.anchor_right = 0.65; kb.anchor_top = 0.79; kb.anchor_bottom = 0.84
-			"jump":          kb.anchor_left = 0.66; kb.anchor_right = 0.80; kb.anchor_top = 0.73; kb.anchor_bottom = 0.84
+			"move_forward":  kb.anchor_left = 0.10; kb.anchor_right = 0.54; kb.anchor_top = 0.73; kb.anchor_bottom = 0.77
+			"move_left":     kb.anchor_left = 0.56; kb.anchor_right = 0.90; kb.anchor_top = 0.73; kb.anchor_bottom = 0.77
+			"move_backward": kb.anchor_left = 0.10; kb.anchor_right = 0.54; kb.anchor_top = 0.78; kb.anchor_bottom = 0.82
+			"move_right":    kb.anchor_left = 0.56; kb.anchor_right = 0.90; kb.anchor_top = 0.78; kb.anchor_bottom = 0.82
+			"jump":          kb.anchor_left = 0.10; kb.anchor_right = 0.90; kb.anchor_top = 0.83; kb.anchor_bottom = 0.87
 		panel.add_child(kb)
 	
 	ui.add_child(menu)
