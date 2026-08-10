@@ -39,7 +39,6 @@ func kill():
 	dp.direction = Vector3(0, 2, 0)
 	dp.spread = 100.0
 	dp.gravity = Vector3(0, -5, 0)
-	dp.velocity_min = 2.0
 	dp.color = Color(0.2, 0.8, 0.9, 1)
 	dp.position = Vector3(0, 0.5, 0)
 	add_child(dp)
