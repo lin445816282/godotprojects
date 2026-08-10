@@ -345,7 +345,7 @@ func _show():
 		var b = get_node_or_null("Panel/" + a + "Btn")
 		if b:
 			b.visible = true
-			b.text = a.replace("move_", "").capitalize() + ": " + OS.get_keycode_string(SettingsManager.get_key(a))
+			b.text = I18n.t(a) + ": " + OS.get_keycode_string(SettingsManager.get_key(a))
 	
 	# First-time tutorial
 	if not SettingsManager.has("tutorial_done"):
