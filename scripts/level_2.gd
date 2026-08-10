@@ -220,10 +220,16 @@ func _create_ui():
 	lb.visible = false
 	panel.add_child(lb)
 	
-	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
+	for a in ["move_forward", "jump", "move_left", "move_backward", "move_right"]:
 		var kb = Button.new()
 		kb.name = a + "Btn"
 		kb.visible = false
+		match a:
+			"move_forward":  kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.60; kb.anchor_bottom = 0.65
+			"jump":          kb.anchor_left = 0.43; kb.anchor_right = 0.80; kb.anchor_top = 0.60; kb.anchor_bottom = 0.65
+			"move_left":     kb.anchor_left = 0.05; kb.anchor_right = 0.27; kb.anchor_top = 0.66; kb.anchor_bottom = 0.71
+			"move_backward": kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.66; kb.anchor_bottom = 0.71
+			"move_right":    kb.anchor_left = 0.35; kb.anchor_right = 0.57; kb.anchor_top = 0.66; kb.anchor_bottom = 0.71
 		panel.add_child(kb)
 	
 	ui.add_child(menu)
