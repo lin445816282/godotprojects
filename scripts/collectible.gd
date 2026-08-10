@@ -3,6 +3,7 @@ extends Area3D
 enum Tier { COPPER, SILVER, GOLD }
 @export var tier: Tier = Tier.COPPER
 @export var worth = 1
+@export var respawn_time = 12.0
 var taken = false
 var base_y = 0.0
 var atime = 0.0
@@ -60,8 +61,15 @@ func _process(dt):
 			var t = ptimer / 0.25
 			var sx = 1.0 + t * 0.8
 			scale = Vector3(sx, sx, sx)
-		elif $Mesh.visible and ptimer <= 0:
-			$Mesh.visible = false
+		elif ptimer <= 0 and ptimer > -respawn_time:
+			if $Mesh.visible:
+				$Mesh.visible = false
+		elif ptimer <= -respawn_time:
+			taken = false
+			ptimer = 0.0
+			scale = Vector3(1, 1, 1)
+			$Mesh.visible = true
+			$Col.set_deferred("disabled", false)
 		return
 	atime += dt
 	var near = false
