@@ -279,15 +279,15 @@ func _create_ui():
 		menu._style_buttons()
 
 
-func _spawn_moving_platform(from_pos: Vector3, to_pos: Vector3, speed: float):
-	var mp = StaticBody3D.new()
+func _spawn_moving_platform(from_pos: Vector3, to_pos: Vector3, spd: float):
+	var mp = CharacterBody3D.new()
 	mp.name = "MovingPlatform"
 	mp.position = from_pos
 	var scr = load("res://scripts/moving_platform.gd")
 	mp.set_script(scr)
-	mp.point_a = from_pos
-	mp.point_b = to_pos
-	mp.move_speed = speed
+	mp.speed = spd
+	mp.dist = from_pos.distance_to(to_pos) / 2.0
+	mp.vertical = abs(from_pos.y - to_pos.y) > abs(from_pos.x - to_pos.x)
 	var mesh = MeshInstance3D.new()
 	mesh.name = "Mesh"
 	var box = BoxMesh.new()
@@ -304,6 +304,15 @@ func _spawn_moving_platform(from_pos: Vector3, to_pos: Vector3, speed: float):
 	shape.size = Vector3(3, 0.3, 1.5)
 	col.shape = shape
 	mp.add_child(col)
+	# Area for player attachment detection
+	var area = Area3D.new()
+	area.name = "PlatArea"
+	var acol = CollisionShape3D.new()
+	var ashape = BoxShape3D.new()
+	ashape.size = Vector3(3.5, 0.5, 2.0)
+	acol.shape = ashape
+	area.add_child(acol)
+	mp.add_child(area)
 	add_child(mp)
 
 func _spawn_ice_spike(pos: Vector3):
