@@ -24,6 +24,8 @@ func _ready():
 		_create_ui()
 	# Start countdown AFTER UI is fully created
 	await get_tree().process_frame
+	_spawn_powerup(Vector3(-6, 1, -6), 1)
+	_spawn_powerup(Vector3(6, 1, 6), 2)
 	GameManager.start_level_countdown()
 
 func _create_ui():

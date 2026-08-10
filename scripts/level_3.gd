@@ -293,3 +293,35 @@ func _spawn_thrower(pos):
 	mesh.material_override = mat
 	t.add_child(mesh)
 	add_child(t)
+
+func _spawn_powerup(pos, ptype):
+	var p = Area3D.new()
+	p.name = "Powerup"
+	p.position = pos
+	var scr = load("res://scripts/powerup.gd")
+	p.set_script(scr)
+	p.power_type = ptype
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var sm = SphereMesh.new()
+	sm.radius = 0.4
+	sm.height = 0.8
+	mesh.mesh = sm
+	var mat = StandardMaterial3D.new()
+	match ptype:
+		0: mat.albedo_color = Color(0.2, 0.8, 0.2, 1)
+		1: mat.albedo_color = Color(0.8, 0.8, 0.1, 1)
+		2: mat.albedo_color = Color(0.8, 0.3, 0.8, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.emission_enabled = true
+	mat.emission = mat.albedo_color
+	mat.emission_energy_multiplier = 1.3
+	mesh.material_override = mat
+	p.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = SphereShape3D.new()
+	shape.radius = 0.5
+	col.shape = shape
+	p.add_child(col)
+	add_child(p)

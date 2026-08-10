@@ -30,6 +30,7 @@ func _ready():
 			e.patrol_speed = 2.5
 			e.chase_speed = 4.5
 			e.detect_range = 4.5
+	_spawn_powerup(Vector3(-5, 1, -4), 1)
 	GameManager.start_level_countdown()
 
 func _create_ui():
@@ -243,3 +244,35 @@ func _create_ui():
 		menu.setup_nodes()
 	if menu.has_method("_style_buttons"):
 		menu._style_buttons()
+
+func _spawn_powerup(pos, ptype):
+	var p = Area3D.new()
+	p.name = "Powerup"
+	p.position = pos
+	var scr = load("res://scripts/powerup.gd")
+	p.set_script(scr)
+	p.power_type = ptype
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var sm = SphereMesh.new()
+	sm.radius = 0.4
+	sm.height = 0.8
+	mesh.mesh = sm
+	var mat = StandardMaterial3D.new()
+	match ptype:
+		0: mat.albedo_color = Color(0.2, 0.8, 0.2, 1)
+		1: mat.albedo_color = Color(0.8, 0.8, 0.1, 1)
+		2: mat.albedo_color = Color(0.8, 0.3, 0.8, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.emission_enabled = true
+	mat.emission = mat.albedo_color
+	mat.emission_energy_multiplier = 1.3
+	mesh.material_override = mat
+	p.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = SphereShape3D.new()
+	shape.radius = 0.5
+	col.shape = shape
+	p.add_child(col)
+	add_child(p)
