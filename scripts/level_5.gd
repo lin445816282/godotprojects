@@ -126,13 +126,13 @@ func _create_ui():
 	panel.add_child(info)
 	
 	var buttons_data = {
-		"StartBtn": {"text": I18n.t("play_level_1"), "pos": 0.38, "vis": true},
-		"NextBtn": {"text": I18n.t("next_level"), "pos": 0.38, "vis": false},
-		"RestartBtn": {"text": I18n.t("restart"), "pos": 0.47, "vis": false},
-		"Level2Btn": {"text": I18n.t_arr("level_names")[1], "pos": 0.47, "vis": false},
-		"Level3Btn": {"text": I18n.t_arr("level_names")[2], "pos": 0.56, "vis": false},
-		"BackMenuBtn": {"text": I18n.t("back_to_menu"), "pos": 0.56, "vis": false},
-		"QuitBtn": {"text": I18n.t("quit"), "pos": 0.67, "vis": false},
+		"StartBtn": {"text": I18n.t("play_level_1"), "pos": 0.36, "vis": true},
+		"NextBtn": {"text": I18n.t("next_level"), "pos": 0.36, "vis": false},
+		"RestartBtn": {"text": I18n.t("restart"), "pos": 0.44, "vis": false},
+		"Level2Btn": {"text": I18n.t_arr("level_names")[1], "pos": 0.44, "vis": false},
+		"Level3Btn": {"text": I18n.t_arr("level_names")[2], "pos": 0.52, "vis": false},
+		"BackMenuBtn": {"text": I18n.t("back_to_menu"), "pos": 0.60, "vis": false},
+		"QuitBtn": {"text": I18n.t("quit"), "pos": 0.60, "vis": false},
 	}
 	for btn_name in buttons_data:
 		var d = buttons_data[btn_name]
@@ -151,7 +151,7 @@ func _create_ui():
 	var sfl = Label.new()
 	sfl.name = "SfxLabel"
 	sfl.anchor_left = 0.05
-	sfl.anchor_top = 0.82
+	sfl.anchor_top = 0.88
 	sfl.anchor_right = 0.50
 	sfl.text = I18n.t("sfx_volume")
 	sfl.visible = false
@@ -159,7 +159,7 @@ func _create_ui():
 	var sfxs = HSlider.new()
 	sfxs.name = "SfxSlider"
 	sfxs.anchor_left = 0.55
-	sfxs.anchor_top = 0.82
+	sfxs.anchor_top = 0.88
 	sfxs.anchor_right = 0.95
 	sfxs.min_value = -30.0
 	sfxs.max_value = 0.0
@@ -169,7 +169,7 @@ func _create_ui():
 	var ml = Label.new()
 	ml.name = "MusicLabel"
 	ml.anchor_left = 0.05
-	ml.anchor_top = 0.86
+	ml.anchor_top = 0.91
 	ml.anchor_right = 0.50
 	ml.text = I18n.t("music_volume")
 	ml.visible = false
@@ -177,7 +177,7 @@ func _create_ui():
 	var mus = HSlider.new()
 	mus.name = "MusicSlider"
 	mus.anchor_left = 0.55
-	mus.anchor_top = 0.86
+	mus.anchor_top = 0.91
 	mus.anchor_right = 0.95
 	mus.min_value = -40.0
 	mus.max_value = 0.0
@@ -188,7 +188,7 @@ func _create_ui():
 	var sl = Label.new()
 	sl.name = "SensLabel"
 	sl.anchor_left = 0.05
-	sl.anchor_top = 0.78
+	sl.anchor_top = 0.85
 	sl.anchor_right = 0.50
 	sl.text = I18n.t("sensitivity")
 	sl.visible = false
@@ -196,7 +196,7 @@ func _create_ui():
 	var ss = HSlider.new()
 	ss.name = "SensSlider"
 	ss.anchor_left = 0.55
-	ss.anchor_top = 0.78
+	ss.anchor_top = 0.85
 	ss.anchor_right = 0.95
 	ss.min_value = 0.05
 	ss.max_value = 1.0
@@ -209,7 +209,7 @@ func _create_ui():
 	var lb = Button.new()
 	lb.name = "LangBtn"
 	lb.anchor_left = 0.20
-	lb.anchor_top = 0.71
+	lb.anchor_top = 0.77
 	lb.anchor_right = 0.80
 	lb.text = I18n.t("lang_zh") if I18n.lang == "en" else I18n.t("lang_en")
 	lb.visible = false
