@@ -516,7 +516,7 @@ text = ""
 [node name="SfxLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.88
+anchor_top = 0.82
 anchor_right = 0.50
 anchor_bottom = 0.88
 margin_bottom = 20.0
@@ -525,7 +525,7 @@ text = ""
 [node name="SfxSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.88
+anchor_top = 0.82
 anchor_right = 0.95
 anchor_bottom = 0.88
 margin_bottom = 24.0
@@ -535,7 +535,7 @@ max_value = 0.0
 [node name="MusicLabel" type="Label" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.05
-anchor_top = 0.92
+anchor_top = 0.86
 anchor_right = 0.50
 anchor_bottom = 0.92
 margin_bottom = 20.0
@@ -544,7 +544,7 @@ text = ""
 [node name="MusicSlider" type="HSlider" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.55
-anchor_top = 0.92
+anchor_top = 0.86
 anchor_right = 0.95
 anchor_bottom = 0.92
 margin_bottom = 24.0
@@ -555,18 +555,18 @@ value = -12.0
 [node name="MuteBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.69
+anchor_top = 0.63
 anchor_right = 0.80
-anchor_bottom = 0.75
+anchor_bottom = 0.69
 margin_bottom = 0.0
 text = ""
 
 [node name="LangBtn" type="Button" parent="UI/Menu/Panel"]
 visible = false
 anchor_left = 0.20
-anchor_top = 0.77
+anchor_top = 0.71
 anchor_right = 0.80
-anchor_bottom = 0.83
+anchor_bottom = 0.77
 margin_bottom = 0.0
 text = ""
 
