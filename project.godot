@@ -28,16 +28,6 @@ I18n="*res://scripts/i18n.gd"
 window/size/width=1280
 window/size/height=720
 
-[window]
-
-stretch/mode=canvas_items
-stretch/aspect=expand
-size/resizable=true
-size/borderless=false
-size/always_on_top=false
-transparent=false
-per_pixel_transparency/enabled=false
-
 [input]
 
 ui_cancel={
