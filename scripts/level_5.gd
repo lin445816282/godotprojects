@@ -151,7 +151,7 @@ func _create_ui():
 	var sfl = Label.new()
 	sfl.name = "SfxLabel"
 	sfl.anchor_left = 0.05
-	sfl.anchor_top = 0.73
+	sfl.anchor_top = 0.61
 	sfl.anchor_right = 0.50
 	sfl.text = I18n.t("sfx_volume")
 	sfl.visible = false
@@ -159,7 +159,7 @@ func _create_ui():
 	var sfxs = HSlider.new()
 	sfxs.name = "SfxSlider"
 	sfxs.anchor_left = 0.55
-	sfxs.anchor_top = 0.73
+	sfxs.anchor_top = 0.61
 	sfxs.anchor_right = 0.95
 	sfxs.min_value = -30.0
 	sfxs.max_value = 0.0
@@ -169,7 +169,7 @@ func _create_ui():
 	var ml = Label.new()
 	ml.name = "MusicLabel"
 	ml.anchor_left = 0.05
-	ml.anchor_top = 0.76
+	ml.anchor_top = 0.66
 	ml.anchor_right = 0.50
 	ml.text = I18n.t("music_volume")
 	ml.visible = false
@@ -177,7 +177,7 @@ func _create_ui():
 	var mus = HSlider.new()
 	mus.name = "MusicSlider"
 	mus.anchor_left = 0.55
-	mus.anchor_top = 0.76
+	mus.anchor_top = 0.66
 	mus.anchor_right = 0.95
 	mus.min_value = -40.0
 	mus.max_value = 0.0
@@ -188,7 +188,7 @@ func _create_ui():
 	var sl = Label.new()
 	sl.name = "SensLabel"
 	sl.anchor_left = 0.05
-	sl.anchor_top = 0.70
+	sl.anchor_top = 0.56
 	sl.anchor_right = 0.50
 	sl.text = I18n.t("sensitivity")
 	sl.visible = false
@@ -196,7 +196,7 @@ func _create_ui():
 	var ss = HSlider.new()
 	ss.name = "SensSlider"
 	ss.anchor_left = 0.55
-	ss.anchor_top = 0.70
+	ss.anchor_top = 0.56
 	ss.anchor_right = 0.95
 	ss.min_value = 0.05
 	ss.max_value = 1.0
@@ -209,22 +209,22 @@ func _create_ui():
 	var lb = Button.new()
 	lb.name = "LangBtn"
 	lb.anchor_left = 0.20
-	lb.anchor_top = 0.62
+	lb.anchor_top = 0.46
 	lb.anchor_right = 0.80
 	lb.text = I18n.t("lang_zh") if I18n.lang == "en" else I18n.t("lang_en")
 	lb.visible = false
 	panel.add_child(lb)
 	
-	for a in ["move_forward", "jump", "move_left", "move_backward", "move_right"]:
+	for a in ["move_forward", "move_backward", "move_left", "move_right", "jump"]:
 		var kb = Button.new()
 		kb.name = a + "Btn"
 		kb.visible = false
 		match a:
-			"move_forward":  kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.78; kb.anchor_bottom = 0.83
-			"jump":          kb.anchor_left = 0.43; kb.anchor_right = 0.80; kb.anchor_top = 0.78; kb.anchor_bottom = 0.83
-			"move_left":     kb.anchor_left = 0.05; kb.anchor_right = 0.27; kb.anchor_top = 0.84; kb.anchor_bottom = 0.89
-			"move_backward": kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.84; kb.anchor_bottom = 0.89
-			"move_right":    kb.anchor_left = 0.35; kb.anchor_right = 0.57; kb.anchor_top = 0.84; kb.anchor_bottom = 0.89
+			"move_forward":  kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.73; kb.anchor_bottom = 0.78
+			"move_backward": kb.anchor_left = 0.20; kb.anchor_right = 0.42; kb.anchor_top = 0.79; kb.anchor_bottom = 0.84
+			"move_left":     kb.anchor_left = 0.43; kb.anchor_right = 0.65; kb.anchor_top = 0.73; kb.anchor_bottom = 0.78
+			"move_right":    kb.anchor_left = 0.43; kb.anchor_right = 0.65; kb.anchor_top = 0.79; kb.anchor_bottom = 0.84
+			"jump":          kb.anchor_left = 0.66; kb.anchor_right = 0.80; kb.anchor_top = 0.73; kb.anchor_bottom = 0.84
 		panel.add_child(kb)
 	
 	ui.add_child(menu)
