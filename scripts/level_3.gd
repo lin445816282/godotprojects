@@ -243,3 +243,53 @@ func _create_ui():
 		menu.setup_nodes()
 	if menu.has_method("_style_buttons"):
 		menu._style_buttons()
+
+
+func _spawn_spinner(pos, speed):
+	var s = Area3D.new()
+	s.name = "Spinner"
+	s.position = pos
+	var scr = load("res://scripts/spinner.gd")
+	s.set_script(scr)
+	s.spin_speed = speed
+	# Mesh
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(3, 0.4, 0.6)
+	mesh.mesh = box
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.7, 0.3, 0.1, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mesh.material_override = mat
+	s.add_child(mesh)
+	# Collision
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = BoxShape3D.new()
+	shape.extents = Vector3(1.5, 0.2, 0.3)
+	col.shape = shape
+	s.add_child(col)
+	add_child(s)
+
+func _spawn_thrower(pos):
+	var t = Node3D.new()
+	t.name = "Thrower"
+	t.position = pos
+	var scr = load("res://scripts/enemy_thrower.gd")
+	t.set_script(scr)
+	# Visual
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(1, 2, 1)
+	mesh.mesh = box
+	mesh.position.y = 1
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.6, 0.2, 0.6, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.emission_enabled = true
+	mat.emission = Color(0.3, 0.1, 0.3, 1)
+	mesh.material_override = mat
+	t.add_child(mesh)
+	add_child(t)

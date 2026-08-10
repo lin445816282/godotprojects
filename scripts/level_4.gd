@@ -243,3 +243,62 @@ func _create_ui():
 		menu.setup_nodes()
 	if menu.has_method("_style_buttons"):
 		menu._style_buttons()
+
+
+func _spawn_spinner(pos, speed):
+	var s = Area3D.new()
+	s.name = "Spinner"
+	s.position = pos
+	var scr = load("res://scripts/spinner.gd")
+	s.set_script(scr)
+	s.spin_speed = speed
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(3, 0.4, 0.6)
+	mesh.mesh = box
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.3, 0.6, 0.8, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mesh.material_override = mat
+	s.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = BoxShape3D.new()
+	shape.extents = Vector3(1.5, 0.2, 0.3)
+	col.shape = shape
+	s.add_child(col)
+	add_child(s)
+
+func _spawn_jumper(pos, amp, freq):
+	var j = Area3D.new()
+	j.name = "Jumper"
+	j.position = pos
+	var scr = load("res://scripts/enemy_jumper.gd")
+	j.set_script(scr)
+	j.hop_amp = amp
+	j.hop_freq = freq
+	var mesh = MeshInstance3D.new()
+	mesh.name = "Mesh"
+	var box = BoxMesh.new()
+	box.size = Vector3(2, 0.4, 2)
+	mesh.mesh = box
+	mesh.position.y = 0
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.2, 0.7, 0.9, 1)
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mesh.material_override = mat
+	j.add_child(mesh)
+	var col = CollisionShape3D.new()
+	col.name = "Col"
+	var shape = BoxShape3D.new()
+	shape.extents = Vector3(1, 0.2, 1)
+	col.shape = shape
+	j.add_child(col)
+	j.body_entered.connect(func(body):
+		if body.is_in_group("player") and body.has_method("take_hit"):
+			body.take_hit(Vector3(0, 0, 0)))
+	GameManager.game_started.connect(func():
+		if is_instance_valid(j):
+			j.position = pos)
+	add_child(j)
