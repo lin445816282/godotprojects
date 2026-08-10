@@ -330,4 +330,53 @@ func _spawn_powerup(pos, ptype):
 	shape.radius = 0.5
 	col.shape = shape
 	p.add_child(col)
-	add_child(p)
+
+func _spawn_key_gate(key_pos: Vector3, gate_pos: Vector3):
+	# Spawn key item
+	var key = Area3D.new()
+	key.name = "KeyItem"
+	key.position = key_pos
+	key.set_script(load("res://scripts/key_item.gd"))
+	var km = MeshInstance3D.new()
+	km.name = "Mesh"
+	var ksm = SphereMesh.new()
+	ksm.radius = 0.3
+	ksm.height = 0.6
+	km.mesh = ksm
+	var kmat = StandardMaterial3D.new()
+	kmat.albedo_color = Color(1, 0.85, 0.1, 1)
+	kmat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	kmat.emission_enabled = true
+	kmat.emission = Color(1, 0.85, 0.1, 1)
+	kmat.emission_energy_multiplier = 1.5
+	km.material_override = kmat
+	key.add_child(km)
+	var kcol = CollisionShape3D.new()
+	kcol.name = "Col"
+	var kshape = SphereShape3D.new()
+	kshape.radius = 0.5
+	kcol.shape = kshape
+	key.add_child(kcol)
+	add_child(key)
+	# Spawn gate
+	var gate = StaticBody3D.new()
+	gate.name = "Gate"
+	gate.position = gate_pos
+	gate.set_script(load("res://scripts/gate.gd"))
+	var gm = MeshInstance3D.new()
+	gm.name = "Mesh"
+	var gbox = BoxMesh.new()
+	gbox.size = Vector3(2, 3, 0.3)
+	gm.mesh = gbox
+	var gmat = StandardMaterial3D.new()
+	gmat.albedo_color = Color(0.9, 0.3, 0.1, 1)
+	gmat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	gm.material_override = gmat
+	gate.add_child(gm)
+	var gcol = CollisionShape3D.new()
+	gcol.name = "Col"
+	var gshape = BoxShape3D.new()
+	gshape.size = Vector3(2, 3, 0.3)
+	gcol.shape = gshape
+	gate.add_child(gcol)
+	add_child(gate)
